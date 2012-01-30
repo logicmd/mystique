@@ -9,6 +9,7 @@
 
 // Renders a single comment.
 // This is a template part.
+// Adding a span and useragent_output_custom()
 
 ?>
 
@@ -29,7 +30,7 @@
           atom()->te('%1$s written by %2$s %3$s',
                  sprintf('<a class="comment-id" href="#comment-%d">#%d</a>', get_comment_ID(), atom()->comment->getNumber()),
                  atom()->comment->getAuthorAsLink(),
-                 sprintf('<span class="d">%s</span>', atom()->comment->getDate()));
+                 sprintf('<span class="ua-img">%s</span><span class="d">%s</span>', useragent_output_custom(), atom()->comment->getDate()));
          ?>
         </div>
         <?php atom()->comment->karma('alignright'); ?>

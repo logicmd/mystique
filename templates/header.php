@@ -16,18 +16,19 @@
 
 <head>
   <meta charset="<?php bloginfo('charset'); ?>" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" /> 
 
   <title><?php atom()->documentTitle(); ?></title>
 
-  <?php atom()->metaDescription(); ?>
   <?php atom()->favicon(); ?>
 
   <link rel="pingback" href="<?php bloginfo('pingback_url'); ?>" />
-
+  <link rel="apple-touch-icon" href="http://logicmd.net/wp-content/themes/intrepidity/images/apple_touch_icon.png" />
+  
   <!--[if lte IE 7]>
   <link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/css/ie.css" type="text/css" media="screen" />
   <![endif]-->
-
+  
   <?php wp_head(); ?>
 
 </head>

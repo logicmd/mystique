@@ -39,6 +39,14 @@
              <div id="copyright">
                <?php echo do_shortcode(atom()->options('footer_content'));  ?>
                <?php wp_footer(); ?>
+               <script type="text/javascript" src='/wp-content/themes/mystique-extend/js/jquery.lazyload.min.js?ver=1.7.0'></script>
+               <script type="text/javascript">
+					      $(function() {
+					          $("img").lazyload({
+					              effect : "fadeIn"
+					          });
+					      });
+               </script>
                <!--[if IE 6]>
                <script type="text/javascript" src="http://letskillie6.googlecode.com/svn/trunk/letskillie6.bilingual.pack.js"></script>
                <![endif]-->

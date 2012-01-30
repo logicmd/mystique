@@ -1,17 +1,62 @@
 /*
-Theme Name: Mystique
+Theme Name: Mystique - Extend
 Theme URI: http://digitalnature.eu/themes/mystique/
-Description: Feature-packed theme with a solid design, built-in widgets and a intuitive theme settings interface. Version 3.0 built around the Atom Framework. Designed and developed by <a href="http://digitalnature.eu/">digitalnature</a>.
-Version: 3.2.8
-Author: digitalnature
+Description: Auto-generated child theme of Mystique. Please leave this one activated for proper customizations to Mystique.
+Version: 1.0
+Author: <a href="http://digitalnature.eu/" title="访问作者主页">digitalnature</a>
 Author URI: http://digitalnature.eu/
-Tags: light, white, two-columns, three-columns, one-column, fixed-width, flexible-width, right-sidebar, left-sidebar, bbpress, theme-options, threaded-comments, translation-ready, custom-header, editor-style
-License: GPL
-License URI: http://www.opensource.org/licenses/gpl-license.
-
-	Theme designed by digitalnature. See the project page for more info and updates
-
-	Both the design and code are released under GPL.
-    http://www.opensource.org/licenses/gpl-license.
-
+Template: mystique
 */
+
+/* You can safely edit this file, but keep the Template tag above unchanged! */
+/* Syntax Hightlighter */
+.syntaxhighlighter,
+.syntaxhighlighter a,
+.syntaxhighlighter div,
+.syntaxhighlighter code,
+.syntaxhighlighter table,
+.syntaxhighlighter table td,
+.syntaxhighlighter table tr,
+.syntaxhighlighter table tbody,
+.syntaxhighlighter table thead,
+.syntaxhighlighter table caption,
+.syntaxhighlighter textarea {
+font-size: 13px !important; /* Set the font size in pixels */  
+font-family: "Consolas", "Bitstream Vera Sans Mono", "Courier New", Courier, monospace !important; /* Set the font type */  
+}
+.syntaxhighlighter table caption {
+/* For Title(Caption) */  
+font-size: 14px !important; /* Set the font size in pixels */  
+font-family: "Consolas", "Bitstream Vera Sans Mono", "Courier New", Courier, monospace !important; /* Set the font type */  
+}
+.syntaxhighlighter.nogutter td.code .line {
+/* Set the left padding space when no-gutter in ver. 3.0 */  
+padding-left: 3px !important;
+}
+.syntaxhighlighter {
+/* For Chrome/Safari(WebKit) */  
+/* Hide the superfluous vertical scrollbar in ver. 3.0 */  
+overflow-y: hidden !important;
+padding: 1px !important;
+}
+/* Post Content Style */  
+.hentry .post-content ul, .hentry .post-content ol {
+  font-size:14px;
+  /*line-height:165%; */ /*Already have*/
+  word-spacing:0.1em;
+}
+
+.hentry .post-content p {
+  font-size:14px;
+  margin:5px 0 10px 0;
+  /*line-height:165%; */ /*Already have*/
+  padding-top:3px; 
+  padding-bottom:5px; 
+  word-spacing:0.1em;
+}
+blockquote p {
+  font-style: normal;
+}
+div#smiles {
+  padding: 10px 0;
+}

@@ -9,6 +9,7 @@
 
 // A nicer alternative to WP's comment_form() function, which doesn't give us full control over the output.
 // This is a template part.
+// Adding custom smiles
 
 ?>
 
@@ -79,6 +80,9 @@
            <!-- comment input -->
            <div class="clear-block">
              <label for="comment"><?php atom()->te('Type your comment'); ?></label>
+             <div id="smiles">
+             	 <?php if ( function_exists(cs_print_smilies) ) {cs_print_smilies();}?>
+             </div>
              <div class="input">
                <textarea name="comment" id="comment" class="validate required xlarge" rows="8" cols="50"></textarea>
                <span class="help-block">
