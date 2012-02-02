@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 /*
  * @template  Mystique
@@ -58,8 +58,29 @@
             <?php if(!post_password_required()): ?>
             <div class="post-meta">
 
-                <?php if(atom()->options('single_share')) atom()->post->ShareLinks(); ?>
-
+                <?php if(atom()->options('single_share')) ?>
+              	 <ul class="sub-menu post-shares">
+              	 	 <li class="weibo">
+              	 	 	 <a href="javascript:void((function(s,d,e,r,l,p,t,z,c){var%20f='http://v.t.sina.com.cn/share/share.php?appkey=696316965&',u=z||d.location,p=['url=',e(u),'&title=',e(t||d.title),'&source=',e(r),'&sourceUrl=',e(l),'&content=',c||'utf-8','&pic=',e(p||'')].join('');function%20a(){if(!window.open([f,p].join(''),'mb',['toolbar=0,status=0,resizable=1,width=440,height=430,left=',(s.width-440)/2,',top=',(s.height-430)/2].join('')))u.href=[f,p].join('');};if(/Firefox/.test(navigator.userAgent))setTimeout(a,0);else%20a();})(screen,document,encodeURIComponent,'logicmd.net','http://logicmd.net','','<?php the_title(); ?> ','<?php the_permalink() ?>','utf-8'));" title="分享到微博">
+              	 	 	 	 <span>Weibo</span>
+              	 	 	 </a>
+              	 	 </li>
+              	 	 <li class="renren">
+              	 	 	 <a href="javascript:void((function(s,d,e){if(/xiaonei\.com/.test(d.location))return;var%20f='http://share.xiaonei.com/share/buttonshare.do?link=',u=d.location,l=d.title,p=[e(u),'&title=',e(l)].join('');function%20a(){if(!window.open([f,p].join(''),'xnshare',['toolbar=0,status=0,resizable=1,width=626,height=436,left=',(s.width-626)/2,',top=',(s.height-436)/2].join('')))u.href=[f,p].join('');};if(/Firefox/.test(navigator.userAgent))setTimeout(a,0);else%20a();})(screen,document,encodeURIComponent));" title="分享到人人">
+              	 	 	 	 <span>Renren</span>
+              	 	 	 </a>
+              	 	 </li>
+              	 	 <li class="qqzone">
+              	 	 	 <a href="http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=<?php the_permalink() ?>" title="分享到QQ空间" target="_blank">
+              	 	 	 	 <span>QQZone</span>
+              	 	 	 </a>
+              	 	 </li>
+              	 	 <li class="qqweibo">
+              	 	 	 <a href="javascript:void(window.open('http://v.t.qq.com/share/share.php?title='+encodeURI(document.title)+'&url='+encodeURIComponent(window.location)+'&appkey=a75e1c5904c842b7b3aed10213379cca&site=logicmd.net&pic=','转播到腾讯微博', 'width=700, height=680, top=0, left=0, toolbar=no, menubar=no, scrollbars=no, location=yes, resizable=no, status=no'));" title="分享到QQ微博">
+              	 	 	 	 <span>QQWeibo</span>
+              	 	 	 </a>
+              	 	 </li>
+              	 </ul>                
                 <?php if(atom()->options('single_meta')): ?>
                 <div class="details">
                   <p>
