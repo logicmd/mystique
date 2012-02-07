@@ -84,21 +84,21 @@ ul.post-shares li, ul.post-shares li a{
 }
 
 ul.post-shares a{
-  background-color: transparent;
+  background: transparent url(images/socialize.png) no-repeat left top;
   width: 32px;
   height: 32px;
   display: block;
 }
 
-ul.post-shares li.weibo a{background-image: url(images/32-weibo_gray.png);}
-ul.post-shares li.renren a{background-image: url(images/32-renren_gray.png);}
-ul.post-shares li.qqzone a{background-image: url(images/32-qqzone_gray.png);}
-ul.post-shares li.qqweibo a{background-image: url(images/32-qqweibo_gray.png);}
+ul.post-shares li.weibo a{background-position:0px -32px;}
+ul.post-shares li.renren a{background-position:-32px -32px;}
+ul.post-shares li.qqzone a{background-position:-64px -32px;}
+ul.post-shares li.qqweibo a{background-position:-96px -32px;}
 
-ul.post-shares li.weibo a:hover{background-image: url(images/32-weibo.png);}
-ul.post-shares li.renren a:hover{background-image: url(images/32-renren.png);}
-ul.post-shares li.qqzone a:hover{background-image: url(images/32-qqzone.png);}
-ul.post-shares li.qqweibo a:hover{background-image: url(images/32-qqweibo.png);}
+ul.post-shares li.weibo a:hover{background-position:0 0px;}
+ul.post-shares li.renren a:hover{background-position:-32px 0px;}
+ul.post-shares li.qqzone a:hover{background-position:-64px 0px;}
+ul.post-shares li.qqweibo a:hover{background-position:-96px 0px;}
 
 ul.post-shares span{
   display: none;
