@@ -1,6 +1,208 @@
 
 /* ATOM back-end CSS styles */
-/* @todo: clean this mess up... */
+/* This only affects mark-up wrapped between an .atom-block class */
+
+
+
+/* clearfix */
+.atom-block .clear-block:after{content:".";display:block;clear:both;visibility:hidden;line-height:0;height:0;}
+
+/* headings */
+
+.atom-block h1{
+  font:normal bold 375% "Arial Black", "Helvetica Black", Gadget, sans-serif;
+  text-transform: lowercase;
+  letter-spacing:-3px;
+  margin:0;
+  padding:0;
+}
+
+.atom-block h1 a{
+  text-decoration: none;
+}
+
+.atom-block h3.title{
+  font-size:16px;
+  font-weight: bold;
+  margin: 20px 0 8px 0;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 2px;
+  color: #333;
+}
+
+
+/* form entry */
+.atom-block .entry{
+  padding: 5px 0;
+}
+
+.atom-block .entry .desc{
+  display: block;
+  font-weight: normal;
+  font-size: 12px;
+  font-style: italic;
+  color: #aaaaaa;
+  line-height: 150%;
+  max-width: 780px;
+}
+
+.atom-block .entry.with-checkbox .desc{
+  margin-left: 20px;
+}
+
+.atom-block input[disabled], .atom-block select[disabled], .atom-block option[disabled], .atom-block textarea[disabled],
+.atom-block label.disabled{
+  color: #ccc !important;
+}
+
+.atom-block label.disabled a{
+  color: #a6bad5;
+}
+
+
+
+/* form-inline notices */
+
+.atom-block .notice{
+  background: #ffffcc;
+  padding: 5px 10px;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -khtml-border-radius: 5px;
+  border-radius: 5px;
+  color: #7f7f66;
+  text-shadow: #fff 0px 1px 1px;
+  margin-bottom: 5px;
+}
+
+.atom-block .notice.e{
+  background: #ffebe8;
+  color: #cc0033;
+}
+
+
+/* tabs */
+
+.atom-tabs{
+  margin-top: 20px;
+}
+
+.atom-tabs .nav{
+  margin: 0;
+}
+
+
+.atom-tabs .nav li{
+  float: left;
+  margin: 0 5px -1px 0;
+  padding: 0;
+}
+
+.atom-tabs .nav li a{
+  display: block;
+  position: relative;
+  z-index: 10;
+  padding: 7px 10px 5px;
+  text-decoration: none;
+  text-align: center;
+  text-shadow: 0px 1px 0px #fff;
+  font-weight: bold;
+  border: 1px solid #ddd;
+  -moz-border-radius-topleft: 6px;
+  -webkit-border-top-left-radius: 6px;
+  -khtml-border-top-left-radius: 6px;
+  border-top-left-radius: 6px;
+  -moz-border-radius-topright: 6px;
+  -webkit-border-top-right-radius: 6px;
+  -khtml-border-top-right-radius: 6px;
+  border-top-right-radius: 6px;
+  color: #666;
+  background-color: #ddd;
+  background-repeat: repeat-x;
+  background-image: -khtml-gradient(linear, left top, left bottom, from(#eee), to(#ddd));
+  background-image: -moz-linear-gradient(top, #eee, #ddd);
+  background-image: -ms-linear-gradient(top, #eee, #ddd);
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #eee), color-stop(100%, #ddd));
+  background-image: -webkit-linear-gradient(top, #eee, #ddd);
+  background-image: -o-linear-gradient(top, #eee, #ddd);
+  background-image: linear-gradient(top, #eee, #ddd);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#eeeeee', endColorstr='#dddddd', GradientType=0);
+}
+
+.atom-block .atom-tabs .nav li.active a{
+  border-bottom-color: #fff;
+  background: #fff;
+  text-decoration: none;
+  color: #999;
+}
+
+.atom-tabs .tab-content{
+  border: 1px solid #dfdfdf;
+  -moz-border-radius-bottomleft: 6px;
+  -webkit-border-bottom-left-radius: 6px;
+  -khtml-border-bottom-left-radius: 6px;
+  border-bottom-left-radius: 6px;
+  -moz-border-radius-bottomright: 6px;
+  -webkit-border-bottom-right-radius: 6px;
+  -khtml-border-bottom-right-radius: 6px;
+  border-bottom-right-radius: 6px;
+  padding: 10px;
+  background: #fff;
+}
+
+
+/* rules specific to the theme-settings tabs */
+
+#theme-settings .atom-tabs .tab-content{
+  min-height: 600px;
+  position: relative;
+  z-index: 5;
+  padding-bottom: 60px;
+}
+
+#theme-settings .atom-tabs .tab-content.loading{
+  background:transparent url(../images/loaders/lh16w.gif) no-repeat center 200px;
+}
+
+#theme-settings .atom-tabs .tab-content.loading > div{
+  opacity: 0.25;
+}
+
+
+
+/* iframe resize control */
+
+.atom-block .grippie {
+  background:#eee url(../images/admin/grippie.png) no-repeat scroll center 2px;
+  border-color:#ddd;
+  border-style:solid;
+  border-width:0pt 1px 1px;
+  cursor:s-resize;
+  height:9px;
+  overflow:hidden;
+}
+
+
+
+
+
+
+
+
+
+
+
+.atom-block label small code{
+  font-style: normal;
+  color: #666;
+}
+
+.atom-block label abbr{
+  border-bottom: 1px dotted #ccc;
+  color: #333
+}
+
+
 
 
 
@@ -194,27 +396,7 @@ div.widgets-sortables[id*=footer-] div.widget[id*=atom-splitter] .widget-title{
 
 
 
-.atom-block h1{
-  font:normal bold 375% "Arial Black", "Helvetica Black", Gadget, sans-serif;
-  text-transform: lowercase;
-  letter-spacing:-3px;
-  margin:0;
-  padding:0;
-}
 
-.atom-block h1 a{
-  text-decoration: none;
-}
-
-
-.atom-block h3.title{
-  font-size:18px;
-  font-weight: normal;
-  margin: 20px 0 10px 0;
-  border-bottom: 1px solid #ddd;
-  padding-bottom: 4px;
-  color: #333;
-}
 
 
 .atom-block h4{
@@ -278,106 +460,6 @@ div.widgets-sortables[id*=footer-] div.widget[id*=atom-splitter] .widget-title{
 }
 
 
-/* tabs */
-.atom-block .notice{
-  background: #FFFFCC;
-  padding: 5px 10px;
-  -moz-border-radius: 5px;
-  -webkit-border-radius: 5px;
-  -khtml-border-radius: 5px;
-  border-radius: 5px;
-  color: #7f7f66;
-  text-shadow: #fff 0px 1px 1px;
-  margin-bottom: 5px;
-}
-
-.atom-block .notice.e{
-  background: #FFEBE8;
-  color: #CC0033;
-}
-
-
-.atom-block .atom-tabs{
-  margin-top: 20px;
-}
-
-.atom-block .atom-tabs .nav{
-  margin: 0;
-}
-
-
-.atom-block .atom-tabs .nav li{
-  float: left;
-  margin: 0 5px -1px 0;
-  padding: 0;
-}
-
-.atom-block .atom-tabs .nav li a{
-  display: block;
-  position: relative;
-  z-index: 10;
-  padding: 7px 10px 5px;
-  text-decoration: none;
-  text-align: center;
-  text-shadow: 0px 1px 0px #fff;
-  font-weight: bold;
-  border: 1px solid #ddd;
-  -moz-border-radius-topleft: 6px;
-  -webkit-border-top-left-radius: 6px;
-  -khtml-border-top-left-radius: 6px;
-  border-top-left-radius: 6px;
-  -moz-border-radius-topright: 6px;
-  -webkit-border-top-right-radius: 6px;
-  -khtml-border-top-right-radius: 6px;
-  border-top-right-radius: 6px;
-  color: #666;
-  background-color: #ddd;
-  background-repeat: repeat-x;
-  background-image: -khtml-gradient(linear, left top, left bottom, from(#eee), to(#ddd));
-  background-image: -moz-linear-gradient(top, #eee, #ddd);
-  background-image: -ms-linear-gradient(top, #eee, #ddd);
-  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #eee), color-stop(100%, #ddd));
-  background-image: -webkit-linear-gradient(top, #eee, #ddd);
-  background-image: -o-linear-gradient(top, #eee, #ddd);
-  background-image: linear-gradient(top, #eee, #ddd);
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#eeeeee', endColorstr='#dddddd', GradientType=0);
-}
-
-.atom-block .atom-tabs .tab-content{
-  border: 1px solid #dfdfdf;
-  -moz-border-radius-bottomleft: 6px;
-  -webkit-border-bottom-left-radius: 6px;
-  -khtml-border-bottom-left-radius: 6px;
-  border-bottom-left-radius: 6px;
-  -moz-border-radius-bottomright: 6px;
-  -webkit-border-bottom-right-radius: 6px;
-  -khtml-border-bottom-right-radius: 6px;
-  border-bottom-right-radius: 6px;
-  padding: 10px;
-  background: #fff;
-}
-
-#theme-settings .tab-content{
-  min-height: 600px;
-  position: relative;
-  z-index: 5;
-  padding-bottom: 60px;
-}
-
-#theme-settings .tab-content.loading{
-  background:transparent url(../images/loaders/lh16w.gif) no-repeat center 200px;
-}
-
-#theme-settings .tab-content.loading > div  {
-  opacity: 0.25;
-}
-
-.atom-block .atom-tabs .nav li.active a{
-  border-bottom-color: #fff;
-  background: #fff;
-  text-decoration: none;
-  color: #999;
-}
 
 /*
 .atom-block .atom-tabs .nav li.welcome a{
@@ -487,55 +569,6 @@ div.widgets-sortables[id*=footer-] div.widget[id*=atom-splitter] .widget-title{
   background-color: #e3f5cf;
 }
 
-
-/* labels */
-
-.atom-block label.selected{
-  font-weight: bold;
-}
-
-
-.atom-block .entry{
-  padding: 5px 0;
-}
-
-
-.atom-block label.disabled{
-  color: #ccc !important;
-}
-
-.atom-block label.disabled a{
-  color: #a6bad5;
-}
-
-.atom-block input[disabled], .atom-block select[disabled], .atom-block option[disabled], .atom-block textarea[disabled]{
-  color: #ccc;
-}
-
-
-.atom-block label.alignleft{
-  margin-right: 30px;
-}
-
-.atom-block .entry .desc{
-  display: block;
-  font-weight: normal;
-  font-size: 12px;
-  color: #aaaaaa;
-  line-height: 150%;
-  max-width: 780px;
-}
-
-
-.atom-block label small code{
-  font-style: normal;
-  color: #666;
-}
-
-.atom-block label abbr{
-  border-bottom: 1px dotted #ccc;
-  color: #333
-}
 
 
 
@@ -1075,8 +1108,6 @@ span.CodeMirror-selected {
 
 
 
-/* clearfix */
-.clear-block:after{content:".";display:block;clear:both;visibility:hidden;line-height:0;height:0;}
 
 
 
@@ -1144,16 +1175,6 @@ a.feature.loading{background-image: url(../images/loaders/lc16w.gif);}
 
 
 
-
-div.grippie {
-  background:#eee url(../images/admin/grippie.png) no-repeat scroll center 2px;
-  border-color:#ddd;
-  border-style:solid;
-  border-width:0pt 1px 1px;
-  cursor:s-resize;
-  height:9px;
-  overflow:hidden;
-}
 
 
 

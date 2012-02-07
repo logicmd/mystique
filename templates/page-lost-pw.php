@@ -18,6 +18,10 @@
 
 <?php
 
+  // force gettext parsers to include this string
+  if(true === false)
+    atom()->t('Password recovery');
+
   global $wpdb, $current_site;
 
   // store error messages here

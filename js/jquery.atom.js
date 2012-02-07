@@ -318,7 +318,7 @@ b*(7.5625*(a-=2.25/2.75)*a+0.9375)+c:b*(7.5625*(a-=2.625/2.75)*a+0.984375)+c},ea
       // show/hide a element
       // the link's rel attribute should contain the target element ID to toggle
       toggleVisibility: function(){
-        return this.live('click', function(){
+        return this.live('click', function(event){
           event.preventDefault();
           var target = $('#' + $(this).data('target'));
 
@@ -369,13 +369,17 @@ b*(7.5625*(a-=2.25/2.75)*a+0.9375)+c:b*(7.5625*(a-=2.625/2.75)*a+0.984375)+c},ea
 
           $(window).scroll(function(){ // on window scroll
             // stupid IE hack
-            if(!$.support.hrefNormalized) link.css({'position': 'absolute', 'top': $(window).scrollTop() + $(window).height() - 50});
+            if(!$.support.hrefNormalized)
+              link.css({'position': 'absolute', 'top': $(window).scrollTop() + $(window).height() - 50});
 
             if($(window).scrollTop() >= 500) link.fadeIn(200); else link.fadeOut(200);
           });
 
-          link.click(function(){ // on go-to-top click
-            $('html, body.browser-chrome').animate({ scrollTop: 0 }, 'slow');
+          // on go-to-top click
+          link.click(function(){
+            var selector = ($.browser.safari || $.browser.chrome) ? 'body' : 'html,body';
+
+            $(selector).animate({ scrollTop: 0 }, 'slow');
             return false;
           });
 
@@ -1069,8 +1073,7 @@ b*(7.5625*(a-=2.25/2.75)*a+0.9375)+c:b*(7.5625*(a-=2.625/2.75)*a+0.984375)+c},ea
             data: {
               instance: $(this).data('instance'),
               atom: $(this).data('cmd'),
-              offset: parseInt($(this).data('offset')),
-              _ajax_nonce: $(this).data('nonce')
+              offset: parseInt($(this).data('offset'))
             },
             dataType: 'json',
             context: this,
@@ -2241,8 +2244,10 @@ b*(7.5625*(a-=2.25/2.75)*a+0.9375)+c:b*(7.5625*(a-=2.625/2.75)*a+0.984375)+c},ea
 
     };
 
-    if(methods[method])
+    if(methods[method]){
+      //cfg = $.extend(this.data(), cfg);
       return methods[method].apply(this, Array.prototype.slice.call(arguments, 1));
+    }
 
   }
 })(jQuery);
@@ -2325,9 +2330,8 @@ jQuery(document).ready(function($){
         if($.inArray('generate_thumbs', options) !== -1){
           $(document).bind('ajaxComplete doThisNow', function(){
             $('span.no-img.regen').each(function(){
-              var id = $(this).attr('id').split(/-/g).slice(1);
 
-              // because we don't want infinite loops
+              // we don't want infinite loops
               $(this).removeClass('regen');
 
               $.ajax({
@@ -2337,8 +2341,8 @@ jQuery(document).ready(function($){
                 data: ({
                   atom: 'update_thumb',
                   attachment_size: $(this).data('size'),
-                  post_id: id[0],
-                  thumb_id: id[1]
+                  post_id: $(this).data('post'),
+                  thumb_id: $(this).data('thumb')
                 }),
                 beforeSend: function(){
                    $(this).addClass('loading');

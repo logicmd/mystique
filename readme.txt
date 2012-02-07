@@ -33,19 +33,27 @@ REQUIREMENTS:
 
 CHANGE LOG:
 
- 24,1,2011,  3.2.8     - removed all negative text-indent properties
+  4,2,2012,  3.2.9.1   - widget / terms: fixed a code typo from 3.2.9
+
+  4,2,2012,  3.2.9     - mod / ad blocks: fixed shortcode not working
+                       - fixed a js error in toggleVisibility()
+                       - added translations for page templates
+                       - widget / posts: added y-thumbnail size option
+                       - the_content is now only called once to prevent compatibility issues with bad plugins
+
+ 24,1,2012,  3.2.8     - removed all negative text-indent properties
                        - fixed a problem with the single pagination
                        - widget / login: fixed login issues with password that contain quotes
                        - fixed problem with some youtube movies not showing up (from 3.2.7)
 
- 23,1,2011,  3.2.7     - removed old Chrome text-shadow/AA css fixes
+ 23,1,2012,  3.2.7     - removed old Chrome text-shadow/AA css fixes
                        - widget / posts: fixed wrong alpha order
                        - z-index fix for youtube iframe/movies
                        - added mousewheel support for the lightbox
                        - removed livequery from the front-end (replaced by the ajaxComplete event hook)
                        - fixed a problem with comment controls, introduced in 3.2.6
 
- 11,1,2011,  3.2.6     - modules can now be called trough atom()->moduleName
+ 11,1,2012,  3.2.6     - modules can now be called trough atom()->moduleName
                        - improved custom post type handling in getBreadcrumbs()
                        - added cache-flush trigger after theme options are changed
                        - mod / translate: fixed a problem with html character encoding
@@ -53,9 +61,9 @@ CHANGE LOG:
                        - fixed a bug related to featured content added in 3.2.5
                        - widget / posts: added "show all" title links for custom post types that have archive pages
 
-  2,1,2011,  3.2.5     - fixed a js bug in theme settings from 3.2.4 that affected other admin pages
+  2,1,2012,  3.2.5     - fixed a js bug in theme settings from 3.2.4 that affected other admin pages
 
-  2,1,2011,  3.2.4     - page and category fallback menus now support arrows without the need of javascript
+  2,1,2012,  3.2.4     - page and category fallback menus now support arrows without the need of javascript
                        - fixed an issue related to disqus plugin
                        - added blog archive page template
                        - added user listing page template

@@ -4,7 +4,7 @@
  *
  * Read the documentation for more info: http://digitalnature.eu/docs/
  *
- * @revised   January 2, 2012
+ * @revised   February 4, 2012
  * @author    digitalnature, http://digitalnature.eu
  * @license   GPL, http://www.opensource.org/licenses/gpl-license
  */
@@ -29,7 +29,7 @@ if(is_admin())
 require TEMPLATEPATH.'/atom-widgets.php';
 
 // deprecated stuff, it's here for compatibility with older versions
-if(defined('ATOM_COMPAT_MODE'))
+if(defined('ATOM_COMPAT_MODE') && ATOM_COMPAT_MODE)
   require TEMPLATEPATH.'/atom-deprecated.php';
 
 //if(ATOM_DEV_MODE)
@@ -54,12 +54,12 @@ class Atom{
   const
 
     // framework version
-    VERSION             = '2.0 r9',
+    VERSION             = '2.0 r14',
 
     // required WordPress version to run this theme (3.1 is the minimum for Atom-based themes)
     // the check is made during the 'after_setup_theme' hook, so everything executed before this action
     // should be backwards compatible as much as possible with older version to avoid breaking the website
-    REQ_WP_VERSION      = '3.1',
+    REQ_WP_VERSION      = '3.2',
 
     // theme documentation URI
     THEME_DOC_URI       = 'http://digitalnature.eu/docs/',
@@ -399,7 +399,7 @@ class Atom{
         // method doesn't exist, check if it has been deprecated
         $deprecated_name = '__'.__CLASS__.$name;
         if(function_exists($deprecated_name))
-          return call_user_func($deprecated_name); // call the compat function
+          return $deprecated_name(); // call the compat function
       }
 
       throw new Exception("Method {$getter} is not defined.");
@@ -426,7 +426,7 @@ class Atom{
         // method doesn't exist, check if it has been deprecated
         $deprecated_name = '__'.__CLASS__.$name;
         if(function_exists($deprecated_name))
-          return call_user_func($deprecated_name, $value); // call the compat function
+          return $deprecated_name($value); // call the compat function
       }
 
       throw new Exception("Method {$setter} is not defined.");
@@ -762,7 +762,7 @@ class Atom{
       if(isset($this->current_theme_options[$option]))
         $results[$option] = (bool)$this->current_theme_options[$option];
 
-    // are all true, or all are false
+    // all are true, or all are false
     if(count(array_unique($results)) === 1)
       return array_shift($results);
 
@@ -871,18 +871,6 @@ class Atom{
 
 
  /*
-  * Get layout types
-  *
-  * @since   1.0
-  * @return  array   Layout types
-  */
-  public function layoutTypes(){
-    return $this->layout_types;
-  }
-
-
-
- /*
   * Registers up layout types (eg. col-1, col-2-left etc)
   *
   * @since   1.0
@@ -897,9 +885,6 @@ class Atom{
 
     return $this->layout_types;
   }
-
-
-
 
 
 
@@ -926,7 +911,6 @@ class Atom{
         $this->log('Failed to initialize WPFS...', 1); // do not return, we still need to set up the settings
 
       }else{
-
         $parent = get_theme_data(TEMPLATEPATH.'/style.css');
         $name = ATOM.'-extend';
         $destination = trailingslashit($wp_filesystem->wp_themes_dir()).$name;
@@ -942,7 +926,13 @@ class Atom{
                 ."*/\n\n"
                 ."/* You can safely edit this file, but keep the Template tag above unchanged! */\n";
 
-        if(!$wp_filesystem->is_dir($destination))
+
+        // test wpfs, we need direct access
+        $temp_file = wp_tempnam();
+        $fs_transport_status = (getmyuid() === fileowner($temp_file));
+        @unlink($temp_file);
+
+        if($fs_transport_status && !$wp_filesystem->is_dir($destination)){
           if($wp_filesystem->mkdir($destination, FS_CHMOD_DIR) && $wp_filesystem->put_contents($destination.'/style.css', $style, FS_CHMOD_FILE)){
 
             // copy screenshot and license.txt
@@ -970,6 +960,7 @@ class Atom{
             $this->log('Failed to create child theme.', 1);
 
           }
+        }
       }
     }
 
@@ -981,27 +972,12 @@ class Atom{
     // update permalink structure later, after posts are loaded (some modules might change the permalink structure ;)
     add_action('wp', 'flush_rewrite_rules');
 
-    add_action('admin_notices', array(&$this, 'themeInstallNotification'));
+    add_action('admin_notices', 'atom_theme_install_notification');
 
     // action hook, probably useless
     $this->action('setup_options');
 
     $this->log('New theme install. Default settings were installed');
-  }
-
-
-
-
-  /**
-   * First theme install notification message
-   *
-   * @since 1.0
-   */
-  public function themeInstallNotification(){ ?>
-    <div class="updated fade">
-      <p><?php atom()->te('You can customize your %1$s theme from the <%2$s>theme settings</a> page.', $this->theme_name, 'a href="'.admin_url('admin.php?page='.ATOM).'"'); ?></p>
-    </div>
-    <?php
   }
 
 
@@ -1376,7 +1352,7 @@ class Atom{
    * Force a custom title for the current page. "Paged" parts are detected automatically.
    * Obviously must be called before getDocumentTitle() below...
    *
-   * @param string $title Title to set. If multiple arguments are given, they are combined as "parts" into a array
+   * @param string $title Title to set. If multiple arguments are given, they are combined as "parts" into an array
    * @since 1.7
    */
   public function setDocumentTitle($title){
@@ -1535,13 +1511,19 @@ class Atom{
         $description = get_bloginfo('description');
 
       // otherwise use the post excerpt
-      if(empty($description))
-        $description = atom()->post->getContent(300, array(
+      if(empty($description)){
+        global $post;
+
+        // some stupid WP plugins force us to call get_the_content only once (inside the loop)
+        $description = atom()->generateExcerpt(trim($post->post_content), array(
+          'limit'                    => 300,
           'cutoff'                   => 'sentence',
+          'shortcodes'               => false,
           'more'                     => '',
           'disallowed_tags_content'  => false,
-          'allowed_tags'             => array(),
+          'allowed_tags'             => array(), // no html!
         ));
+      }
 
 
     // archive pages?
@@ -2074,7 +2056,7 @@ class Atom{
       if(($current_page + 1) > $total_pages)
         return '';
 
-      $out[] = '<a class="next" href="'.esc_url(call_user_func($getPageLink, $current_page + 1)).'" title="'.atom()->t('Show More').'">'.atom()->t('Show More').'</a>';
+      $out[] = '<a class="next" href="'.esc_url($getPageLink($current_page + 1)).'" title="'.atom()->t('Show More').'">'.atom()->t('Show More').'</a>';
       $class .= "{$class} fadeThis";
 
     }else{
@@ -2083,13 +2065,13 @@ class Atom{
         $out[] = '<span class="pages">'.atom()->t('Page %1$s of %2$s', $current_page, $total_pages).'</span>';
 
       if($prev_next && ($current_page > 1))
-        $out[] = '<a class="previous" href="'.esc_url(call_user_func($getPageLink, $current_page - 1)).'">'.atom()->t('&laquo; Previous').'</a>';
+        $out[] = '<a class="previous" href="'.esc_url($getPageLink($current_page - 1)).'">'.atom()->t('&laquo; Previous').'</a>';
 
       // numbered page links
       if($type !== 'prevnext'){
 
         if(($start_page) >= 2 && ($pages_to_show < $total_pages)){
-          $out[] = '<a class="first" href="'.esc_url(call_user_func($getPageLink, 1)).'">1</a>';
+          $out[] = '<a class="first" href="'.esc_url($getPageLink(1)).'">1</a>';
           $out[] = '<span class="dots">...</span>';
         }
 
@@ -2102,33 +2084,33 @@ class Atom{
           $larger_page_start = 0;
           foreach($larger_pages_array as $larger_page)
             if(($larger_page < $start_page) && ($larger_page_start < $larger_page_to_show)){
-              $out[] = '<a class="ext page" href="'.esc_url(call_user_func($getPageLink, $larger_page)).'">'.$larger_page.'</a>';
+              $out[] = '<a class="ext page" href="'.esc_url($getPageLink($larger_page)).'">'.$larger_page.'</a>';
               $larger_page_start++;
             }
         }
 
         foreach(range($start_page, $end_page) as $i)
-          $out[] = ($i == $current_page) ? '<span class="current">'.$i.'</span>' : '<a class="page" href="'.esc_url(call_user_func($getPageLink, $i)).'">'.$i.'</a>';
+          $out[] = ($i == $current_page) ? '<span class="current">'.$i.'</span>' : '<a class="page" href="'.esc_url($getPageLink($i)).'">'.$i.'</a>';
 
 
         if($extended){
           $larger_page_end = 0;
           foreach($larger_pages_array as $larger_page)
             if(($larger_page > $end_page) && ($larger_page_end < $larger_page_to_show)){
-              $out[] = '<a class="ext page" href="'.esc_url(call_user_func($getPageLink, $larger_page)).'">'.$larger_page.'</a>';
+              $out[] = '<a class="ext page" href="'.esc_url($getPageLink($larger_page)).'">'.$larger_page.'</a>';
               $larger_page_end++;
             }
         }
 
         if($end_page < $total_pages){
           $out[] = '<span class="dots">...</span>';
-          $out[] = '<a class="last" href="'.esc_url(call_user_func($getPageLink, $total_pages)).'">'.$total_pages.'</a>';
+          $out[] = '<a class="last" href="'.esc_url($getPageLink($total_pages)).'">'.$total_pages.'</a>';
         }
 
       }
 
       if($prev_next && ($current_page < $total_pages))
-        $out[] = '<a class="next" href="'.esc_url(call_user_func($getPageLink, $current_page + 1)).'">'.atom()->t('Next &raquo;').'</a>';
+        $out[] = '<a class="next" href="'.esc_url($getPageLink($current_page + 1)).'">'.atom()->t('Next &raquo;').'</a>';
 
     }
 
@@ -2378,15 +2360,17 @@ class Atom{
   *
   * Options are synced when:
   * - a new theme version is installed
-  * - a module that changes options is de/activated
+  * - a module is de/activated (if the module has option fields)
   * - theme options from the db are invalid
   *
   * @since 1.0
   */
   protected function syncOptions(){
 
+    if(defined('DOING_AJAX') && DOING_AJAX) return;
+
     // sets up the "current_theme_options" property
-    // only needed for the front-end, because within the admin area AtomConfig will call this function sooner
+    // only needed for the front-end, because within the admin area options() will be called sooner
     $this->options();
 
     // only go further if the theme version from the database differs from the one in style.css;
@@ -2395,9 +2379,9 @@ class Atom{
     $new_version = version_compare($this->current_theme_options['theme_version'], $this->theme_version, '!=');
 
     // ...or if option names present in the database are different than the default option names
-    $options_desynced = array_diff_key($this->default_theme_options, $this->current_theme_options) !== array_diff_key($this->current_theme_options, $this->default_theme_options);
+    $desynced = array_diff_key($this->default_theme_options, $this->current_theme_options) !== array_diff_key($this->current_theme_options, $this->default_theme_options);
 
-    if($new_version || $options_desynced){
+    if($new_version || $desynced){
 
       // save old version info
       $old_version = $this->current_theme_options['theme_version'];
@@ -2411,9 +2395,8 @@ class Atom{
           $this->current_theme_options[$option] = $value;
 
       // remove deprecated options -- maybe we should do this only on version change?
-      //foreach($this->current_theme_options as $option => $value)
-      //  if(!array_key_exists($option, $this->default_theme_options)) unset($this->current_theme_options[$option]);
-      // @todo: fix this!!
+      foreach($this->current_theme_options as $option => $value)
+        if(!array_key_exists($option, $this->default_theme_options)) unset($this->current_theme_options[$option]);
 
       // update theme version info
       $this->current_theme_options['theme_version'] = $this->theme_version;
@@ -2421,10 +2404,11 @@ class Atom{
       // update db
       $this->setOptions($this->current_theme_options);
 
-      wp_cache_flush();      
+      wp_cache_flush();
 
       // update permalink structure a little later
-      add_action('wp', 'flush_rewrite_rules');
+      if(!defined('INSTALLING_ATOM'))
+        add_action('wp', 'flush_rewrite_rules');
 
       // full theme update
       if($new_version)
@@ -2502,7 +2486,6 @@ class Atom{
       foreach($sidebars_widgets[$index] as $widget_id)
         if(isset($wp_registered_widgets[$widget_id])){
           $number = $wp_registered_widgets[$widget_id]['params'][0]['number'];
-
 
           $callback = AtomWidget::getObject($widget_id);
           if(!$callback) continue;
@@ -2662,7 +2645,7 @@ class Atom{
 
 
 
-  /**
+ /*
   * Create pagination links for the comments on the current post.
   *
   * @see paginate_links()
@@ -2692,7 +2675,7 @@ class Atom{
 
 
 
-  /**
+ /*
   * Renders comment form input fields (excluding the textarea)
   *
   * @since 2.0
@@ -2921,7 +2904,7 @@ class Atom{
 
  /*
   * Loads a .php file, in a variable-clear environment
-  * $app is exposed for compatibility with Atom < 2.0 (atom() should be used instead)
+  * $app is exposed for compatibility with Atom < 2.0; atom() should be used instead
   *
   * @since   2.0
   * @param   string $_file   File to include
@@ -2944,9 +2927,9 @@ class Atom{
   * Renders a simple block template (really basic templating system for widgets). Replaces {VAR} with $parameters['var'];
   * original was from: Fabien Potencier's "Design patterns revisited with PHP 5.3" (page 45), but this version is slightly faster
   *
-  * @param string $string
-  * @param array $parameters
-  * @return string
+  * @param    string $string
+  * @param    array $parameters
+  * @return   string
   */
   public static function getBlockTemplate($string, $parameters = array()){
 
@@ -2969,7 +2952,6 @@ class Atom{
    * @since 1.3
    * @param string $req
    */
-
   public function getNonce($req){
     return wp_create_nonce("atom_{$req}");
   }
@@ -3073,7 +3055,6 @@ class Atom{
 
 
 
-
  /*
   * Get the user avatar based on his email address
   *
@@ -3093,7 +3074,6 @@ class Atom{
     // if not, display the user's gravatar
     return get_avatar($email, $size, $default, $alt);
   }
-
 
 
 
@@ -3522,11 +3502,11 @@ class Atom{
 
 
 
-  /**
-   * Closes the HTML document
-   *
-   * @since 1.3
-   */
+ /*
+  * Closes the HTML document
+  *
+  * @since 1.3
+  */
   public function end(){
 
     // debug info?
@@ -3704,7 +3684,7 @@ abstract class AtomObject{
 
 
 /*
- * Term object (like category or tags)
+ * Term object (like category or tag)
  *
  * @since 2.0
  */
@@ -4083,14 +4063,16 @@ class AtomObjectPost extends AtomObject{
       if(empty($numpages))
         $nummpages = substr_count('<!--nextpage-->', $this->data->post_content);
 
-      return atom()->getPagination(wp_parse_args($args, array(
+      $args = wp_parse_args($args, array(
         'type'          => 'numbers',
         'status'        => true,
         'prev_next'     => false,
         'object'        => $this,
         'current_page'  => max(1, absint(get_query_var('page'))),
         'total_pages'   => max(1, $numpages),
-      )));
+      ));
+
+      return atom()->getPagination($args);
     }
 
     return '';
@@ -4287,7 +4269,7 @@ class AtomObjectPost extends AtomObject{
 
 
 
-  /**
+ /**
   * List comments
   *
   * @param $type type
@@ -4434,7 +4416,7 @@ class AtomObjectPost extends AtomObject{
 
 
 
-  /**
+ /*
   * Get post view count
   *
   * @since 1.4
@@ -4449,9 +4431,9 @@ class AtomObjectPost extends AtomObject{
 
 
 
-  /**
+ /*
   * Get the blog ID of the current post.
-  * Only relevant within a "Atom Site-Wide Content" query
+  * Only relevant within an "Atom Site-Wide Content" query
   *
   * @since 1.4
   */
@@ -4464,11 +4446,11 @@ class AtomObjectPost extends AtomObject{
 
 
 
-  /**
-   * Update post view count
-   *
-   * @since 1.4
-   */
+ /*
+  * Update post view count
+  *
+  * @since 1.4
+  */
   public static function incrementViews(){
 
     // wp-postviews installed? don't do anything then...
@@ -4510,19 +4492,19 @@ class AtomObjectPost extends AtomObject{
         setcookie('posts-seen', '', time() - 3600, '/');
 
     }else{
-      setcookie('posts-seen', implode('-', $new_records), time() + 60*60*24*90, '/'); // 3 months (should get renewed every time the user reads a new   post)
+      setcookie('posts-seen', implode('-', $new_records), time() + 60*60*24*90, '/'); // 3 months (should get renewed every time the user reads a new post)
     }
   }
 
 
 
-  /**
-   * Retrieve the post title URL (to be used only inside the loop)
-   * title_url custom field overrides the assigned permalink
-   *
-   * @since 1.0
-   * @return string URL
-   */
+ /*
+  * Retrieve the post title URL (to be used only inside the loop)
+  * title_url custom field overrides the assigned permalink
+  *
+  * @since    1.0
+  * @return   string
+  */
   public function getURL(){
     if($this->post_url === false){
 
@@ -4541,13 +4523,13 @@ class AtomObjectPost extends AtomObject{
 
 
 
-  /**
-   * Create a TinyURL link - see tinyurl.com
-   *
-   * @since 1.0
-   * @param string $url Website URL to convert to a TinyURL link; default is the current post permalink
-   * @return string The TinyURL link
-   */
+ /*
+  * Create a TinyURL link - see tinyurl.com
+  *
+  * @since     1.0
+  * @param     string $url    Website URL to convert to a TinyURL link; default is the current post permalink
+  * @return    string         The TinyURL link
+  */
   public function getTinyURL($url = ''){
     // only connect to tinyurl if the transient is not present in the database (to avoid slowing down page load)
     $response = false;
@@ -4564,13 +4546,13 @@ class AtomObjectPost extends AtomObject{
 
 
 
-  /**
-   * Get the post title, trim if necessary
-   *
-   * @since 1.2
-   * @param int $character_limit Limit title length
-   * @return string post title
-   */
+ /*
+  * Get the post title, trim if necessary
+  *
+  * @since     1.2
+  * @param     int $character_limit     Limit title length
+  * @return    string                   Post title
+  */
   public function getTitle($character_limit = 0){
 
     if($this->post_title === false)
@@ -4626,6 +4608,34 @@ class AtomObjectPost extends AtomObject{
 
 
  /*
+  * Wrapper for getTerms; returns tags
+  *
+  * @since    2.0
+  * @param    string $separator
+  * @param    string $template
+  * @return   array|string
+  */
+  public function getTags($separator = ' ', $template = '<a href="%url%" rel="tag" title="%title%">%name%</a>'){
+    return $this->getTerms('post_tag', $separator, $template);
+  }
+
+
+
+ /*
+  * Wrapper for getTerms; returns categories
+  *
+  * @since    2.0
+  * @param    string $separator
+  * @param    string $template
+  * @return   array|string
+  */
+  public function getCategories($separator = ' ', $template = '<a href="%url%" title="%title%">%name%</a>'){
+    return $this->getTerms('category', $separator, $template);
+  }
+
+
+
+ /*
   * Get post content.
   * uses get_the_content()
   *
@@ -4656,7 +4666,7 @@ class AtomObjectPost extends AtomObject{
 
     // "more" text, link by default
     if(!empty($defaults['more']))
-      $defaults['more'] = '<a href="'.$this->getURL().'" class="more-link" data-post="'.$this->data->ID.'">'.$defaults['more'].'</a>';
+      $defaults['more'] = '<a title="'.esc_attr($defaults['more']).'" href="'.$this->getURL().'" class="more-link" data-post="'.$this->data->ID.'">'.$defaults['more'].'</a>';
 
     // function arguments override everything
     $options = array_merge($defaults, $options);
@@ -4668,7 +4678,6 @@ class AtomObjectPost extends AtomObject{
       return $this->post_excerpt;
 
     }else{
-
       if($this->post_content === false){
         $this->post_content = apply_filters('the_content', get_the_content());
         $this->post_content = str_replace(']]>', ']]&gt;', $this->post_content);
@@ -4684,7 +4693,7 @@ class AtomObjectPost extends AtomObject{
   * Get the post thumbnail.
   * Replaces get_the_post_thumbnail() for two reasons:
   * - we get to know if a thumbnail size exists, instead of getting a browser-resized image
-  * - if we know a thumbnail size doesn't exist we can regenerate thumbnails for the attachment
+  * - if we know a thumbnail size doesn't exist we can regenerate the thumbnails for that attachment
   *
   * @since    1.0
   * @see      post-thumbnail-template.php   get_the_post_thumbnail()
@@ -4770,7 +4779,7 @@ class AtomObjectPost extends AtomObject{
 
     if(is_numeric($t) && $this->thumbnailNeedsRegeneration($t, array($width, $height))){
       if(is_string($size))
-        $html = '<span class="no-img regen" id="regen-'.$this->data->ID.'-'.$t.'" style="width:'.$width.'px;height:'.$height.'px" data-size="'.$size_id.'">&nbsp;</span>';
+        $html = '<span class="no-img regen" data-post="'.$this->data->ID.'" data-thumb="'.$t.'" data-size="'.$size_id.'" style="width:'.$width.'px;height:'.$height.'px">&nbsp;</span>';
       else
         $html = '<span class="no-img" style="width:'.$width.'px;height:'.$height.'px">&nbsp;</span>';
 
@@ -4785,7 +4794,7 @@ class AtomObjectPost extends AtomObject{
     }
 
     $html = apply_filters('post_thumbnail_html', $html, $this->data->ID, $t, $size, $attr);
-    $this->post_thumb[$size_id] = $html ? $html : "<span class=\"no-img\" style=\"width:{$width}px;height:{$height}px\"></span>";
+    $this->post_thumb[$size_id] = $html ? $html : '<span class="no-img" style="width:'.$width.'px;height:'.$height.'px"></span>';
 
     if($html)
       $this->available_thumb_sizes[] = $size_id;
@@ -4841,10 +4850,10 @@ class AtomObjectPost extends AtomObject{
   * Check if a post thumbnail needs to be updated (missing size)
   * @todo: attempt to create and generate missing array(w,h) sizes, not just IDs (need a proper security check so we can do that)
   *
-  * @since   1.3
-  * @param   int $attachment_id   Attachment ID
-  * @param   string|array $size   Thumbnail size, ID or array
-  * @return  bool                 True on success, false on failure (eg. size not registered, or attachment doesn't exist)
+  * @since     1.3
+  * @param     int $attachment_id    Attachment ID
+  * @param     string|array $size    Thumbnail size, ID or array
+  * @return    bool                  True on success, false on failure (eg. size not registered, or attachment doesn't exist)
   */
   public static function thumbnailNeedsRegeneration($attachment_id, $size = 'post-thumbnail'){
     global $_wp_additional_image_sizes;
@@ -4884,16 +4893,16 @@ class AtomObjectPost extends AtomObject{
 
 
 
-  /**
-   * Update a post thumbnail (generate new image sizes)
-   * Should be called trough ajax because needs a lot of cpu and it will slow down page loading
-   * - ideas from the 'Regenerate Thumbnails' plugin by Viper007Bond
-   *
-   * @since   1.0
-   * @param   int $t                Thumbnail (attachment) ID
-   * @param   string|array $size    Optional. Thumbnail size
-   * @return  bool                  True if new meta data was generated, false otherwise
-   */
+ /*
+  * Update a post thumbnail (generate new image sizes)
+  * Should be called trough an ajax request because it needs a lot of CPU and it will slow down page loading
+  * - ideas from the 'Regenerate Thumbnails' plugin by Viper007Bond
+  *
+  * @since     1.0
+  * @param     int $t                Thumbnail (attachment) ID
+  * @param     string|array $size    Optional. Thumbnail size
+  * @return    bool                  True if new meta data was generated, false otherwise
+  */
   public static function regenerateThumbnail($attachment_id, $size = 'post-thumbnail'){
 
     if(atom()->options('generate_thumbs') && self::thumbnailNeedsRegeneration($attachment_id, $size)){
@@ -4906,7 +4915,7 @@ class AtomObjectPost extends AtomObject{
 
       require_once(ABSPATH.'/wp-admin/includes/image.php');
 
-      @set_time_limit(300); // 5 minutes should be PLENTY
+      @set_time_limit(300); // 5 minutes
       $metadata = wp_generate_attachment_metadata($attachment_id, $original_path);
 
       if(is_wp_error($metadata))
@@ -4922,14 +4931,14 @@ class AtomObjectPost extends AtomObject{
 
 
 
-  /**
-   * Output the social media links to allow the user to share the current post
-   * to be used only inside the loop!
-   *
-   * @since 1.0
-   * @todo Re-check all website URLs + parameters
-   * @return string HTML
-   */
+ /*
+  * Output the social media links to allow the user to share the current post
+  * to be used only inside the loop!
+  * @todo -- Re-check all website URLs + parameters
+  *
+  * @since    1.0
+  * @return   string
+  */
   public function getShareLinks(){
 
     // data to expose
@@ -4958,28 +4967,30 @@ class AtomObjectPost extends AtomObject{
       //*/
     ));
 
-    $output = '';
+    $output = array();
     if(!empty($sites)){
-      $output .= '<ul class="sub-menu share-this">';
+      $output[] = '<ul class="sub-menu share-this">';
       $total = count($sites);
       foreach($sites as $name => $url){
         $url = str_replace(array_keys($fields), array_values($fields), $url);
-        $output .= '<li class="'.implode(' ', array(sanitize_html_class(strtolower($name)))).'"><a href="'.$url.'" title="'.atom()->t('Share this post on %s', $name).'"><span>'.$name.'</span></a></li>';
+        $title = esc_attr(atom()->t('Share this post on %s', $name));
+        $class = implode(' ', array(sanitize_html_class(strtolower($name))));
+        $output[] = '<li class="'.$class.'"><a href="'.$url.'" title="'.$title.'"><span>'.$name.'</span></a></li>';
       }
-      $output .= '</ul>';
+      $output[] = '</ul>';
     }
 
-    return $output;
+    return implode("\n", $output);
   }
 
 
 
-  /**
-   * Get the post author
-   *
-   * @since 1.0
-   * @return object Atom author object
-   */
+ /*
+  * Get the post author
+  *
+  * @since     1.0
+  * @return   object      Atom author object
+  */
   public function _getAuthor(){
     if(!($this->post_author instanceof AtomObjectUser) && isset($this->data->post_author))
       $this->post_author = new AtomObjectUser($this->data->post_author);
@@ -4989,12 +5000,12 @@ class AtomObjectPost extends AtomObject{
 
 
 
-  /**
-   * Output posts related to the current post, by taxonomy terms
-   *
-   * @since 1.6
-   * @return array|bool array of post objects, or false if no related posts were found
-   */
+ /*
+  * Output posts related to the current post, by taxonomy terms
+  *
+  * @since 1.6
+  * @return array|bool array of post objects, or false if no related posts were found
+  */
   public function _getRelated(){
 
     if($this->related_posts === false){
@@ -5049,7 +5060,7 @@ class AtomObjectPost extends AtomObject{
 
 
 
-/**
+/*
  * User object
  *
  * @since 1.0
@@ -5106,25 +5117,25 @@ class AtomObjectUser extends AtomObject{
 
 
 
-  /**
-   * Get the current user ID
-   *
-   * @since 1.7
-   * @return int ID
-   */
+ /*
+  * Get the current user ID
+  *
+  * @since    1.7
+  * @return   int
+  */
   public function getID(){
     return (int)$this->data->ID;
   }
 
 
 
-  /**
-   * Get a user meta field
-   *
-   * @since 1.7
-   * @param string $field Field
-   * @return string User display name
-   */
+ /*
+  * Get a user meta field
+  *
+  * @since    1.7
+  * @param    string $field    Field
+  * @return   string           User display name
+  */
   public function getMeta($field){
 
     if(!isset($this->meta[$field]))
@@ -5135,12 +5146,12 @@ class AtomObjectUser extends AtomObject{
 
 
 
-  /**
-   * Get the current user nice name
-   *
-   * @since 2.0
-   * @return string User display name
-   */
+ /*
+  * Get the current user nice name
+  *
+  * @since 2.0
+  * @return string User display name
+  */
   public function getSlug(){
     return $this->data->user_nicename;
   }
@@ -5209,7 +5220,7 @@ class AtomObjectUser extends AtomObject{
 
 
   /**
-   * Get the "karm" meta field of the current user
+   * Get the "karma" meta field of the current user
    *
    * @since 1.7
    * @return int karma value (At least 0)
@@ -5294,16 +5305,16 @@ class AtomObjectUser extends AtomObject{
 
 
 
-  /**
-   * Get the account role of the author of the current post in the Loop.
-   * from - http://core.trac.wordpress.org/attachment/ticket/5290/author-template-the_author_role.diff
-   *
-   * @since 1.3
-   * @global object $wpdb WordPress database layer.
-   * @global object $wp_roles avaliable account roles and capabilities.
-   * @param string $display Return type, "label or "slug"
-   * @return string The author's account role, eg. "Administrator"
-   */
+ /*
+  * Get the account role of the author of the current post in the Loop.
+  * from - http://core.trac.wordpress.org/attachment/ticket/5290/author-template-the_author_role.diff
+  *
+  * @since     1.3
+  * @global    object $wpdb        WordPress database layer.
+  * @global    object $wp_roles    Avaliable account roles and capabilities.
+  * @param     string $display     Return type, "label or "slug"
+  * @return    string              The author's account role, eg. "Administrator"
+  */
   public function getRole($display = 'label') {
     global $wpdb, $wp_roles;
 
@@ -5324,16 +5335,15 @@ class AtomObjectUser extends AtomObject{
 
 
 
-  /**
-   * Number of posts/comments user has written.
-   * Can count custom post types
-   *
-   * @since 1.3
-   * @uses $wpdb WordPress database object for queries.
-   * @param int $what_to_count Post types or comments, Default is "post"
-   *
-   * @return int count
-   */
+ /*
+  * Number of posts/comments the user has written.
+  * Can count custom post types
+  *
+  * @since    1.3
+  * @uses     $wpdb                 WordPress database object for queries.
+  * @param    int $what_to_count    Post types or comments, Default is "post"
+  * @return   int                   Count
+  */
   public function getCount($what_to_count = 'post') {
     global $wpdb;
 
@@ -5364,14 +5374,14 @@ class AtomObjectUser extends AtomObject{
 
 
 
-  /**
-   * Get the online status of the user
-   * The ATOM_TRACK_USERS constant must be set to "true" for this work
-   *
-   * @since 2.0
-   * @param int $time_limit Under this limit, the user is assumed "offline"
-   * @return bool Online status
-   */
+ /*
+  * Get the online status of the user
+  * The ATOM_TRACK_USERS constant must be set to "true" for this work
+  *
+  * @since    2.0
+  * @param    int $time_limit    Under this limit, the user is assumed "offline"
+  * @return   bool               Online status
+  */
   public function isOnline($time_limit = 15) {
 
     // get the online users list
@@ -5821,7 +5831,7 @@ class AtomMod{
 
 
 
-/**
+/*
  * Term Walker -- temporary
  * Replaces WP's default category walker (which doesn't allow much control over the output and the css classes provided are useless)
  * All content inside the list item can be formatted trough the "item_display_callback" function
@@ -5871,7 +5881,7 @@ class AtomWalkerTerms extends Walker_Category{
     // @todo
     // $item_display_template = '<a href="%url%" title="%description%">%name%</a>';
 
-    if(!empty($item_display_callback))
+    if(is_callable($item_display_callback))
       $output .= call_user_func($item_display_callback, $term, $args, $depth);
 
     else $output .= '<a href="'.get_term_link($term, $term->taxonomy).'" title="'
@@ -5929,7 +5939,7 @@ class AtomWalkerComments extends Walker{
     if(-1 == $max_depth)
       $total_top = count($elements);
 
-    if($page_num < 1 || $per_page < 0 ){
+    if($page_num < 1 || $per_page < 0){
       $paging = false;
       $start = 0;
 
@@ -5940,16 +5950,16 @@ class AtomWalkerComments extends Walker{
 
     }else{
       $paging = true;
-      $start = ((int)$page_num - 1 ) * (int)$per_page;
+      $start = ((int)$page_num - 1) * (int)$per_page;
       $end  = $start + $per_page;
       if(-1 == $max_depth)
         $this->max_pages = ceil($total_top / $per_page);
     }
 
     // flat display
-    if ( -1 == $max_depth ){
+    if (-1 == $max_depth){
       if(!empty($args[0]['reverse_top_level'])){
-        $elements = array_reverse( $elements );
+        $elements = array_reverse($elements);
         $oldstart = $start;
         $start = $total_top - $end;
         $end = $total_top - $oldstart;
@@ -5958,7 +5968,7 @@ class AtomWalkerComments extends Walker{
       if($paging){
         // HK: if paging enabled and its a flat display.
         // HK: mark the current print index from page number * comments per page
-        $this->current_comment_print_index = ((int) $page_num - 1) * $per_page;
+        $this->current_comment_print_index = ((int)$page_num - 1) * $per_page;
       }
 
       $empty_array = array();
@@ -5980,61 +5990,53 @@ class AtomWalkerComments extends Walker{
     */
     $top_level_elements = array();
     $children_elements  = array();
-    foreach($elements as $e){
-      if ( 0 == $e->$parent_field )
-      $top_level_elements[] = $e;
-      else
-      $children_elements[ $e->$parent_field ][] = $e;
-    }
+    foreach($elements as $e)
+      if(0 == $e->$parent_field) $top_level_elements[] = $e; else $children_elements[$e->$parent_field][] = $e;
 
-    $total_top = count( $top_level_elements );
-    if ( $paging )
-      $this->max_pages = ceil($total_top / $per_page);
-    else
-      $end = $total_top;
+    $total_top = count($top_level_elements);
+    if($paging) $this->max_pages = ceil($total_top / $per_page); else  $end = $total_top;
 
-    if ( !empty($args[0]['reverse_top_level']) ){
-      $top_level_elements = array_reverse( $top_level_elements );
+    if(!empty($args[0]['reverse_top_level'])){
+      $top_level_elements = array_reverse($top_level_elements);
       $oldstart = $start;
       $start = $total_top - $end;
       $end = $total_top - $oldstart;
     }
-    if ( !empty($args[0]['reverse_children']) )
-      foreach ( $children_elements as $parent => $children )
-        $children_elements[$parent] = array_reverse( $children );
 
+    if(!empty($args[0]['reverse_children']))
+      foreach($children_elements as $parent => $children)
+        $children_elements[$parent] = array_reverse($children);
 
-    foreach ( $top_level_elements as $e ){
+    foreach($top_level_elements as $e){
       $count++;
 
       // HK: current iteration index, will be added to global index
       // NOTE: will only be added to global index if already printed
       $iteration_comment_print_index = 1;
-      // HK: count of current iteration children ( includes grand children too )
-      $iteration_comment_print_index += $this->count_children( $e->comment_ID, $children_elements );
+      // HK: count of current iteration children (includes grand children too)
+      $iteration_comment_print_index += $this->count_children($e->comment_ID, $children_elements);
 
-      //for the last page, need to unset earlier children in order to keep track of orphans
-      if ( $end >= $total_top && $count < $start )
-        $this->unset_children( $e, $children_elements );
+      // for the last page, need to unset earlier children in order to keep track of orphans
+      if($end >= $total_top && $count < $start)
+        $this->unset_children($e, $children_elements);
 
-      if ( $count < $start ) {
+      if($count < $start){
         // HK: if we have already printed this top level comment
         // HK: then just add the count (including children) to global index and continue
         $this->current_comment_print_index += $iteration_comment_print_index;
         continue;
       }
 
-      if ( $count >= $end )
-      break;
+      if($count >= $end) break;
 
-      $this->display_element( $e, $children_elements, $max_depth, 0, $args, $output );
+      $this->display_element($e, $children_elements, $max_depth, 0, $args, $output);
     }
 
-    if($end >= $total_top && count( $children_elements ) > 0 ){
+    if($end >= $total_top && count($children_elements) > 0){
       $empty_array = array();
-      foreach ( $children_elements as $orphans )
-      foreach( $orphans as $op )
-        $this->display_element( $op, $empty_array, 1, 0, $args, $output );
+      foreach($children_elements as $orphans)
+        foreach($orphans as $op)
+          $this->display_element($op, $empty_array, 1, 0, $args, $output);
     }
 
     return $output;
@@ -6053,10 +6055,10 @@ class AtomWalkerComments extends Walker{
 
   function count_children($comment_id, $children_elements){
     $children_count = 0;
-    if(isset( $children_elements[$comment_id])){
-      $children_count = count( $children_elements[$comment_id] );
-      foreach( $children_elements[$comment_id] as $child )
-        $children_count += $this->count_children( $child->comment_ID, $children_elements );
+    if(isset($children_elements[$comment_id])){
+      $children_count = count($children_elements[$comment_id]);
+      foreach($children_elements[$comment_id] as $child)
+        $children_count += $this->count_children($child->comment_ID, $children_elements);
 
     }
     return $children_count;
@@ -6205,7 +6207,7 @@ class AtomWalkerPages extends Walker_Page{
     $output .= $indent.'<li '.$classes.'>';
 
     if(!empty($item_display_callback))
-      $output .= call_user_func($item_display_callback, $page, $args, $depth);
+      $output .= $item_display_callback($page, $args, $depth);
 
     else
       $output .= '<a href="'.get_permalink($page->ID).'">'.$link_before.apply_filters('the_title', $page->post_title, $page->ID).$link_after.'</a>';

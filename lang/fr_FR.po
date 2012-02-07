@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Mystique 3.2.6\n"
+"Project-Id-Version: Mystique 3.2.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-01-11 01:52+0200\n"
+"POT-Creation-Date: 2012-01-27 23:47+0200\n"
 "PO-Revision-Date: \n"
 "Last-Translator: www.gregorymarcel.fr <gregorymarcel@gmail.com>\n"
 "Language-Team: Gregory Marcel <gregory.marcel@gmail.com>\n"
@@ -112,142 +112,139 @@ msgstr "Page %s"
 msgid "Comment Page %s"
 msgstr "Page de commentaire %s"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-core.php:1784
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-core.php:1879
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-core.php:1799
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-core.php:1894
 msgid "Home Page"
 msgstr "Page d'accueil"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-core.php:1784
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-core.php:1879
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-core.php:3357
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-core.php:1799
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-core.php:1894
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-core.php:3381
 msgid "Home"
 msgstr "Accueil"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-core.php:1808
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-core.php:1892
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-core.php:1823
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-core.php:1907
 msgid "Search Website"
 msgstr "Chercher sur le site"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-core.php:2063
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:908
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:994
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:1799
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:2926
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:3056
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:3244
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:3324
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:5565
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:5664
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-core.php:2082
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:202
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:1018
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:1823
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:3072
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:3338
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:5672
 msgid "Show More"
 msgstr "Voir plus"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-core.php:2069
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-core.php:2088
 #, php-format
 msgid "Page %1$s of %2$s"
 msgstr "Page %1$s sur %2$s"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-core.php:2072
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-core.php:2091
 msgid "&laquo; Previous"
 msgstr "&laquo; Précédent"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-core.php:2117
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-core.php:2136
 msgid "Next &raquo;"
 msgstr "Suivant &raquo;"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-core.php:2692
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:1569
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:4535
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:5633
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-core.php:2716
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:1593
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:4549
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:5641
 msgid "Name"
 msgstr "Nom"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-core.php:2692
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-core.php:2716
 msgid "(required)"
 msgstr "(obligatoire)"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-core.php:2693
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-core.php:2717
 msgid "E-mail"
 msgstr "e-mail"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-core.php:2693
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-core.php:2717
 msgid "(required, will not be published)"
 msgstr "(obligatoire, ne sera pas publié)"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-core.php:2693
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-core.php:2717
 msgid "(will not be published)"
 msgstr "(ne sera pas publié)"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-core.php:2694
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-core.php:2718
 msgid "Website"
 msgstr "Site Internet"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-core.php:3381
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-core.php:3405
 #, php-format
 msgid "Search: %s"
 msgstr "Recherche: %s"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-core.php:3404
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-core.php:3428
 #, php-format
 msgid "Archives: %s"
 msgstr "Archives: %s"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-core.php:3972
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-core.php:5370
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-core.php:3996
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-core.php:5435
 msgid "Edit"
 msgstr "Modifier"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-core.php:4599
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-core.php:4623
 #, php-format
 msgid "%s topic"
 msgid_plural "%s topics"
 msgstr[0] "%s sujet"
 msgstr[1] "%s sujets"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-core.php:4634
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-core.php:4658
 msgid "More &gt;"
 msgstr "Plus &gt;"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-core.php:4920
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-core.php:4944
 msgid "Anonymous"
 msgstr "Anonyme"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-core.php:4949
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-core.php:4973
 #, php-format
 msgid "Share this post on %s"
 msgstr "Partager cet article sur %s"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-core.php:5273
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-core.php:5297
 #, php-format
 msgid "Posts by %1$s (%2$s)"
 msgstr "Articles par %1$s (%2$s)"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-core.php:5273
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:5495
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-core.php:5297
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:5509
 #, php-format
 msgid "Posts by %s"
 msgstr "Articles par %s"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-core.php:5377
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-core.php:5442
 msgid "Delete"
 msgstr "Supprimer"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-core.php:5383
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-core.php:5448
 msgid "Spam"
 msgstr "Spam"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-core.php:5388
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-core.php:5453
 msgid "Approve"
 msgstr "Approuver"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-core.php:5399
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-core.php:5464
 msgid "Reply"
 msgstr "Répondre"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-core.php:5404
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-core.php:5469
 msgid "Quote"
 msgstr "Citer"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-core.php:5523
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-core.php:5588
 #: c:\wamp\www\wpmu\wp-content\themes\mystique/mods/PhotoGallery/module.php:288
 msgid "Show"
 msgstr "Afficher"
@@ -258,17 +255,17 @@ msgid "Loading..."
 msgstr "Chargement..."
 
 #: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-hooks.php:844
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-hooks.php:2087
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-hooks.php:2092
 msgid "Show Page Visibility Options"
 msgstr "Afficher les options de visibilité de la page"
 
 #: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-hooks.php:845
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-hooks.php:2087
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-hooks.php:2092
 msgid "Hide Page Visibility Options"
 msgstr "Cacher les options de visibilité de la page"
 
 #: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-hooks.php:846
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:2003
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:2020
 msgid "Checking..."
 msgstr "Vérification..."
 
@@ -298,158 +295,158 @@ msgstr "Changer l'image"
 msgid "Upload Image"
 msgstr "Envoyer une image"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-hooks.php:1435
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-hooks.php:1439
 msgid "You can't vote your own comment :("
 msgstr "Vous ne pouvez pas voter sur votre propre commentaire :("
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-hooks.php:1439
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-hooks.php:1443
 msgid "You can only vote once :)"
 msgstr "Vous ne pouvez voter qu'une fois :)"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-hooks.php:1443
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-hooks.php:1447
 msgid "Invalid vote"
 msgstr "Vote invalide"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-hooks.php:1450
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-hooks.php:1454
 msgid "Failed."
 msgstr "Echoué"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-hooks.php:1493
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-hooks.php:1497
 #, php-format
 msgid "%s debug info"
 msgstr "%s informations de débogage"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-hooks.php:1554
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-hooks.php:1558
 #, php-format
 msgid "Your site is running on %1$s. %2$s requires at least %3$s. Please update your site even if you're not going to use this theme, because outdated applications expose you to security risks"
 msgstr "Votre site utilise %1$s. %2$s requiert au moins %3$s. Mettez à jour votre site même si vous n'allez pas utiliser ce thème, car les applications datées vous exposent à des failles de sécurité."
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-hooks.php:1562
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-hooks.php:1566
 #, php-format
 msgid "The site is temporarily down for maintainance. Come back in a few minutes, or login in <a%s>here</a> if you're the site admin"
 msgstr "Le site est temporairement inactif pour cause de maintenance. Revenez dans quelques minutes, ou connectez-vous <a%s>ici</a> si vous êtes l'administrateur du site."
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-hooks.php:1568
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-hooks.php:1572
 #, php-format
 msgid "Go to your %s"
 msgstr "Allez à votre %s"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-hooks.php:1568
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-hooks.php:1572
 #: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-shortcodes.php:110
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:1935
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:2128
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:1952
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:2145
 msgid "Dashboard"
 msgstr "Tableau de bord"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-hooks.php:1589
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-hooks.php:1593
 #, php-format
 msgid "To make small CSS customizations you can use the %1$s option from the theme settings. For extensive customizations activate and edit the %2$s theme if available, or create your own child theme. Read the %3$s for more information."
 msgstr "Pour de petits changements CSS, vous pouvez utiliser l'option %1$s dans les paramètres du thème. Pour des personnalisations plus complexes, activez et modifiez le thème %2$s si possible, ou créez votre propre thème enfant. Lisez le %3$s pour plus d'informations."
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-hooks.php:1590
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-hooks.php:1594
 msgid "User CSS"
 msgstr "CSS utilisateur"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-hooks.php:1592
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-hooks.php:1596
 #: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-interface.php:731
 #: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-interface.php:774
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:1001
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:3080
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:3333
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:4558
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:5070
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:5686
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:1025
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:3096
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:3347
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:4572
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:5084
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:5694
 msgid "documentation"
 msgstr "Documentation"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-hooks.php:1595
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-hooks.php:1599
 msgid "Do not edit core theme files because you will loose any changes you make here when you update!"
 msgstr "N'éditez pas les fichiers du thème car les modifications que vous faites seront perdues lors d'une mise à jour !"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-hooks.php:1657
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-hooks.php:1661
 msgid "Stop spamming dude!"
 msgstr "Arrête de spammer mec !"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-hooks.php:2124
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/mods/AdBlocks/module.php:232
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-hooks.php:2129
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/mods/AdBlocks/module.php:288
 #: c:\wamp\www\wpmu\wp-content\themes\mystique/mods/PhotoGallery/module.php:160
 msgid "Blog Homepage"
 msgstr "Page d'accueil du blog"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-hooks.php:2125
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-hooks.php:2130
 #: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-interface.php:1670
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/mods/AdBlocks/module.php:238
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/mods/AdBlocks/module.php:294
 #: c:\wamp\www\wpmu\wp-content\themes\mystique/mods/PhotoGallery/module.php:161
 msgid "Search Results"
 msgstr "Résultats de recherche"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-hooks.php:2126
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-hooks.php:2131
 #: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-interface.php:1671
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/mods/AdBlocks/module.php:236
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/mods/AdBlocks/module.php:292
 #: c:\wamp\www\wpmu\wp-content\themes\mystique/mods/PhotoGallery/module.php:162
 msgid "Author Archives"
 msgstr "Archives de l'auteur"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-hooks.php:2127
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-hooks.php:2132
 #: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-interface.php:1672
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/mods/AdBlocks/module.php:237
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/mods/AdBlocks/module.php:293
 #: c:\wamp\www\wpmu\wp-content\themes\mystique/mods/PhotoGallery/module.php:163
 msgid "Date-based Archives"
 msgstr "Archives par date"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-hooks.php:2128
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-hooks.php:2133
 #: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-interface.php:1673
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/mods/AdBlocks/module.php:235
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/mods/AdBlocks/module.php:291
 #: c:\wamp\www\wpmu\wp-content\themes\mystique/mods/PhotoGallery/module.php:164
 msgid "Tag Archives"
 msgstr "Archives par mot-clé"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-hooks.php:2129
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-hooks.php:2134
 #: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-interface.php:1674
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/mods/AdBlocks/module.php:234
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/mods/AdBlocks/module.php:290
 #: c:\wamp\www\wpmu\wp-content\themes\mystique/mods/PhotoGallery/module.php:165
 msgid "Category Archives"
 msgstr "Archives par catégorie"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-hooks.php:2171
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-hooks.php:2176
 msgid "Show this widget on:"
 msgstr "Montrer ce widget sur:"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-hooks.php:2188
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-hooks.php:2193
 #: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-interface.php:1698
 #, php-format
 msgid "Single: %s"
 msgstr "Article seul: %s"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-hooks.php:2198
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-hooks.php:2203
 #: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-interface.php:1712
 #, php-format
 msgid "Tax Archive: %s"
 msgstr "Archives de taxe: %s"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-hooks.php:2214
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-hooks.php:2219
 #: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-interface.php:1762
 #, php-format
 msgid "Page: %s"
 msgstr "Page: %s"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-hooks.php:2223
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/mods/AdBlocks/module.php:302
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-hooks.php:2228
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/mods/AdBlocks/module.php:358
 #: c:\wamp\www\wpmu\wp-content\themes\mystique/mods/PhotoGallery/module.php:332
 msgid "To:"
 msgstr "Vers:"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-hooks.php:2228
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-hooks.php:2233
 #: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-interface.php:1617
 msgid "Unregistered user (Visitor)"
 msgstr "Utilisateur non enregistré (visiteur)"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-hooks.php:2251
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-hooks.php:2256
 #, php-format
 msgid "To include this widget into your posts or pages use one of the following shortcodes: %s"
 msgstr "Pour utiliser ce wigdet dans vos articles ou pages utilisez l'un des shortcodes suivants: %s"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-hooks.php:2443
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-hooks.php:2448
 msgid "Featured"
 msgstr "Mis en avant"
 
@@ -526,12 +523,12 @@ msgid "To get the child theme URL use %s."
 msgstr "Pour trouver l'URL du thème enfant utilisez %s."
 
 #: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-interface.php:774
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:1001
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:3080
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:3333
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:4558
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:5070
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:5686
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:1025
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:3096
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:3347
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:4572
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:5084
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:5694
 #, php-format
 msgid "Read the %s to see all available keywords."
 msgstr "Lisez le %s pour voir tous les mots-clefs permis."
@@ -666,7 +663,7 @@ msgstr "Logo actuel"
 #: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-interface.php:985
 #: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-interface.php:1022
 #: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-interface.php:1063
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/mods/AdBlocks/module.php:313
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/mods/AdBlocks/module.php:369
 msgid "Remove"
 msgstr "Supprimer"
 
@@ -717,7 +714,7 @@ msgid "Modules act like plugins that can further extend %s. Keep in mind that by
 msgstr "Les modules sont comme des plugins qui peuvent ajouter des fonctionalités à %s. Gardez à l'esprit qu'en désactivant un module vous supprimez ses options également (s'il en possède)."
 
 #: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-interface.php:1103
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:192
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:197
 msgid "Title"
 msgstr "Titre"
 
@@ -726,12 +723,12 @@ msgid "Type"
 msgstr "Type"
 
 #: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-interface.php:1105
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:253
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:258
 msgid "Author"
 msgstr "Auteur"
 
 #: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-interface.php:1106
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:1575
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:1599
 msgid "Description"
 msgstr "Description"
 
@@ -807,7 +804,7 @@ msgid "RSS Feeds"
 msgstr "Flux RSS"
 
 #: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-shortcodes.php:110
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:1859
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:1883
 msgid "Log in"
 msgstr "Connexion"
 
@@ -834,1384 +831,1388 @@ msgstr "Copyright &copy;"
 msgid "%1$s queries in %2$s seconds (%3$sM)"
 msgstr "%1$s interrogations en %2$s secondes (%3$sM)"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:465
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:468
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:191
+#, php-format
+msgid "Show next %d entries"
+msgstr "Voir les prochaines %d entrées"
+
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:491
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:494
 msgid "Archives"
 msgstr "Archives"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:466
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:492
 msgid "Archives of your site's posts"
 msgstr "Archives des articles de votre site"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:561
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:587
 #, php-format
 msgid "%1$s %2$d"
 msgstr "%1$s %2$d"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:647
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:2916
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:4140
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:5554
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:673
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:2934
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:4154
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:5566
 msgid "Show All"
 msgstr "Tout afficher"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:655
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:681
 msgid "Select Day:"
 msgstr "Choisir le jour:"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:656
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:682
 msgid "Select Week:"
 msgstr "Choisir la semaine:"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:657
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:683
 msgid "Select Month:"
 msgstr "Choisir le mois:"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:658
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:684
 msgid "Select Year:"
 msgstr "Choisir l'année:"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:719
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:955
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:1550
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:1787
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:2114
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:2268
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:2423
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:2639
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:2991
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:3303
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:4195
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:4506
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:4793
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:5035
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:5345
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:5616
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:745
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:979
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:1574
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:1811
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:2131
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:2285
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:2440
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:2656
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:3007
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:3317
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:4209
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:4520
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:4807
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:5049
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:5359
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:5624
 msgid "Title:"
 msgstr "Titre:"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:724
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:750
 msgid "Type:"
 msgstr "Type:"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:726
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:752
 msgid "Yearly"
 msgstr "Annuel"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:727
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:753
 msgid "Monthly"
 msgstr "Mensuel"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:728
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:754
 msgid "Weekly"
 msgstr "Hebdomadaire"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:729
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:755
 msgid "Daily"
 msgstr "Journalier"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:734
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:1377
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:2996
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:760
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:1401
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:3012
 msgid "Post Type:"
 msgstr "Type d'article:"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:744
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:1600
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:770
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:1624
 msgid "Limit to:"
 msgstr "Limiter à:"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:745
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:771
 msgid "Entries"
 msgstr "Entrées"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:752
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:778
 msgid "Show post count"
 msgstr "Voir le nombre d'articles"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:757
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:4523
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:783
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:4537
 msgid "Show as dropdown"
 msgstr "Voir en menu déroulant"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:763
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:789
 msgid "Day archive date format:"
 msgstr "Format de la date de l'archive par jour:"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:768
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:794
 msgid "Week archive date format:"
 msgstr "Format de la date de l'archive par semaine:"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:804
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:830
 msgid "Network Blogs"
 msgstr "Blogs du réseau"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:805
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:831
 msgid "A list of site blogs"
 msgstr "Une liste de blogs"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:809
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:835
 msgid "Recently updated blogs"
 msgstr "Blogs mis-à-jour récemment"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:960
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:1567
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:3006
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:4533
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:984
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:1591
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:3022
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:4547
 msgid "Order by:"
 msgstr "Trier par:"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:962
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:986
 msgid "Last Update"
 msgstr "Dernière mise à jour"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:963
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:987
 msgid "Registered Date"
 msgstr "Date d'enregistrement"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:964
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:988
 msgid "Site ID"
 msgstr "ID du site"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:965
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:989
 msgid "Nothing, Randomize"
 msgstr "Rien, au hasard"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:970
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:1792
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:3040
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:3308
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:5040
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:5355
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:5658
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:994
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:1816
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:3056
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:3322
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:5054
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:5369
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:5666
 msgid "How many entries to display?"
 msgstr "Afficher combien d'entrées ?"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:975
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:2655
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:5050
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:5651
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:999
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:2672
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:5064
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:5659
 msgid "Exclude:"
 msgstr "Exclure:"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:977
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:1001
 msgid "Site IDs, separated by commas."
 msgstr "IDs du site, séparés par des virgules."
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:983
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:1007
 msgid "Exclude sites marked as mature"
 msgstr "Exclure les sites marqués comme mature."
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:987
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:3318
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:5045
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:5668
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:1011
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:3332
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:5059
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:5676
 msgid "Avatar Size:"
 msgstr "Taille de l'avatar:"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:988
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:3051
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:3319
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:5046
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:5669
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:1012
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:3067
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:3333
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:5060
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:5677
 #: c:\wamp\www\wpmu\wp-content\themes\mystique/mods/PhotoGallery/module.php:257
 msgid "pixels"
 msgstr "pixels"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:994
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:1799
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:3056
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:3324
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:5664
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:1018
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:1823
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:3072
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:3338
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:5672
 #, php-format
 msgid "Display %s Link"
 msgstr "Montrer le lien %s"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:1037
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:1195
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:1061
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:1219
 msgid "Calendar"
 msgstr "Calendrier"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:1038
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:1062
 msgid "A calendar of your site's posts"
 msgstr "Un calendrier des articles de votre site"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:1178
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:1187
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:1202
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:1211
 #, php-format
 msgid "View posts for %1$s %2$s"
 msgstr "Voir les articles pour %1$s %2$s"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:1390
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:1414
 msgid "Use AJAX for month navigation, when possible"
 msgstr "Utiliser AJAX pour la navigation par mois, lorsque possible"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:1395
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:1419
 msgid "One-letter day abbreviation"
 msgstr "Abréviations des jours avec une lettre"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:1433
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:1601
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:1457
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:1625
 msgid "Links"
 msgstr "Liens"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:1434
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:1458
 msgid "Your blogroll/links"
 msgstr "Votre blogroll / vos liens"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:1436
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:1460
 msgid "Blogroll"
 msgstr "Blogroll"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:1502
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:1526
 #, php-format
 msgid "%s out of 10"
 msgstr "%s sur 10"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:1555
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:1579
 msgid "Link Category:"
 msgstr "Catégorie de liens:"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:1557
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:3022
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:1581
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:3038
 msgid "-- All categories --"
 msgstr "-- Toutes les catégories --"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:1570
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:1594
 msgid "Rating"
 msgstr "Note"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:1571
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:1595
 msgid "URL"
 msgstr "URL"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:1573
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:1597
 msgid "Owner"
 msgstr "Propriétaire"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:1574
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:1598
 msgid "Notes"
 msgstr "Notes"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:1581
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:1605
 msgid "Hide Private Links"
 msgstr "Cacher les liens privés"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:1586
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:1610
 msgid "Display Link Image"
 msgstr "Afficher l'image du lien"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:1591
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:1615
 msgid "Display Link Rating"
 msgstr "Afficher la note du lien"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:1596
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:1620
 msgid "Display Link Description"
 msgstr "Afficher la description du lien"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:1630
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:1654
 msgid "Lifestream"
 msgstr "Flux de vie"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:1631
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:1655
 msgid "Your activity around social networks"
 msgstr "Votre activité autour des réseaux sociaux"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:1636
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:1660
 msgid "My Lifestream"
 msgstr "Mon flux de vie"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:1803
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:1827
 msgid "Max. records to keep in database"
 msgstr "Entrées maximum a garder dans la base de données"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:1811
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:1835
 #, php-format
 msgid "Check for new data every %s seconds (Time-out)"
 msgstr "Chercher du nouveau contenu toutes les %s secondes (Temps mort)"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:1815
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:1839
 msgid "Services:"
 msgstr "Services:"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:1855
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:1879
 msgid "Login"
 msgstr "Identifiant"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:1856
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:1880
 msgid "Login and Lost Password forms"
 msgstr "Identifiant et formulaire d'oubli du mot de passe"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:1860
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:1884
 msgid "Hello Guest. Login below if you have an account"
 msgstr "Bonjour invité. Connectez-vous ci-dessous si vous avez un compte"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:1893
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:1910
 msgid "Please enter a valid user name and password"
 msgstr "Entrez un nom d'utilisateur et un mot de passe valides s'il-vous-plait"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:1923
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:1940
 #, php-format
 msgid "Welcome %s"
 msgstr "Bievenue %s"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:1938
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:2140
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:1955
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:2157
 msgid "Write"
 msgstr "Ecrire"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:1941
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:2146
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:179
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:1958
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:2163
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:184
 msgid "Comments"
 msgstr "Commentaires"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:1944
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:2134
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:1961
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:2151
 msgid "Profile"
 msgstr "Profil"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:1946
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:1963
 msgid "Log Out"
 msgstr "Déconnexion"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:1961
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:1978
 msgid "User"
 msgstr "Utilisateur"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:1962
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:1979
 msgid "Password"
 msgstr "Mot de passe"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:1966
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:1983
 msgid "Log In"
 msgstr "Connexion"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:1974
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:1991
 msgid "Remember me"
 msgstr "Se souvenir de moi"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:2008
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:2025
 msgid "Login Successful, redirecting..."
 msgstr "Connexion réussie, redirection..."
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:2044
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:2061
 msgid "Lost your password?"
 msgstr "Mot de passe oublié ?"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:2071
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:2088
 msgid "Register"
 msgstr "Enregistrement"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:2119
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:2136
 msgid "Initial Status Text (or HTML):"
 msgstr "Texte de statut initial (ou HTML):"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:2124
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:2141
 msgid "Welcome screen links (if enough permissions):"
 msgstr "Liens de l'écran de bienvenue (si permissions suffisantes):"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:2152
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:2169
 msgid "Log out"
 msgstr "Déconnexion"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:2186
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:2203
 msgid "Menus"
 msgstr "Menus"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:2187
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:2204
 msgid "Display custom menus"
 msgstr "Afficher un menu personnalisé"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:2261
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:2278
 msgid "No menus have been created yet."
 msgstr "Aucun menu n'a encore été créé."
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:2261
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:2278
 msgid "Create some"
 msgstr "En créer"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:2272
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:2289
 msgid "Select Menu:"
 msgstr "Sélectionner menu:"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:2284
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:2301
 msgid "Behaviour:"
 msgstr "Comportement:"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:2286
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:2303
 msgid "Expanded"
 msgstr "Développé"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:2287
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:2304
 msgid "Collapsible, Standard"
 msgstr "Pliant, standard"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:2288
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:2305
 msgid "Collapsible, Accordion style"
 msgstr "Pliant, style accordéon"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:2293
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:2310
 msgid "Expand/Collapse Fire Event:"
 msgstr "Evènement lors du pliage / dépliage:"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:2295
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:3925
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:2312
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:3939
 msgid "Click"
 msgstr "Clic"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:2296
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:3926
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:2313
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:3940
 msgid "Double-Click"
 msgstr "Double-clic"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:2297
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:3927
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:2314
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:3941
 msgid "Mouse Over"
 msgstr "Au passage de la souris"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:2300
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:2317
 #, php-format
 msgid "Note: Links with the %s URL will behave the same way as the arrows. You should use them on menus with children"
 msgstr "NB : les liens avec l'url %s se comporteront de la même façon que les flèches. Vous devriez les utiliser sur des menus avec des enfants."
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:2331
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:2334
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:2348
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:2351
 msgid "Meta"
 msgstr "Meta"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:2332
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:2349
 msgid "Log in/out, admin, feed and WordPress links"
 msgstr "(Dé)connexion, admin, flux, et liens WordPress"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:2367
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:2384
 msgid "Syndicate this site using RSS 2.0"
 msgstr "Syndiquer ce site avec RSS 2.0"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:2367
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:2384
 msgid "Entries <abbr title=\"Really Simple Syndication\">RSS</abbr>"
 msgstr "Entrées <abbr title=\"Really Simple Syndication\">RSS</abbr>"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:2371
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:2388
 msgid "The latest comments to all posts in RSS"
 msgstr "Les derniers commentaires sur tous les articles en RSS"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:2371
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:2388
 msgid "Comments <abbr title=\"Really Simple Syndication\">RSS</abbr>"
 msgstr "Commentaires <abbr title=\"Really Simple Syndication\">RSS</abbr>"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:2375
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:2392
 msgid "Powered by WordPress, state-of-the-art semantic personal publishing platform."
 msgstr "Propulsé par WordPress,technologie de pointe pour la publication personnelle."
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:2379
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:2396
 msgid "Theme developed by digitalnature"
 msgstr "Thème développé par digitalnature"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:2427
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:2444
 msgid "Links to display:"
 msgstr "Liens à afficher:"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:2431
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:2448
 msgid "Login / Logout / Site Admin"
 msgstr "Connexion / Déconnexion / Admin du site"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:2436
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:2453
 msgid "Post RSS"
 msgstr "RSS des articles"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:2441
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:2458
 msgid "Comment RSS"
 msgstr "RSS des commentaires"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:2446
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:2463
 msgid "External: WordPress.org"
 msgstr "Externe: WordPress.org"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:2451
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:2468
 msgid "External: digitalnature.eu"
 msgstr "Externe: digitalnature.eu"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:2495
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:2502
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:2512
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:2519
 msgid "Pages"
 msgstr "Pages"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:2496
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:2513
 msgid "Your site&#8217;s WordPress Pages"
 msgstr "Les pages WordPress de votre site"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:2604
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:4463
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:2621
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:4477
 msgid "Display:"
 msgstr "Affichage:"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:2607
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:2624
 msgid "All Pages"
 msgstr "Toutes les pages"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:2612
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:2629
 msgid "Children of the active page"
 msgstr "Enfants de la page active"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:2616
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:4475
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:2633
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:4489
 msgid "Start from root"
 msgstr "Commencer à la racine"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:2622
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:2639
 msgid "Children of:"
 msgstr "Enfants de:"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:2644
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:2661
 msgid "Sort by:"
 msgstr "Trier par:"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:2646
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:2663
 msgid "Page title"
 msgstr "Titre de la page"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:2647
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:2664
 msgid "Page order"
 msgstr "Ordre de la page"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:2648
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:2665
 msgid "Page ID"
 msgstr "ID de la page"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:2649
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:2666
 msgid "Date, created"
 msgstr "Date, créée"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:2650
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:2667
 msgid "Date, modified"
 msgstr "Date, modifiée"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:2658
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:2675
 msgid "Page IDs, separated by commas."
 msgstr "IDs des pages, séparés par des virgules."
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:2662
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:4548
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:2679
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:4562
 msgid "Depth:"
 msgstr "Profondeur:"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:2665
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:4550
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:2682
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:4564
 msgid "0 = All levels"
 msgstr "0 = Tous les niveaux"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:2705
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:2722
 msgid "Posts"
 msgstr "Articles"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:2706
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:2723
 msgid "List posts based on filters you choose"
 msgstr "Lister les articles à partir de filtres que vous choisissez"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:2711
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:2728
 msgid "Recent Posts"
 msgstr "Articles récents"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:2982
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:3295
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:2998
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:3309
 msgid "Network (site-wide) content"
 msgstr "Contenu du réseau (du site)"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:2984
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:3000
 msgid "Get posts from all network blogs"
 msgstr "Obtenir les articles de tous les blogs du réseau"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:3008
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:3024
 msgid "Date (Recent posts)"
 msgstr "Date (articles récents)"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:3009
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:3025
 msgid "Modified date (Recently modified)"
 msgstr "Date de modification (modifié récemment)"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:3010
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:3026
 msgid "Comment count"
 msgstr "Nombre de commentaires"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:3011
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:3027
 msgid "View count"
 msgstr "Nombre de lectures"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:3012
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:3028
 msgid "Title, alphabetically"
 msgstr "Titre, par ordre alphabétique"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:3013
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:3029
 msgid "Nothing, get random posts"
 msgstr "Rien, chercher des articles au hasard"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:3032
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:3048
 msgid "Show posts from:"
 msgstr "Montrer les articles de:"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:3046
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:3314
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:3062
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:3328
 #, php-format
 msgid "Content has max %s characters"
 msgstr "Le contenu a %s caractères au maximum"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:3050
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:3066
 msgid "Thumbnail Size:"
 msgstr "Taille des miniatures:"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:3061
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:3077
 msgid "Get only context-related posts"
 msgstr "Obtenir seulement les pages connexes"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:3067
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:5057
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:5673
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:3083
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:5071
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:5681
 msgid "Display mode"
 msgstr "Mode d'affichage"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:3068
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:5058
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:5674
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:3084
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:5072
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:5682
 msgid "Full"
 msgstr "Complet"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:3069
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:5059
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:5675
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:3085
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:5073
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:5683
 msgid "Details"
 msgstr "Détails"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:3070
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:5060
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:5676
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:3086
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:5074
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:5684
 msgid "Brief"
 msgstr "Bref"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:3071
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:5061
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:3087
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:5075
 msgid "Post thumbnails"
 msgstr "Miniatures des articles"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:3072
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:5062
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:5678
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:3088
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:5076
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:5686
 msgid "Custom Template"
 msgstr "Modèle personnalisé"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:3089
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:3105
 #, php-format
 msgid "<strong>Important:</strong> %1$s sized thumbnails have to be created if you just added this widget, or if you're changing the thumbnail size. Read more about thumbnail sizes %2$s"
 msgstr "<strong>Important :</strong> les miniatures de taille %1$s doivent être créées si vous venez d'ajouter ce widget, ou si vous changez la taille de la miniature. Lisez plus sur la taille des miniatures %2$s"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:3089
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:3105
 msgid "here"
 msgstr "ici"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:3126
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:3131
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:3142
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:3147
 msgid "Recent Comments"
 msgstr "Commentaires récents"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:3127
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:3143
 msgid "The most recent comments"
 msgstr "Les commentaires les plus récents"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:3142
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:3158
 #, php-format
 msgid "on %s"
 msgstr "sur %s"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:3297
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:3311
 msgid "Get comments from all network blogs"
 msgstr "Obtenir les commentaires de tout les blogs du réseau"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:3329
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:4554
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:3343
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:4568
 msgid "Template:"
 msgstr "Modèle:"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:3368
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:3382
 msgid "Search"
 msgstr "Recherche"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:3369
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:3383
 msgid "A search form for your site"
 msgstr "Un formulaire de recherche pour votre site"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:3423
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:3437
 msgid "Column Splitter"
 msgstr "Séparateur en colonnes"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:3424
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:3438
 msgid "Splits area into 2 columns"
 msgstr "Divise une zone en deux colonnes"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:3484
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:3498
 msgid "Widgets surrounded by splitters will be grouped into columns (two per row)."
 msgstr "Les widgets entourés par les répartiteurs seront groupés en colonnes (deux par ligne)."
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:3526
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:3540
 msgid "Tabbed Widgets"
 msgstr "Widgets en onglets"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:3527
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:3541
 msgid "Group arbitrary widgets into tabs"
 msgstr "Grouper les widgets en vrac en onglets"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:3783
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:3797
 msgid "To add tabs, you must have at least one active arbitrary widget. Click save to refresh..."
 msgstr "Pour ajouter des onglets, il faut avoir au moins un widget en vrac ativé. Cliquez sur sauvegarder pour actualiser..."
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:3803
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:3817
 msgid "Create Tabs for:"
 msgstr "Créer des onglets pour:"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:3914
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:3928
 msgid "Transition effect:"
 msgstr "Effet de transition:"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:3916
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:3930
 msgid "-- None --"
 msgstr "-- Aucun --"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:3917
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:3931
 #: c:\wamp\www\wpmu\wp-content\themes\mystique/mods/PhotoGallery/module.php:40
 msgid "Fade"
 msgstr "Fondu"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:3918
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:3932
 msgid "Toggle Height"
 msgstr "Basculer la taille"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:3923
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:3937
 msgid "Switch-Tab event:"
 msgstr "Evènement lors du changement d'onglet:"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:3961
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:3975
 msgid "Tag Cloud"
 msgstr "Nuage de mots-clés"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:3962
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:3976
 msgid "Your most used tags in cloud format"
 msgstr "Vos mots-clés les plus utilisés en nuage"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:3964
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:267
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:3978
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:272
 msgid "Tags"
 msgstr "Mots-clés"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:4200
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:4511
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:4214
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:4525
 msgid "Taxonomy:"
 msgstr "Taxonomie:"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:4211
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:4225
 msgid "Max. number of tags to show:"
 msgstr "Nombre maximum de mots-clés à afficher:"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:4217
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:4231
 msgid "Smallest:"
 msgstr "Plus petit:"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:4229
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:4243
 msgid "Largest:"
 msgstr "Plus grand:"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:4271
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:4285
 msgid "Terms"
 msgstr "Termes"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:4272
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:4286
 msgid "A list of taxonomy terms like categories or post tags"
 msgstr "Une liste des termes de taxonomie, comme les catégories ou les mots-clés des articles"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:4275
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:4289
 msgid "Categories"
 msgstr "Catégories"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:4293
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:4307
 #, php-format
 msgid "View all posts filed under %s"
 msgstr "Voir tous les articles classés sous %s"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:4466
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:4480
 msgid "All Terms"
 msgstr "Tous les termes"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:4471
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:4485
 msgid "Children of the active term"
 msgstr "Enfants du terme en cours"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:4526
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:4540
 msgid "Hierarchical?"
 msgstr "Hiérarchique ?"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:4529
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:4543
 msgid "Hide empty?"
 msgstr "Cacher les vides ?"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:4536
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:5634
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:4550
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:5642
 msgid "Post count, descending"
 msgstr "Nombre d'articles, descendant"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:4537
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:4551
 msgid "ID"
 msgstr "ID"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:4538
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:4552
 msgid "Slug"
 msgstr "Slug"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:4543
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:4557
 msgid "Exclude (IDs separated by comma):"
 msgstr "Exclure (IDs séparés par des virgules):"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:4592
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:4606
 msgid "Text"
 msgstr "Texte"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:4593
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:4607
 msgid "Arbitrary text, HTML/PHP or shortcodes"
 msgstr "Texte arbitraire, HTML/PHP ou shortcodes"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:4593
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:4607
 msgid "Arbitrary text, HTML or shortcodes"
 msgstr "Texte arbitraire, HTML ou shortcodes"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:4823
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:4837
 msgid "Automatically add paragraphs"
 msgstr "Ajouter des paragraphes automatiquement"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:4830
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:4844
 #, php-format
 msgid "Execute code within %s tags"
 msgstr "Executer le code entre les mots-clés %s"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:4869
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:4873
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:4883
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:4887
 msgid "Top Commenters"
 msgstr "Top des commentateurs"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:4870
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:4884
 msgid "People who frequently comment the blog"
 msgstr "Personnes qui commentent fréquemment"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:4971
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:4985
 #, php-format
 msgid "%s comment"
 msgid_plural "%s comments"
 msgstr[0] "%s commentaire"
 msgstr[1] "%s commentaires"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:5053
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:5654
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:5067
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:5662
 msgid "User IDs, separated by commas."
 msgstr "ID des utilisateurs, séparés par des virgules."
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:5053
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:5067
 msgid "Enter \"0\" to exclude all unregistered commenters."
 msgstr "Entrez \"0\" pour exclure tous les commentaires non enregistrés."
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:5111
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:5125
 msgid "Twitter"
 msgstr "Twitter"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:5112
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:5126
 msgid "Your latest Twitter updates"
 msgstr "Vos derniers tweets"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:5115
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:5129
 msgid "Tweets"
 msgstr "Tweets"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:5191
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:5205
 #, php-format
 msgid "%s followers"
 msgstr "%s suiveurs"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:5192
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:5206
 #, php-format
 msgid "%s tweets"
 msgstr "%s tweets"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:5216
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:5230
 #, php-format
 msgid "Twitter returned error: %s"
 msgstr "Twitter a retourné l'erreur: %s"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:5217
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:5231
 msgid "Could not retrieve tweets."
 msgstr "Impossible d'obtenir les tweets."
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:5221
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:5235
 msgid "Possible reasons:"
 msgstr "Raisons possibles:"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:5223
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:5237
 msgid "Your host doesn't allow outgoing connections"
 msgstr "Votre fournisseur d'accès n'autorize pas les connexions sortantes"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:5224
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:5238
 msgid "Your server has made too many requests and is being limited (try increasing the cache value)"
 msgstr "Votre serveur a fait trop de requètes et est surchargé (essayez d'augmenter le cache)"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:5225
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:5239
 msgid "The user has protected his/her tweets"
 msgstr "L'utilisateur a protégé ses tweets"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:5226
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:5240
 msgid "Twitter may be down"
 msgstr "Twitter est peut-être en panne"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:5230
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:5244
 msgid "Unavailable for the moment"
 msgstr "Indisponible pour le moment"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:5350
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:5364
 #, php-format
 msgid "%s user name:"
 msgstr "Nom d'utilisateur %s :"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:5362
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:5376
 msgid "Show profile info"
 msgstr "Voir les informations du profil"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:5369
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:5383
 #, php-format
 msgid "Keep data cached for %s minute(s)"
 msgstr "Garder les données en mémoire cache pendant %s minute(s):"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:5405
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:5419
 msgid "Users"
 msgstr "Utilisateurs"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:5406
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:5420
 msgid "A list of users/authors from your blog"
 msgstr "Une liste d'utilisateurs / d'auteurs de votre blog"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:5410
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:5424
 msgid "Authors"
 msgstr "Auteurs"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:5495
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:5509
 #, php-format
 msgid "%1$s (%2$s posts)"
 msgstr "%1$s (%2$s articles)"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:5502
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:5516
 #, php-format
 msgid "%s post"
 msgid_plural "%s posts"
 msgstr[0] "%s article"
 msgstr[1] "%s articles"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:5621
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:5629
 msgid "Role"
 msgstr "Rôle"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:5623
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:5631
 msgid "-- Any --"
 msgstr "-- N'importe lequel --"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:5631
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:5639
 msgid "Sort by"
 msgstr "Trier par"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:5635
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:5643
 msgid "Date registered, newest first"
 msgstr "Date d'enregistrement, les plus récents d'abord"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:5677
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:5685
 msgid "Avatar thumbnails"
 msgstr "Miniatures de l'avatar"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:5677
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/atom-widgets.php:5685
 msgid "Avatars thumbnails"
 msgstr "Miniatures des avatars"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:61
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:66
 msgid "Page Top"
 msgstr "Haut de page"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:62
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:67
 msgid "Below Header (Main)"
 msgstr "Sous l'en-tête (menu principal)"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:63
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:68
 msgid "Above Footer"
 msgstr "Au-dessus du pied de page"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:131
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:136
 msgid "Primary Sidebar"
 msgstr "Barre latérale principale"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:132
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:137
 msgid "This is the default sidebar, active on 2 or 3 column layouts. If no widgets are visible, the page will fall back to a single column layout."
 msgstr "Il s'agit de la barre latérale par défaut, active avec l'affichage à 2 ou 3 colonnes. Si aucun widget n'est visible, la page reviendra en affichage à une colonne."
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:141
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:146
 msgid "Secondary Sidebar"
 msgstr "Barre latérale secondaire"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:142
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:147
 msgid "This sidebar is active only on a 3 column setup, if at least one of its widgets is visible to the current user."
 msgstr "Cette barre latérale est active avec un affichage à 3 colonnes, si au moins l'un de ses widgets est visible pour l'utilisateur actuel."
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:152
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:180
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:157
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:185
 msgid "Footer"
 msgstr "Pied de page"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:153
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:158
 msgid "Active only if at least one of its widgets is visible to the current user. You can add between 1 and 6 widgets here (3 or 4 are optimal). They will adjust their size based on the widget count."
 msgstr "Active seulement si au moins l'un de ses widgets est visible pour l'utilisateur actuel. Vous pouvez ajouter de 1 à 6 widgets ici (3 ou 4 est optimal). Leur taille sera ajustée en fonction du nombre de widgets."
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:162
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:167
 msgid "Arbitrary Widgets"
 msgstr "Widgets en vrac"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:163
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:168
 #, php-format
 msgid "Widgets from this area can be grouped into tabs, or added into posts/pages using the %1$s or %2$s shortcodes."
 msgstr "Les widgets dans cet espace peuvent être groupés en onglets, ou ajoutés dans des articles / pages avec les shortcodes %1$s ou %2$s."
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:174
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:179
 msgid "Welcome"
 msgstr "Bienvenue"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:175
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:180
 msgid "Design"
 msgstr "Apparence"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:176
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:181
 msgid "Content options"
 msgstr "Options de contenu"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:177
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:182
 msgid "Post teasers"
 msgstr "Extraits des articles"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:178
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:183
 msgid "Single pages"
 msgstr "Pages seules"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:181
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:186
 msgid "CSS"
 msgstr "CSS"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:182
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:187
 msgid "Advanced"
 msgstr "Avancé"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:183
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:188
 msgid "Modules"
 msgstr "Modules"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:199
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:204
 msgid "Content"
 msgstr "Contenu"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:208
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:213
 msgid "User limit"
 msgstr "Limite de l'utilisateur"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:209
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:214
 msgid "Full post"
 msgstr "Article entier"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:210
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:215
 msgid "Full post, filtered"
 msgstr "Article entier, filtré"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:211
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:216
 msgid "Excerpt"
 msgstr "Extrait"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:220
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:225
 #, php-format
 msgid "~ %s characters"
 msgstr "~ %s caractères"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:227
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:232
 msgid "Category"
 msgstr "Catégorie"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:235
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:240
 msgid "Date / Time"
 msgstr "Date / heure"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:244
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:249
 msgid "Relative"
 msgstr "Relative"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:245
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:250
 msgid "Absolute"
 msgstr "Absolue"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:260
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:265
 msgid "Comment Count"
 msgstr "Nombre de commentaires"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:274
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:279
 msgid "Thumbnails"
 msgstr "Miniatures"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:283
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:288
 msgid "Left Aligned"
 msgstr "Aligné à gauche"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:284
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:289
 msgid "Right Aligned"
 msgstr "Aligné à droite"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:293
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:298
 msgid "Thumbnail Size"
 msgstr "Taille des miniatures"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:294
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:299
 msgid "Note that for the new sized thumbnails to take effect, all existing images must be resized. See the Advanced page."
 msgstr "Notez que pour que la nouvelle taille des miniatures prenne effet, toutes les images existantes doivent être redimensionnées. Voir la page Avancé."
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:296
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:301
 msgid "Very Small, 60 x 60"
 msgstr "Très petit, 60 x 60"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:297
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:302
 msgid "Small, 90 x 90"
 msgstr "Petit, 90 x 90"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:298
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:303
 msgid "Medium, 120 x 120"
 msgstr "Moyen, 120 x 120"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:299
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:304
 msgid "Large, 140 x 140"
 msgstr "Grand, 180 x 180"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:300
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:305
 msgid "Larger, 180 x 180"
 msgstr "Plus grand, 180 x 180"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:301
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:306
 msgid "Very large, 210 x 210"
 msgstr "Très grand, 210 x 210"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:302
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:307
 #, php-format
 msgid "Default media setting: %d x %d"
 msgstr "Paramètres par défaut des médias: %d x %d"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:310
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:315
 msgid "Use first attachment as thumbnail, if none is set"
 msgstr "Utiliser le premier média comme miniature si aucune miniature n'a été définie"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:317
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:322
 msgid "Navigation"
 msgstr "Navigation"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:319
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:324
 msgid "Single link for older posts"
 msgstr "Lien unique pour les anciens articles"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:320
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:344
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:325
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:349
 msgid "Previous / Next links"
 msgstr "Liens précédent / suivant"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:321
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:326
 msgid "Page numbers"
 msgstr "Numéros de page"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:329
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:334
 msgid "Allow Comment Ratings (Karma)"
 msgstr "Autoriser la notation des commentaires (Karma)"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:337
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:342
 #, php-format
 msgid "Hide comments with %s karma and below"
 msgstr "Cacher les commentaires avec un Karma de %s ou moins"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:351
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:356
 msgid "Share Links"
 msgstr "Liens pour le partage"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:358
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:363
 msgid "Meta Information"
 msgstr "Informations meta"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:365
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:370
 msgid "About the Author"
 msgstr "À propos de l'auteur"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:372
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:377
 msgid "Related Posts"
 msgstr "Articles connexes"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:379
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:384
 #, php-format
 msgid "Use %s for convenient adjustments"
 msgstr "Utilisez les %s pour des ajustements pratiques."
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:379
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:384
 msgid "shortcodes"
 msgstr "shortcodes"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:386
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:391
 msgid "Use jQuery"
 msgstr "Utiliser jQuery"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:387
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:392
 msgid "Only uncheck if you know what you're doing. Your site will load faster without jQuery, but features that depend on it will be disabled."
 msgstr "Décochez seulement si vous savez ce que vous faites. Votre site se chargera plus rapidement sans jQuery, mais certaines fonctionalités seront désactivées."
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:395
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:400
 msgid "Animate content"
 msgstr "Animer le contenu"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:396
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:401
 msgid "Enable jQuery effects such as fading or sliding. Effects can render the site slightly slower on less powerful PCs"
 msgstr "Activer les effets jQuery comme le fondu ou le glissement. Les effets peuvent ralentir le site sur les ordinateurs peu puissants."
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:404
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:409
 msgid "Optimize website for faster loading"
 msgstr "Optimiser le site Internet pour un chargement plus rapide."
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:405
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:410
 #, php-format
 msgid "Compresses and concatenates stylesheets and javascript files (using %s). Leave this unchecked if you're experiencing conflicts with other plugins, or if you're using a cache plugin that handles such functions"
 msgstr "Compresse et concatène les feuilles de style et les fichiers javascript (utilise %s). Laisser ceci décoché si vous avez des conflits avec d'autres plugins, ou si vous utilisez un plugin de cache qui gère de telles fonctionnalités."
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:413
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:418
 msgid "Automatically create missing thumbnail sizes"
 msgstr "Créer automatiquement les tailles de miniatures manquantes"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:414
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:419
 #, php-format
 msgid "Asynchronously update thumbnails if needed. You can also use the %s plugin to process all missing thumbnail sizes manually, in a single pass"
 msgstr "Mettre à jour les miniatures en décalé si besoin est. Vous pouvez aussi utiliser le plugin %s pour redimensionner toutes les miniatures manquantes, en une seule fois."
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:422
-#, php-format
-msgid "Use theme built-in lightbox (%s) on all image links"
-msgstr "Utiliser la lightbox intégrée au thème (%s) sur tous les liens vers des images"
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:427
+msgid "Use theme built-in lightbox on all image links"
+msgstr "Utiliser la lightbox intégrée au thème sur tous les liens vers des images"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:423
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:428
 msgid "Uncheck if you prefer a lightbox plugin"
 msgstr "Décochez si vous préférez un autre plugin de lightbox."
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:430
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:435
 msgid "Automatically generate meta descriptions"
 msgstr "Générer automatiquement les descriptions meta"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:431
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:436
 #, php-format
 msgid "Uncheck if you're using a SEO plugin, otherwise you'll get duplicate fields! Note that you don't need such plugins, %s is heavily optimized for search engines"
 msgstr "Décochez si vous utilisez un plugin de SEO pour éviter les duplicatas. Notez que les plugins de SEO sont superflus, %s est optimisé pour les moteurs de recherche."
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:438
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:443
 msgid "Display debug messages (english only)"
 msgstr "Afficher les messages de débogage (en anglais seulement)"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:439
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:444
 msgid "Status notifications about the theme setup (only visible to administrators). Only enable this when you need to, because it can significantly slow down page load for admins"
 msgstr "Notifications d'état de la configuration du thème (visible seulement pour les administrateurs). Activez les seulement quand vous en avez besoin, car cela peut ralentir considérablement le chargement de la page pour les admins"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:446
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:451
 msgid "Theme auto-uninstall"
 msgstr "Désinstallation automatique du thème"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:447
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/functions.php:452
 #, php-format
 msgid "Check to remove all %s settings from the database after you switch to a different theme (Featured post records are preserved)."
 msgstr "Cochez pour supprimer tous les paramètres %s de la base de données après un changement de thème. (Les articles mis en avant sont préservés)."
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/mods/AdBlocks/module.php:38
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/mods/AdBlocks/module.php:45
 msgid "Ads"
 msgstr "Publicités"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/mods/AdBlocks/module.php:130
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/mods/AdBlocks/module.php:179
 msgid "This section helps you create advertisment blocks in non-widgetized areas. For widgetized areas such as sidebars, simply use a text widget to display your ads."
 msgstr "Cette section vous aide à créer des blocks de publicités dans des zones non-widgetisées. Pour les zones widgetisées comme les barres latérales, utilisez simplement un widget de texte pour afficher vos publicités."
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/mods/AdBlocks/module.php:135
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/mods/AdBlocks/module.php:184
 #, php-format
 msgid "It appears that a plugin has already registered the %s shortcode."
 msgstr "Il semble qu'un plugin a déjà enregistré le shortcode %s ."
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/mods/AdBlocks/module.php:140
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/mods/AdBlocks/module.php:189
 msgid "Create New Ad"
 msgstr "Créer une nouvelle publicité"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/mods/AdBlocks/module.php:233
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/mods/AdBlocks/module.php:289
 msgid "Single Post Pages"
 msgstr "Pages d'articles seuls"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/mods/AdBlocks/module.php:243
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/mods/AdBlocks/module.php:250
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/mods/AdBlocks/module.php:299
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/mods/AdBlocks/module.php:306
 msgid "After Header"
 msgstr "Après l'en-tête"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/mods/AdBlocks/module.php:244
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/mods/AdBlocks/module.php:251
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/mods/AdBlocks/module.php:300
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/mods/AdBlocks/module.php:307
 msgid "Before Main"
 msgstr "Avant la partie principale"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/mods/AdBlocks/module.php:245
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/mods/AdBlocks/module.php:252
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/mods/AdBlocks/module.php:301
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/mods/AdBlocks/module.php:308
 msgid "After Main"
 msgstr "Après la partie principale"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/mods/AdBlocks/module.php:246
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/mods/AdBlocks/module.php:302
 msgid "Before Comment"
 msgstr "Avant les commentaires"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/mods/AdBlocks/module.php:253
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/mods/AdBlocks/module.php:309
 msgid "Before Post Teaser"
 msgstr "Avant l'extrait de l'article"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/mods/AdBlocks/module.php:254
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/mods/AdBlocks/module.php:310
 msgid "After Post Teaser"
 msgstr "Après l'extrait de l'article"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/mods/AdBlocks/module.php:266
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/mods/AdBlocks/module.php:322
 msgid "Visibility:"
 msgstr "Visibilité:"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/mods/AdBlocks/module.php:268
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/mods/AdBlocks/module.php:324
 msgid "Automatic"
 msgstr "Automatique"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/mods/AdBlocks/module.php:273
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/mods/AdBlocks/module.php:329
 msgid "Manual"
 msgstr "Manuel"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/mods/AdBlocks/module.php:274
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/mods/AdBlocks/module.php:330
 msgid "Use shortcode"
 msgstr "Utiliser shortcode"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/mods/AdBlocks/module.php:295
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/mods/AdBlocks/module.php:351
 msgid "When:"
 msgstr "Quand:"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/mods/AdBlocks/module.php:297
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/mods/AdBlocks/module.php:353
 msgid "Anytime"
 msgstr "N'importe quand"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/mods/AdBlocks/module.php:298
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/mods/AdBlocks/module.php:354
 msgid "Comments are closed"
 msgstr "Les commentaires sont fermés"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/mods/AdBlocks/module.php:299
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/mods/AdBlocks/module.php:355
 msgid "Comments are open"
 msgstr "Les commentaires sont autorisés"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/mods/AdBlocks/module.php:304
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/mods/AdBlocks/module.php:360
 msgid "Anyone"
 msgstr "N'importe qui"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/mods/AdBlocks/module.php:305
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/mods/AdBlocks/module.php:361
 msgid "Visitor only"
 msgstr "Visiteur seulement"
 
@@ -2971,7 +2972,7 @@ msgid "Update User"
 msgstr "Mettre à jour utilisateur"
 
 #: c:\wamp\www\wpmu\wp-content\themes\mystique/templates/home.php:36
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/templates/page-categories.php:88
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/templates/page-categories.php:93
 msgid "Oops, nothing here :("
 msgstr "Oops, rien ici :("
 
@@ -3032,79 +3033,127 @@ msgstr "Pings (%s)"
 msgid "Comment Feed for this Post"
 msgstr "Flux de commentaires pour cet article"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/templates/page-lost-pw.php:32
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/templates/page-archives.php:22
+msgid "Blog archives grouped by month"
+msgstr "Archives du blog groupées par mois"
+
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/templates/page-archives.php:91
+msgid "D jS"
+msgstr "D j"
+
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/templates/page-c1.php:20
+msgid "1 column page (no sidebars)"
+msgstr "1 colonne (pas de barre latérale)"
+
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/templates/page-c2left.php:20
+msgid "2 column page (left sidebar)"
+msgstr "2 colonnes (barre latérale à gauche)"
+
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/templates/page-c2right.php:20
+msgid "2 column page (right sidebar)"
+msgstr "2 colonnes (barre latérale à droite)"
+
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/templates/page-c3.php:20
+msgid "3 column page"
+msgstr "3 colonnes"
+
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/templates/page-c3left.php:20
+msgid "3 column page (sidebars on the left)"
+msgstr "3 colonnes (barres latérales à gauche)"
+
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/templates/page-c3right.php:20
+msgid "3 column page (sidebars on the right)"
+msgstr "3 colonnes (barres latérales à droite)"
+
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/templates/page-lost-pw.php:23
+msgid "Password recovery"
+msgstr "Récupération du mot de passe"
+
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/templates/page-lost-pw.php:36
 msgid "Enter a username or e-mail address."
 msgstr "Entrer un nom d'utilisateur ou une adresse e-mail."
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/templates/page-lost-pw.php:37
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/templates/page-lost-pw.php:41
 msgid "There is no user registered with that email address."
 msgstr "Il n'y a pas d'utilisateur enregistré avec cette adresse e-mail."
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/templates/page-lost-pw.php:42
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/templates/page-lost-pw.php:46
 msgid "There is no user with that name."
 msgstr "Il n'y a pas d'utilisateur avec ce nom."
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/templates/page-lost-pw.php:100
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/templates/page-lost-pw.php:104
 msgid "Failed to send confirmation e-mail. Please contact the site admin."
 msgstr "Echec lors de l'envoi de l'e-mail de confirmation. Merci de contacter l'administrateur du site."
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/templates/page-lost-pw.php:206
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/templates/page-lost-pw.php:210
 msgid "Get New Password"
 msgstr "Obtenir un nouveau mot de passe"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/templates/page-sign-up.php:79
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/templates/page-sign-up.php:150
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/templates/page-sign-up.php:175
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/templates/page-sign-up.php:21
+msgid "Sign-up"
+msgstr "Inscrivez-vous"
+
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/templates/page-sign-up.php:83
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/templates/page-sign-up.php:154
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/templates/page-sign-up.php:179
 msgid "Srsly?"
 msgstr "Sérieusement ?"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/templates/page-sign-up.php:104
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/templates/page-sign-up.php:108
 msgid "You left the user name field empty."
 msgstr "Vous avez laissé le champ nom d'utilisateur vide."
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/templates/page-sign-up.php:107
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/templates/page-sign-up.php:111
 msgid "Invalid user name, illegal characters."
 msgstr "Nom d'utilisateur invalide, caractères illégaux."
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/templates/page-sign-up.php:111
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/templates/page-sign-up.php:115
 msgid "User name already registered, choose another."
 msgstr "Nom d'utilisateur déjà utilisé, merci d'en choisir un autre."
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/templates/page-sign-up.php:116
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/templates/page-sign-up.php:120
 msgid "You left the e-mail field empty."
 msgstr "Vous avez laissé le champ e-mail vide."
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/templates/page-sign-up.php:119
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/templates/page-sign-up.php:123
 msgid "Invalid e-mail address."
 msgstr "Adresse e-mail invalide."
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/templates/page-sign-up.php:123
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/templates/page-sign-up.php:127
 msgid "This email is already registered, please choose another one."
 msgstr "Cet e-mail est déjà enregistré, merci d'en choisir un autre."
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/templates/page-sign-up.php:138
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/templates/page-sign-up.php:142
 #, php-format
 msgid "Registration failed, please contact the <a href=\"mailto:%s\">webmaster</a>"
 msgstr "Echec de l'enregistrement, veuillez contacter le <a href=\"mailto:%s\">webmaster</a>"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/templates/page-sign-up.php:184
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/templates/page-sign-up.php:188
 msgid "You must be logged in to do this"
 msgstr "Vous devez être connecté pour faire cela."
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/templates/page-sign-up.php:275
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/templates/page-sign-up.php:208
+msgid "Registration has been disabled."
+msgstr "L'enregistrement a été désactivé."
+
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/templates/page-sign-up.php:279
 #, php-format
 msgid "%s is yours."
 msgstr "%s est la vôtre."
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/templates/page-sign-up.php:392
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/templates/page-sign-up.php:396
 msgid "Next"
 msgstr "Suivant"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/templates/page-sign-up.php:392
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/templates/page-sign-up.php:396
 msgid "Create User"
 msgstr "Créer un utilisateur"
 
-#: c:\wamp\www\wpmu\wp-content\themes\mystique/templates/page-users.php:84
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/templates/page-users.php:21
+msgid "User list"
+msgstr "Liste des utilisateurs"
+
+#: c:\wamp\www\wpmu\wp-content\themes\mystique/templates/page-users.php:88
 msgid "Registered"
 msgstr "Enregistré"
 

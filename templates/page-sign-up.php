@@ -16,6 +16,10 @@
 
 <?php
 
+  // force gettext parsers to include this string
+  if(true === false)
+    atom()->t('Sign-up');
+
   // store error messages here
   $errors = new WP_Error();
 
@@ -201,7 +205,7 @@
 
     default:
       if((MU_SIGNUP && $active_signup == 'none') || (!MU_SIGNUP && !get_option('users_can_register')))
-        $errors->add('generic', __('Registration has been disabled.'));
+        $errors->add('generic', atom()->t('Registration has been disabled.'));
 
       elseif(MU_SIGNUP && $active_signup == 'blog' && !is_user_logged_in())
         $errors->add('generic', sprintf(__('You must first <a href="%s">log in</a>, and then you can create a new site.'), site_url('wp-login.php?redirect_to='.urlencode((is_ssl() ? 'https://' : 'http://').$_SERVER['HTTP_HOST'].'/wp-signup.php'))));

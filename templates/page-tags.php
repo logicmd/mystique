@@ -17,6 +17,10 @@
 
 <?php
 
+  // force gettext parsers to include this string
+  if(true === false)
+    atom()->t('Tag Cloud');
+
   atom()->template('header');
 
   // max. # of tags

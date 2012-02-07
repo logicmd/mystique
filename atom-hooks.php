@@ -4,7 +4,7 @@
  *
  * Read the documentation for more info: http://digitalnature.eu/docs/
  *
- * @revised   January 2, 2012
+ * @revised   February 4, 2012
  * @author    digitalnature, http://digitalnature.eu
  * @license   GPL, http://www.opensource.org/licenses/gpl-license
  */
@@ -1264,8 +1264,12 @@ function atom_assets(){
     $search_query = preg_match('@^http://(.*)?\.?(google|yahoo|lycos).*@i', $referer) ? esc_attr(preg_replace('/^.*(&q|query|p)=([^&]+)&?.*$/i','$2', $referer)) : get_search_query();
 
     // determine page context
-    foreach(array('404', 'page', 'single', 'search', 'archive', 'home') as $context)
-      if(call_user_func("is_{$context}")) break; // $context will hold our context
+    foreach(array('404', 'page', 'single', 'search', 'archive', 'home') as $context){
+      $is_context = "is_{$context}";
+
+      // $context will hold our context
+      if($is_context()) break;
+    }
 
     // wp_localize_script should escape any js characters
     $args = array(
@@ -1924,8 +1928,9 @@ function atom_page_attributes_meta_box($post) {
 
           $template_data = implode('', file($template));
           $name = '';
+          $prefix_tag = 'Template Name';
 
-          if(preg_match('|Template Name:(.*)$|mi', $template_data, $name))
+          if(preg_match('|'.$prefix_tag.':(.*)$|mi', $template_data, $name))
             $name = _cleanup_header_comment($name[1]);
 
           if(!empty($name))
@@ -1944,7 +1949,7 @@ function atom_page_attributes_meta_box($post) {
       <select name="atom_page_template" id="atom_page_template">
         <option value="default"><?php _e('Default Template'); ?></option>
         <?php foreach(array_keys($page_templates) as $template): ?>
-        <option value="<?php echo $page_templates[$template]; ?>" <?php selected($current_template, $page_templates[$template]); ?>> <?php echo $template; ?></option>
+        <option value="<?php echo $page_templates[$template]; ?>" <?php selected($current_template, $page_templates[$template]); ?>> <?php echo translate($template, ATOM); ?></option>
         <?php endforeach; ?>
       </select> <?php
     endif;
@@ -2503,4 +2508,18 @@ function clean_featured_post_record($post_id){
   }
 
   return $post_id;
+}
+
+
+
+/**
+ * First theme install notification message
+ *
+ * @since 2.0
+ */
+function atom_theme_install_notification(){ ?>
+  <div class="updated fade">
+    <p><?php atom()->te('You can customize your %1$s theme from the <%2$s>theme settings</a> page.', atom()->getThemeName(), 'a href="'.admin_url('admin.php?page='.ATOM).'"'); ?></p>
+  </div>
+  <?php
 }

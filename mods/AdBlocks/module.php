@@ -2,7 +2,7 @@
 /**
  * Module Name: Advertisment Blocks
  * Description: Allows you to insert context-dependent ads into your pages
- * Version: 1.3
+ * Version: 1.4
  * Author: digitalnature
  * Author URI: http://digitalnature.eu
  * Auto Enable: yes
@@ -19,15 +19,22 @@
 // class name must follow this pattern (AtomMod + directory name)
 class AtomModAdBlocks extends AtomMod{
 
-  protected
-    $queue,
-    $ads;
+  // valid ads visible on the current page / to the current user
+  protected $queue = array();
 
   // available variables from parent class:
   //
   // $this->url  - this module's url path
   // $this->dir  - this module's directory
 
+
+
+ /*
+  * Module init event.
+  * Runs during Atom initialization (within the 'after_setup_theme' action)
+  *
+  * @since      1.0
+  */
   public function onInit(){
 
      // register extra theme options
@@ -45,54 +52,91 @@ class AtomModAdBlocks extends AtomMod{
   }
 
 
-  public function shortcode($atts){
-    extract(shortcode_atts(array(
-      'id'    => false,              // only taken in consideration if the 1st argument is the "Widget Name" (not the hashed ID)
-      'align' => false,
-    ), $atts));
 
-    $id = 'a'.esc_attr(strip_tags($id));
+ /*
+  * Shortcode handler
+  *
+  * @since      1.0
+  * @params     array $atts
+  * @return     string
+  */
+  public function shortcode($atts){
 
     $ads = atom()->options('advertisments');
 
-    if(isset($ads[$id]))
-      return $ad[$id]['html'];
+    // only continue if the ad record exists
+    if(!empty($atts) && isset($ads["a{$atts[0]}"])){
+
+      extract($ads["a{$atts[0]}"]);
+
+      // check if the current user can see it
+      $current_user = wp_get_current_user();
+      $active = is_numeric($to) ? (($to && !is_user_logged_in()) || (!$to && is_user_logged_in())) : in_array($to, $current_user->roles);
+
+      if($active)
+        return $html;
+    }
   }
 
 
 
+ /*
+  * Processes the registered ads.
+  * Here are all the visibility checks for each ad block
+  *
+  * @since      1.0
+  */
   public function queueAds(){
     global $current_user, $post;
 
-    $this->ads = atom()->options('advertisments');
-    if(!is_array($this->ads) || empty($this->ads)) return; // no ads have been set up
+    $ads = atom()->options('advertisments');
+    if(!is_array($ads) || empty($ads)) return; // no ads have been set up
 
-    $this->queue = array();
-    foreach($this->ads as $ad){
+    $per_page = get_option('posts_per_page');
 
-      $active = false;
-      $ad['n'] = empty($ad['n']) ? 1 : min(max((int)$ad['n'], 1), get_option('posts_per_page'));
+    foreach($ads as $adv){
 
-      // page
-      $active = call_user_func("is_{$ad['page']}");
+      // reset
+      $when = $page = $n = '';
+
+      extract($adv);
+
+      $n = empty($n) ? 1 : min(max((int)$n, 1), $per_page);
+
+      if(empty($page)) continue;
+
+      // page check
+      $active = "is_{$page}";
+      $active = $active();
 
       // user: all/visitor
-      if(is_numeric($ad['to'])) $active = !$active || ($active && $ad['to'] && is_user_logged_in()) ? false : $active;
+      if(is_numeric($to))
+        $active = !$active || ($active && $to && is_user_logged_in()) ? false : $active;
 
       // user: role
-      else $active = $active && in_array($ad['to'], $current_user->roles);
+      else
+        $active = $active && in_array($to, $current_user->roles);
 
       // comment status, on single pages
-      if(!empty($ad['when']) && is_single()) $active = $active && ($ad['when'] == $post->comment_status);
+      if(!empty($when) && is_single())
+        $active = $active && ($when == $post->comment_status);
 
-      if($active) $this->queue[$ad['place']][] = $ad;
+      if(apply_filters('atom_ad_visibility', $active, $adv))
+        $this->queue[$place][] = $adv;
     }
 
-    foreach($this->queue as $place => $ad)
+    foreach($this->queue as $place => $adv)
       atom()->add($place, array(&$this, 'output'));
   }
 
 
+
+ /*
+  * Outputs visible ads to the screen
+  *
+  * @since      1.0
+  * @param      string $place
+  */
   public function output($place){
     global $wp_query;
 
@@ -103,23 +147,28 @@ class AtomModAdBlocks extends AtomMod{
 
     if(!isset($this->queue[$place])) return;
 
-    foreach($this->queue[$place] as $key => $ad){
+    foreach($this->queue[$place] as $key => $adv){
 
       // teaser
-      if(in_array($place, array('before_teaser', 'after_teaser')) && ($ad['n'] !== $wp_query->current_post + 1)) continue;
+      if(in_array($place, array('before_teaser', 'after_teaser')) && ($adv['n'] !== $wp_query->current_post + 1)) continue;
 
       // comments
-      if(($place === 'before_comment') && ($ad['n'] !== atom()->comment->getNumber())) continue;
+      if(($place === 'before_comment') && ($adv['n'] !== atom()->comment->getNumber())) continue;
 
       // all
-      echo $ad['html'];
+      echo $adv['html'];
       unset($this->queue[$place][$key]);
-
     }
   }
 
 
-  // tab entry in theme settings
+
+ /*
+  * Tab entry in theme settings
+  *
+  * @since      1.0
+  * @param      array $options
+  */
   public function form($options){
     $ads = is_array($options['advertisments']) ? $options['advertisments'] : array();
     ?>
@@ -130,7 +179,7 @@ class AtomModAdBlocks extends AtomMod{
         <?php atom()->te('This section helps you create advertisment blocks in non-widgetized areas. For widgetized areas such as sidebars, simply use a text widget to display your ads.'); ?>
       </div>
 
-      <?php if(atom()->ShortcodeExists('ad', array(&$this, 'shortcode'))): ?>
+      <?php if(atom()->shortcodeExists('ad', array(&$this, 'shortcode'))): ?>
       <div class="notice e">
         <?php atom()->te('It appears that a plugin has already registered the %s shortcode.', '<strong>[ad]</strong>'); ?>
       </div>
@@ -211,6 +260,13 @@ class AtomModAdBlocks extends AtomMod{
 
 
 
+ /*
+  * Single ad form entry in the theme settings
+  *
+  * @since      1.0
+  * @param      string $id
+  * @param      array $add
+  */
   private function advertismentForm($id, $ad = array()){
 
     // defaults
@@ -342,10 +398,16 @@ class AtomModAdBlocks extends AtomMod{
    <?php
   }
 
+
+ /*
+  * Ajax event for adding a new ad from the theme settings
+  *
+  * @since      1.0
+  */
   public function createAd(){
     check_ajax_referer('theme-settings-ads');
     $this->advertismentForm(strip_tags($_GET['key']));
-    die();
+    exit;
   }
 
 

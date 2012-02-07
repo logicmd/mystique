@@ -17,6 +17,10 @@
 
 <?php
 
+  // force gettext parsers to include this string
+  if(true === false)
+    atom()->t('Blog archives grouped by month');
+
   atom()->template('header');
 
   global $wp_locale, $post;
@@ -84,7 +88,7 @@
                 ?>
                 <li>
                   <p>
-                    <?php atom()->post->date('D jS'); ?>: <a href="<?php atom()->post->URL(); ?>"><?php atom()->post->Title(70); ?></a> (<?php atom()->post->CommentCount(); ?>)
+                    <?php atom()->post->date(atom()->t('D jS')); ?>: <a href="<?php atom()->post->URL(); ?>"><?php atom()->post->Title(70); ?></a> (<?php atom()->post->CommentCount(); ?>)
                   </p>
                 </li>
 

@@ -16,6 +16,11 @@
 ?>
 
 <?php
+
+  // force gettext parsers to include this string
+  if(true === false)
+    atom()->t('Categories');
+
   atom()->template('header');
 
   // if a different taxonomy is used, replace the 'category' argument below with the taxonomy slug

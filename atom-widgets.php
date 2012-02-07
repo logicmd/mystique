@@ -4,7 +4,7 @@
  *
  * Read the documentation for more info: http://digitalnature.eu/docs/
  *
- * @revised   January 2, 2012
+ * @revised   February 4, 2012
  * @author    digitalnature, http://digitalnature.eu
  * @license   GPL, http://www.opensource.org/licenses/gpl-license
  */
@@ -142,8 +142,6 @@ abstract class AtomWidget extends WP_Widget{
       @header('Content-Type: application/json; charset='.get_option('blog_charset'));
       @header('X-Content-Type-Options: nosniff');
 
-      check_ajax_referer("atom_{$this->ajax_control}", '_ajax_nonce');
-
       $options = get_option($this->option_name);
       $instance = (int)$_GET['instance'];
 
@@ -190,7 +188,6 @@ abstract class AtomWidget extends WP_Widget{
       'href'          => '#',
       'title'         => atom()->t('Show next %d entries', $offset), // offset = number on first display
       'data-instance' => $this->number,
-      'data-nonce'    => wp_create_nonce("atom_{$command}"),
       'data-cmd'      => $command,
       'data-offset'   => $offset,
     );
@@ -1105,7 +1102,7 @@ class AtomWidgetCalendar extends AtomWidget{
   public function ajaxControl(){
     if(atom()->request('get_calendar')){
 
-      atom()->ajaxHeader('get_calendar', 'application/json');
+      atom()->ajaxHeader('', 'application/json');
       $output = $this->getCalendar(array(
         'initial' => (bool)$_GET['initial'],
         'req_m'   => (int)$_GET['reqmonth'],
@@ -1346,7 +1343,6 @@ class AtomWidgetCalendar extends AtomWidget{
                     initial: <?php echo $initial; ?>,
                     reqmonth: reqdate[0],
                     reqyear: reqdate[1],
-                    _ajax_nonce: '<?php atom()->nonce('get_calendar'); ?>',
                     atom: 'get_calendar' },
             dataType: 'json',
             beforeSend: function() { $(this).addClass('loading'); },
@@ -2732,7 +2728,7 @@ class AtomWidgetPosts extends AtomWidget{
         'category'            => 0,
         'number'              => 5,
         'character_count'     => 140,
-        'thumb_size'          => 48,
+        'thumb_size'          => array(48, 48),
         'more'                => true,
         'related'             => false,
         'template'            => '',
@@ -2786,6 +2782,7 @@ class AtomWidgetPosts extends AtomWidget{
 
     // we need to process all instances because this function gets to run only once
     $widget_options = get_option($this->option_name);
+
     foreach((array)$widget_options as $instance => $options){
 
       // identify instance
@@ -2796,7 +2793,15 @@ class AtomWidgetPosts extends AtomWidget{
 
       AtomWidget::getObject($id)->parseOptions($options);
 
-      add_image_size($id, $options['thumb_size'], $options['thumb_size'], true);
+      // conditional check needed for settings saved in older versions of the "Mystique" theme, ie. 3.2.9 and below
+      if(is_array($options['thumb_size'])){
+        list($thumb_size_x, $thumb_size_y) = $options['thumb_size'];
+
+      }else{
+        $thumb_size_x = $thumb_size_y = $options['thumb_size'];
+      }
+
+      add_image_size($id, $thumb_size_x, $thumb_size_y, true);
     }
 
     return $sizes;
@@ -2972,7 +2977,7 @@ class AtomWidgetPosts extends AtomWidget{
       'order_by'        => esc_attr($order_by),
       'number'          => min(max((int)$number, 1), 50),
       'character_count' => (int)$character_count,
-      'thumb_size'      => (int)$thumb_size,
+      'thumb_size'      => array_map('intval', $thumb_size),
       'more'            => (bool)$more,
       'related'         => (bool)$related,
       'template'        => (isset($template) && current_user_can('edit_themes')) ? $template : $old_instance['template'],
@@ -2988,13 +2993,22 @@ class AtomWidgetPosts extends AtomWidget{
 
     // merge default widget options with active widget options
     $this->parseOptions($instance);
+    extract($instance);
+
+    // conditional check needed for settings saved in older versions of the "Mystique" theme, ie. 3.2.9 and below
+    if(is_array($thumb_size)){
+      list($thumb_size_x, $thumb_size_y) = $thumb_size;
+
+    }else{
+      $thumb_size_x = $thumb_size_y = $thumb_size;
+    }
 
     ?>
     <div <?php $this->formClass(); ?>>
       <?php if(atom()->get('swc')): // only on mu + atom-swc ?>
       <div class="high-priority-block">
 
-         <input type="checkbox" id="<?php echo $this->get_field_id('site_wide'); ?>" name="<?php echo $this->get_field_name('site_wide'); ?>" <?php checked($instance['site_wide']); ?> followRules />
+         <input type="checkbox" id="<?php echo $this->get_field_id('site_wide'); ?>" name="<?php echo $this->get_field_name('site_wide'); ?>" <?php checked($site_wide); ?> followRules />
          <label for="<?php echo $this->get_field_id('site_wide'); ?>"><strong><?php atom()->te('Network (site-wide) content'); ?></strong></label>
          <br />
          <em style="margin-left:15px;">(<?php atom()->te('Get posts from all network blogs'); ?>)</em>
@@ -3005,15 +3019,14 @@ class AtomWidgetPosts extends AtomWidget{
         <div class="section alignleft">
           <p>
            <label for="<?php echo $this->get_field_id('title'); ?>"><?php atom()->te('Title:'); ?></label>
-           <input class="wide" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php if (isset($instance['title'])) echo esc_attr($instance['title']); ?>" />
+           <input class="wide" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php $title; ?>" />
           </p>
 
           <p>
            <label for="<?php echo $this->get_field_id('post_type'); ?>"><?php atom()->te('Post Type:'); ?></label>
            <select id="<?php echo $this->get_field_id('post_type'); ?>" name="<?php echo $this->get_field_name('post_type'); ?>" class="wide" followRules>
-             <?php foreach(get_post_types(array('public' => true)) as $post_type): ?>
-              <?php $data = get_post_type_object($post_type); ?>
-              <option value="<?php echo esc_attr($post_type); ?>" <?php selected($instance['post_type'], $post_type); ?>><?php echo $data->label; ?></option>
+             <?php foreach(get_post_types(array('public' => true)) as $cpt): ?>
+              <option value="<?php echo esc_attr($cpt); ?>" <?php selected($post_type, $cpt); ?>><?php echo get_post_type_object($cpt)->label; ?></option>
              <?php endforeach; ?>
            </select>
           </p>
@@ -3021,12 +3034,12 @@ class AtomWidgetPosts extends AtomWidget{
           <p>
             <label for="<?php echo $this->get_field_id('order_by'); ?>"><?php atom()->te('Order by:') ?></label>
             <select class="wide" id="<?php echo $this->get_field_id('order_by'); ?>" name="<?php echo $this->get_field_name('order_by'); ?>">
-             <option value="date" <?php selected($instance['order_by'], "date"); ?>><?php atom()->te("Date (Recent posts)"); ?></option>
-             <option value="modified" <?php selected($instance['order_by'], "modified"); ?>><?php atom()->te("Modified date (Recently modified)"); ?></option>
-             <option value="comment_count" <?php selected($instance['order_by'], "comment_count"); ?>><?php atom()->te("Comment count"); ?></option>
-             <option value="views" <?php selected($instance['order_by'], "views"); ?>><?php atom()->te("View count"); ?></option>
-             <option value="title" <?php selected($instance['order_by'], "title"); ?>><?php atom()->te("Title, alphabetically"); ?></option>
-             <option value="rand" <?php selected($instance['order_by'], "rand"); ?>><?php atom()->te("Nothing, get random posts"); ?></option>
+             <option value="date" <?php selected($order_by, 'date'); ?>><?php atom()->te('Date (Recent posts)'); ?></option>
+             <option value="modified" <?php selected($order_by, 'modified'); ?>><?php atom()->te('Modified date (Recently modified)'); ?></option>
+             <option value="comment_count" <?php selected($order_by, 'comment_count'); ?>><?php atom()->te('Comment count'); ?></option>
+             <option value="views" <?php selected($order_by, 'views'); ?>><?php atom()->te('View count'); ?></option>
+             <option value="title" <?php selected($order_by, 'title'); ?>><?php atom()->te('Title, alphabetically'); ?></option>
+             <option value="rand" <?php selected($order_by, 'rand'); ?>><?php atom()->te('Nothing, get random posts'); ?></option>
             </select>
           </p>
 
@@ -3034,7 +3047,7 @@ class AtomWidgetPosts extends AtomWidget{
             $categories = atom()->getDropdown('category', array(
               'name'              => $this->get_field_name('category'),
               'id'                => $this->get_field_id('category'),
-              'selected'          => (int)$instance['category'],
+              'selected'          => (int)$category,
               'show_option_all'   => atom()->t('-- All categories --'),
               'hide_empty'        => 0,
               'orderby'           => 'name',
@@ -3054,26 +3067,28 @@ class AtomWidgetPosts extends AtomWidget{
         <div class="section alignright">
           <p>
            <label for="<?php echo $this->get_field_id('number'); ?>"><?php atom()->te('How many entries to display?'); ?></label><br />
-           <input id="<?php echo $this->get_field_id('number'); ?>" name="<?php echo $this->get_field_name('number'); ?>" type="text" value="<?php if (isset($instance['number'])) echo (int)$instance['number']; ?>" size="3" />
+           <input id="<?php echo $this->get_field_id('number'); ?>" name="<?php echo $this->get_field_name('number'); ?>" type="text" value="<?php echo (int)$number; ?>" size="3" />
           </p>
 
           <p>
-           <?php $input = '<br /><input id="'.$this->get_field_id('character_count').'" name="'.$this->get_field_name('character_count').'" type="text" value="'.(isset($instance['character_count']) ? (int)$instance['character_count'] : null).'" size="3" />'; ?>
+           <?php $input = '<br /><input id="'.$this->get_field_id('character_count').'" name="'.$this->get_field_name('character_count').'" type="text" value="'.$character_count.'" size="3" />'; ?>
            <label for="<?php echo $this->get_field_id('character_count'); ?>"><?php atom()->te('Content has max %s characters', $input); ?></label>
           </p>
 
           <p>
             <label for="<?php echo $this->get_field_id('thumb_size'); ?>"><?php atom()->te('Thumbnail Size:') ?></label><br />
-            <input type="text" size="3" id="<?php echo $this->get_field_id('thumb_size'); ?>" name="<?php echo $this->get_field_name('thumb_size'); ?>" value="<?php if (isset($instance['thumb_size'])) echo (int)$instance['thumb_size']; ?>" /> <em><?php atom()->te("pixels"); ?></em>
+            <input type="text" size="3" id="<?php echo $this->get_field_id('thumb_size'); ?>_x" name="<?php echo $this->get_field_name('thumb_size'); ?>[]" value="<?php echo (int)$thumb_size_x; ?>" />
+            &times;
+            <input type="text" size="3" id="<?php echo $this->get_field_id('thumb_size'); ?>_y" name="<?php echo $this->get_field_name('thumb_size'); ?>[]" value="<?php echo (int)$thumb_size_y; ?>" /> <em><?php atom()->te('pixels'); ?></em>
           </p>
 
           <p>
-           <input <?php if(!atom()->options('jquery')) echo "disabled=\"disabled\""; ?> type="checkbox" id="<?php echo $this->get_field_id('more'); ?>" name="<?php echo $this->get_field_name('more'); ?>"<?php checked($instance['more']); ?> />
+           <input <?php if(!atom()->options('jquery')) echo "disabled=\"disabled\""; ?> type="checkbox" id="<?php echo $this->get_field_id('more'); ?>" name="<?php echo $this->get_field_name('more'); ?>"<?php checked($more); ?> />
            <label for="<?php echo $this->get_field_id('more'); ?>" <?php if(!atom()->options('jquery')) echo "class=\"disabled\""; ?>><?php atom()->te('Display %s Link', '<code>'.atom()->t('Show More').'</code>'); ?></label>
           </p>
 
           <p>
-           <input type="checkbox" id="<?php echo $this->get_field_id('related'); ?>" name="<?php echo $this->get_field_name('related'); ?>"<?php checked($instance['related']); ?> followRules rules="DEPENDS ON <?php echo $this->get_field_name('post_type'); ?> BEING post" />
+           <input type="checkbox" id="<?php echo $this->get_field_id('related'); ?>" name="<?php echo $this->get_field_name('related'); ?>"<?php checked($related); ?> followRules rules="DEPENDS ON <?php echo $this->get_field_name('post_type'); ?> BEING post" />
            <label for="<?php echo $this->get_field_id('related'); ?>"><?php atom()->te('Get only context-related posts'); ?></label>
           </p>
         </div>
@@ -3086,12 +3101,12 @@ class AtomWidgetPosts extends AtomWidget{
         <a href="#" class="select t-brief" rel="brief" title="<?php atom()->te("Brief"); ?>"><?php atom()->te("Brief"); ?></a>
         <a href="#" class="select t-images" rel="images" title="<?php atom()->te("Post thumbnails"); ?>"><?php atom()->te("Post thumbnails"); ?></a>
         <a href="#" class="select t-custom" rel="template" title="<?php atom()->te("Custom Template"); ?>"><?php atom()->te("Custom Template"); ?></a>
-        <input class="select" type="hidden" value="<?php echo $instance['mode']; ?>" id="<?php echo $this->get_field_id('mode'); ?>" name="<?php echo $this->get_field_name('mode'); ?>" />
+        <input class="select" type="hidden" value="<?php echo $mode; ?>" id="<?php echo $this->get_field_id('mode'); ?>" name="<?php echo $this->get_field_name('mode'); ?>" />
       </div>
 
       <?php if(current_user_can('edit_themes')): ?>
-      <div class="user-template <?php if($instance['mode'] !== 'template') echo 'hidden'; ?>">
-        <textarea class="wide code editor" id="<?php echo $this->get_field_id('template'); ?>" name="<?php echo $this->get_field_name('template'); ?>" rows="8" cols="28" data-mode="atom/html"><?php echo (empty($instance['template'])) ? format_to_edit($this->getTemplate()) : format_to_edit($instance['template']); ?></textarea>
+      <div class="user-template <?php if($mode !== 'template') echo 'hidden'; ?>">
+        <textarea class="wide code editor" id="<?php echo $this->get_field_id('template'); ?>" name="<?php echo $this->get_field_name('template'); ?>" rows="8" cols="28" data-mode="atom/html"><?php echo (empty($template)) ? format_to_edit($this->getTemplate()) : format_to_edit($template); ?></textarea>
         <small>
           <?php atom()->te('Read the %s to see all available keywords.', '<a href="'.Atom::THEME_DOC_URI.'" target="_blank">'.atom()->t('documentation').'</a>'); ?>
         </small>
@@ -3102,7 +3117,7 @@ class AtomWidgetPosts extends AtomWidget{
       <p>
         <em>
           <?php
-            atom()->te('<strong>Important:</strong> %1$s sized thumbnails have to be created if you just added this widget, or if you\'re changing the thumbnail size. Read more about thumbnail sizes %2$s',  (int)$instance['thumb_size'].'x'.(int)$instance['thumb_size'], '<a href="'.admin_url('themes.php?page='.ATOM.'#advanced').'">'.atom()->t('here').'</a>'); ?>
+            atom()->te('<strong>Important:</strong> %1$s sized thumbnails have to be created if you just added this widget, or if you\'re changing the thumbnail size. Read more about thumbnail sizes %2$s',  (int)$thumb_size_x.'x'.(int)$thumb_size_y, '<a href="'.admin_url('themes.php?page='.ATOM.'#advanced').'">'.atom()->t('here').'</a>'); ?>
         </em>
       </p>
     </div>
@@ -5140,7 +5155,7 @@ class AtomWidgetTwitter extends AtomWidget{
   public function ajaxControl(){
     if(atom()->request('get_twitter_data')){
 
-      atom()->ajaxHeader('get_twitter_data');
+      atom()->ajaxHeader();
       $this->displayTweets(esc_attr(strip_tags($_GET['widget_id'])), esc_attr(strip_tags($_GET['twituser'])), (int)$_GET['twitcount'], false, (bool)$_GET['showinfo']);
       exit;
     }
@@ -5280,7 +5295,6 @@ class AtomWidgetTwitter extends AtomWidget{
                     twituser: '<?php echo $user; ?>',
                     twitcount: <?php echo $count; ?>,
                     showinfo: <?php echo (bool)$instance['info']; ?>,
-                    _ajax_nonce: '<?php echo wp_create_nonce('atom_get_twitter_data'); ?>',
                     atom: 'get_twitter_data'
                   },
             beforeSend: function() { },

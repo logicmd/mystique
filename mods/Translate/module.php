@@ -737,7 +737,7 @@ class AtomModTranslate extends AtomMod{
       'Last-Translator'       => stripslashes($_POST['translator']),
       'Language-Team'         => stripslashes($_POST['team']),
       'X-Poedit-Language'     => $this->getLanguageByCode(),
-      'X-Generator'           => 'ATOM '.ATOM_VERSION.' (Translate Module)',
+      'X-Generator'           => 'ATOM '.Atom::VERSION.' (Translate Module)',
       'X-Poedit-KeywordsList' => '_a;_ae;_an:1,2;nt:1,2;nte:1,2;t;te\n',               // Atom functions
       'X-Poedit-SearchPath-0' => str_replace(array('/', '\\'), '\\', TEMPLATEPATH),    // local paths to the theme files for PoEdit
       'X-Poedit-SearchPath-1' => '.\n"',

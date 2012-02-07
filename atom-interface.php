@@ -5,7 +5,7 @@
  *
  * Read the documentation for more info: http://digitalnature.eu/docs/
  *
- * @revised   January 2, 2012
+ * @revised   February 4, 2012
  * @author    digitalnature, http://digitalnature.eu
  * @license   GPL, http://www.opensource.org/licenses/gpl-license
  */
@@ -152,7 +152,7 @@ class AtomInterface{
     $levels = 0;
 
     if(is_callable($html))
-      $html = call_user_func($html);
+      $html = $html();
 
     while(count($keys) > 0){
       $levels++;

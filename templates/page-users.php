@@ -16,6 +16,10 @@
 
 <?php
 
+  // force gettext parsers to include this string
+  if(true === false)
+    atom()->t('User list');
+
   atom()->template('header');
 
   $total_users = count_users();
