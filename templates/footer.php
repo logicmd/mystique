@@ -38,6 +38,15 @@
 
              <div id="copyright">
                <?php echo do_shortcode(atom()->options('footer_content'));  ?>
+               <?php if (is_singular()) { ?>
+               <script type="text/javascript">
+                 (function() {
+                   var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+                   po.src = 'https://apis.google.com/js/plusone.js';
+                   var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+                 })();
+               </script>
+               <?php } ?>               
                <?php wp_footer(); ?>
                <!--[if IE 6]>
                <script type="text/javascript" src="http://letskillie6.googlecode.com/svn/trunk/letskillie6.bilingual.pack.js"></script>

@@ -38,7 +38,7 @@
           <div id="post-<?php the_ID(); ?>" <?php post_class('primary'); ?>>
 
             <?php if(!atom()->post->getMeta('hide_title')): ?>
-            <h1 class="title"><?php atom()->post->Title(); ?></h1>
+            <h1 class="title"><?php atom()->post->Title(); ?><span class="plusone" style="padding:0 10px"><g:plusone href="<?php the_permalink() ?>"></g:plusone></span></h1>
             <?php endif; ?>
 
             <div class="post-content clear-block">

@@ -103,3 +103,8 @@ ul.post-shares li.qqweibo a:hover{background-position:-96px 0px;}
 ul.post-shares span{
   display: none;
 }
+
+span.gplusone{
+	padding:0 10px;
+}
+

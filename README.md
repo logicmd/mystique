@@ -24,5 +24,7 @@ Adding the following feature
    * atom-core.php may get protected from the child theme.
    * working on single.php, worked.
    * add css sprite
-7. recaptcha
+7. google plus one   
+   `done`
+8. recaptcha
    `TODO` work-around for admin.
