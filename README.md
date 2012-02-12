@@ -3,7 +3,6 @@
 
 Branch
 ------
-
 * [master] -- mystique
 * [extend] -- mystique-extend Child theme of mystique
 
