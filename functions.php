@@ -21,7 +21,7 @@ defined('ATOM_DEV_MODE') or define('ATOM_DEV_MODE', (isset($_SERVER['SERVER_ADDR
 
 // attempt to automatically create and activate a child theme on 1st install or reset;
 // if succesfull the user-functions field is enabled in the theme settings;
-defined('ATOM_EXTEND') or define('ATOM_EXTEND', true);
+defined('ATOM_EXTEND') or define('ATOM_EXTEND', false);
 
 // log post views (just like wp-post-views) ?
 // on a very large site this can cause server load issues since the database is updated on each page view...

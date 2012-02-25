@@ -2056,7 +2056,7 @@ class Atom{
       if(($current_page + 1) > $total_pages)
         return '';
 
-      $out[] = '<a class="next" href="'.esc_url($getPageLink($current_page + 1)).'" title="'.atom()->t('Show More').'">'.atom()->t('Show More').'</a>';
+      $out[] = '<a class="next" href="'.esc_url(call_user_func($getPageLink, $current_page + 1)).'" title="'.atom()->t('Show More').'">'.atom()->t('Show More').'</a>';
       $class .= "{$class} fadeThis";
 
     }else{
@@ -2065,13 +2065,13 @@ class Atom{
         $out[] = '<span class="pages">'.atom()->t('Page %1$s of %2$s', $current_page, $total_pages).'</span>';
 
       if($prev_next && ($current_page > 1))
-        $out[] = '<a class="previous" href="'.esc_url($getPageLink($current_page - 1)).'">'.atom()->t('&laquo; Previous').'</a>';
+        $out[] = '<a class="previous" href="'.esc_url(call_user_func($getPageLink, $current_page - 1)).'">'.atom()->t('&laquo; Previous').'</a>';
 
       // numbered page links
       if($type !== 'prevnext'){
 
         if(($start_page) >= 2 && ($pages_to_show < $total_pages)){
-          $out[] = '<a class="first" href="'.esc_url($getPageLink(1)).'">1</a>';
+          $out[] = '<a class="first" href="'.esc_url(call_user_func($getPageLink, 1)).'">1</a>';
           $out[] = '<span class="dots">...</span>';
         }
 
@@ -2084,33 +2084,33 @@ class Atom{
           $larger_page_start = 0;
           foreach($larger_pages_array as $larger_page)
             if(($larger_page < $start_page) && ($larger_page_start < $larger_page_to_show)){
-              $out[] = '<a class="ext page" href="'.esc_url($getPageLink($larger_page)).'">'.$larger_page.'</a>';
+              $out[] = '<a class="ext page" href="'.esc_url(call_user_func($getPageLink, $larger_page)).'">'.$larger_page.'</a>';
               $larger_page_start++;
             }
         }
 
         foreach(range($start_page, $end_page) as $i)
-          $out[] = ($i == $current_page) ? '<span class="current">'.$i.'</span>' : '<a class="page" href="'.esc_url($getPageLink($i)).'">'.$i.'</a>';
+          $out[] = ($i == $current_page) ? '<span class="current">'.$i.'</span>' : '<a class="page" href="'.esc_url(call_user_func($getPageLink, $i)).'">'.$i.'</a>';
 
 
         if($extended){
           $larger_page_end = 0;
           foreach($larger_pages_array as $larger_page)
             if(($larger_page > $end_page) && ($larger_page_end < $larger_page_to_show)){
-              $out[] = '<a class="ext page" href="'.esc_url($getPageLink($larger_page)).'">'.$larger_page.'</a>';
+              $out[] = '<a class="ext page" href="'.esc_url(call_user_func($getPageLink, $larger_page)).'">'.$larger_page.'</a>';
               $larger_page_end++;
             }
         }
 
         if($end_page < $total_pages){
           $out[] = '<span class="dots">...</span>';
-          $out[] = '<a class="last" href="'.esc_url($getPageLink($total_pages)).'">'.$total_pages.'</a>';
+          $out[] = '<a class="last" href="'.esc_url(call_user_func($getPageLink, $total_pages)).'">'.$total_pages.'</a>';
         }
 
       }
 
       if($prev_next && ($current_page < $total_pages))
-        $out[] = '<a class="next" href="'.esc_url($getPageLink($current_page + 1)).'">'.atom()->t('Next &raquo;').'</a>';
+        $out[] = '<a class="next" href="'.esc_url(call_user_func($getPageLink, $current_page + 1)).'">'.atom()->t('Next &raquo;').'</a>';
 
     }
 

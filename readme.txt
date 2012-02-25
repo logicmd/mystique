@@ -33,6 +33,10 @@ REQUIREMENTS:
 
 CHANGE LOG:
 
+ 23,2,2012,  3.2.9.2   - disabled the EXTEND feature (too many people getting server errors because of host restrictions);
+                         if you want it, just create the child theme yourself...
+                       - fixed an issue with multipart posts
+
   4,2,2012,  3.2.9.1   - widget / terms: fixed a code typo from 3.2.9
 
   4,2,2012,  3.2.9     - mod / ad blocks: fixed shortcode not working
