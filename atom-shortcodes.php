@@ -254,7 +254,7 @@ class AtomShortcodes{
 
     // get the featured post IDs if "featured" argument is true
     if($featured && ($featured_ids = get_option('featured_posts')))
-      $query['post__in'] = explode(',', $featured_ids);
+      $query['post__in'] = wp_parse_id_list($featured_ids);
 
     $output = '';
     ob_start();

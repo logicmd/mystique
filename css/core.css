@@ -27,6 +27,8 @@ body{
   background:transparent url(../images/header.jpg) no-repeat center top;
 }
 
+body.cbgi #page, body.cbgc #page{background-image:none;}
+
 #page-ext{
   background:transparent url(../images/bg.png) repeat-x center bottom;
 }
@@ -260,6 +262,12 @@ p{
 
 img{
   border:0;
+}
+
+.maybe-scale img{
+  -ms-interpolation-mode: bicubic;
+  max-width: 100%;
+  height: auto !important;
 }
 
 
@@ -729,8 +737,17 @@ hr{
   font-weight: bold;
 }
 
-.nav-main .arrow{display:none;}
-.nav-main .extends a{padding-right: 12px;}
+.nav-main .extends a{padding-right: 30px;}
+
+.nav-main > ul > li > a .arrow{
+  width:0;
+  height:0;
+  border-left:4px solid transparent;  /* css arrow ;) */
+  border-right:4px solid transparent;
+  border-top:4px solid #4e4e4e;
+  background: none;
+  margin-left: 12px;
+}
 
 .nav-main li li .arrow{
   display:block;
@@ -1125,6 +1142,8 @@ hr{
 /* extra margin - useful if you want the avatars alinged perfectly. for eg. 72px avatars on the default fixed layout (2 cols) */
 .block ul.menu.images{margin-right:-4px;}
 
+.block-tabs ul.menu.images{margin:10px 0 0 10px;}
+
 .block ul.menu.images li{
   float:left;
   margin:4px 4px 0 0;
@@ -1352,22 +1371,42 @@ hr{
 }
 
 .hentry .post-tags a{
-  color:#aaa;
-  text-decoration: none;
-  border:1px solid #eee;
-  padding:1px 5px 2px 5px;
+  padding:2px 5px 3px 5px;
   margin-bottom:2px;
   -moz-border-radius:10px;
   -webkit-border-radius:10px;
   border-radius:10px;
   display:inline-block;
+  background-color: #ddd;
+  background-repeat: repeat-x;
+  background-image: -khtml-gradient(linear, left top, left bottom, from(#eee), to(#ddd));
+  background-image: -moz-linear-gradient(top, #eee, #ddd);
+  background-image: -ms-linear-gradient(top, #eee, #ddd);
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #eee), color-stop(100%, #ddd));
+  background-image: -webkit-linear-gradient(top, #eee, #ddd);
+  background-image: -o-linear-gradient(top, #eee, #ddd);
+  background-image: linear-gradient(top, #eee, #ddd);
+  text-decoration: none;
+  -webkit-box-shadow: inset 0 1px 0 rgba(0, 0, 0, 0.025), inset 0 -1px rgba(0, 0, 0, 0.025);
+  -moz-box-shadow: inset 0 1px 0 rgba(0, 0, 0, 0.025), inset 0 -1px rgba(0, 0, 0, 0.025);
+  box-shadow: inset 0 1px 0 rgba(0, 0, 0, 0.025), inset 0 -1px rgba(0, 0, 0, 0.025);
+  color: #808080;
+  text-shadow: #fff 0px 1px 0px;
 }
 
 .hentry .post-tags a:hover{
-  background-color:#666;
-  border-color:#666;
+  background-color: #222;
+  background-repeat: repeat-x;
+  background-image: -khtml-gradient(linear, left top, left bottom, from(#333), to(#222));
+  background-image: -moz-linear-gradient(top, #333, #222);
+  background-image: -ms-linear-gradient(top, #333, #222);
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #333), color-stop(100%, #222));
+  background-image: -webkit-linear-gradient(top, #333, #222);
+  background-image: -o-linear-gradient(top, #333, #222);
+  background-image: linear-gradient(top, #333, #222);
   text-decoration:none;
   color:#fff;
+  text-shadow: none;
 }
 
 /* comments link */
@@ -2613,7 +2652,7 @@ a.go-top:hover{
   overflow: hidden;
   z-index: 1104;
   display: none;
-    background:rgba(0,0,0, 0.75) url(../images/loaders/lh16b.gif) no-repeat center center;
+  background:rgba(0,0,0, 0.75) url(../images/loaders/lh16b.gif) no-repeat center center;
 }
 
 #fb-overlay {
@@ -2700,7 +2739,7 @@ a.go-top:hover{
 }
 
 #fb-left {
-  left: 0px;
+  left: 0;
 }
 
 #fb-right {
@@ -2718,6 +2757,7 @@ a.go-top:hover{
   z-index: 1102;
   display: block;
   background: transparent url(../images/i-ctrls.png) no-repeat 0px -16px;
+  text-decoration: none;
 }
 
 #fb-right a {
@@ -2743,15 +2783,6 @@ a.go-top:hover{
   text-align: center;
   padding: 0 0 10px 0;
 }
-
-
-
-
-
-
-
-
-
 
 
 
@@ -2805,6 +2836,7 @@ a.go-top:hover{
   top:0;
   left:0;
   z-index: 5;
+  text-decoration: none;
 }
 
 
@@ -2834,6 +2866,7 @@ a.go-top:hover{
   float: left;
   margin-left: 5px;
   cursor: pointer;
+  text-decoration: none;
 }
 
 #gallery .pager a.current,
@@ -2855,6 +2888,7 @@ a.go-top:hover{
   z-index: 16;
   top: 50%;
   cursor: pointer;
+  text-decoration: none;
 }
 
 #gallery a.prev{

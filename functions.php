@@ -92,7 +92,7 @@ if(!defined('ATOM_OVERRIDE_CONFIG') || !ATOM_OVERRIDE_CONFIG){
     'logo'                         => '',
     'color_scheme'                 => 'green',
     'background_image'             => '',
-    'background_color'             => '000000',
+    'background_color'             => '',
     'background_image_selector'    => '#page',    // internal (only change if you alter the selector name in the html templates / css)
     'background_color_selector'    => 'body',     // internal, same...
     'footer_content'               => '<p> [credit] | [link rss] </p>',
@@ -220,7 +220,7 @@ if(!defined('ATOM_OVERRIDE_CONFIG') || !ATOM_OVERRIDE_CONFIG){
       // content options: content limit
       'post_content_size'   => array(
                                  'location'    => 'content/post/post_content',
-                                 'depends_on'  => 'post_content_mode BEING user',
+                                 'depends_on'  => 'post_content_mode:user',
                                  'type'        => 'text:5',
                                  'label'       => atom()->t('~ %s characters', '%post_content_size%'),
                                ),
@@ -474,6 +474,17 @@ if(!defined('ATOM_OVERRIDE_CONFIG') || !ATOM_OVERRIDE_CONFIG){
     // because almost none of the older settings are relevant in 3+
     if(version_compare($old_version, '3.0', '<')){
       atom()->reset();
+
+    // changes in 3.3
+    }elseif(version_compare($old_version, '3.3', '<')){
+
+      // background color option changed in 3.3
+      // black doesn't meant "no color" anymore
+      if($old_options['background_color'] == '000000' || empty($old_options['background_color'])){
+        $old_options['background_color'] = '';
+        atom()->setOptions($old_options);
+      }
+
     }
 
     /*

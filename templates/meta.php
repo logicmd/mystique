@@ -14,7 +14,7 @@
 
  // don't show this section if we're on a page with comments disabled and without any comments or pings in it
  // (we're assuming the site admin doesn't want this section on such pages)
- if(post_password_required() || (!comments_open() && is_page() && atom()->post->getCommentCount() < 1)) return;
+ if(post_password_required() || (!comments_open() && !is_single('post') && atom()->post->getCommentCount() < 1)) return;
 
 ?>
 

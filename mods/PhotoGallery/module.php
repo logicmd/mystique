@@ -1,7 +1,7 @@
 <?php
 /**
- * Module Name: Photo Gallery
- * Description: Image gallery showcase
+ * Module Name: Featured Content / Gallery
+ * Description: Gallery showcase
  * Version: 2.0
  * Author: digitalnature
  * Author URI: http://digitalnature.eu
@@ -53,8 +53,9 @@ class AtomModPhotoGallery extends AtomMod{
     // register extra theme options
     atom()->registerDefaultOptions(atom()->getContextArgs('photo_gallery_defaults', array(
       'gallery_dimensions'             => array(960, 320),
-      'gallery_source'                 => 'marked',
+      'gallery_source'                 => 'posts',
       'gallery_source_nextgen'         => 0,
+      'gallery_source_atom'            => 0,
       'gallery_link'                   => 'post',
       'gallery_effects'                => array_keys($this->effects),
       'gallery_count'                  => 6,
@@ -83,7 +84,7 @@ class AtomModPhotoGallery extends AtomMod{
 
     // insert a tab, 35 is the priority (somewhere between content options and ads)
     if(is_admin())
-      atom()->interface->addSection('gallery', atom()->t('Photo Gallery'), array(&$this, 'form'), 35);
+      atom()->interface->addSection('gallery', atom()->t('Featured Content'), array($this, 'form'), 35);
 
     // allow override of the current options
     $this->options = atom()->getContextArgs('photo_gallery', $this->getOptions('gallery'));
@@ -93,7 +94,7 @@ class AtomModPhotoGallery extends AtomMod{
     add_image_size('photo_gallery', $w, $h, true);
 
     if(!is_admin())
-      add_action('wp', array(&$this, 'prepareImages'));
+      add_action('wp', array($this, 'prepareImages'));
   }
 
 
@@ -125,8 +126,12 @@ class AtomModPhotoGallery extends AtomMod{
     if(atom_strict_visibility_check($this->options['gallery_visibility'])){
 
       // featured media
-      if($this->options['gallery_source'] === 'marked')
-        $this->photos = $this->getFeaturedPhotos($this->options);
+      if($this->options['gallery_source'] === 'posts')
+        $this->photos = $this->getFeaturedPostsPhotos($this->options);
+
+      // featured media
+      elseif($this->options['gallery_source'] === 'marked')
+        $this->photos = $this->getFeaturedMediaPhotos($this->options);
 
       // nextgen gallery
       elseif($this->options['gallery_source'] === 'nextgen')
@@ -140,7 +145,7 @@ class AtomModPhotoGallery extends AtomMod{
       elseif(in_array($this->options['gallery_source'], array_keys($this->sources)))
         $this->photos = call_user_func($this->sources[$this->options['gallery_source']]['callback'], $this->options);
 
-      atom()->add($this->options['gallery_location'], array(&$this, 'output'));
+      atom()->add($this->options['gallery_location'], array($this, 'output'));
 
       if($this->photos)
         atom()->addContextArgs('body_class', array('with-gallery'));
@@ -170,6 +175,7 @@ class AtomModPhotoGallery extends AtomMod{
     list($width, $height) = $this->options['gallery_dimensions'];
 
     $ngg_installed = isset($nggdb) && ($nggdb instanceof nggdb);
+    $atom_installed = class_exists('AtomGallery');
     ?>
     <!-- tab: gallery -->
     <div class="clear-block">
@@ -180,43 +186,31 @@ class AtomModPhotoGallery extends AtomMod{
          <h3 class="title"><?php atom()->te('Content source'); ?></h3>
 
          <div class="entry">
+         <label for="gallery_source_posts">
+           <input type="radio" value="posts" id="gallery_source_posts" name="gallery_source" <?php checked($this->options['gallery_source'], 'posts'); ?> followRules />
+           <a href="<?php echo admin_url('edit.php'); ?>"><?php atom()->te('Featured posts'); ?></a>
+         </label>
+         </div>
+
+         <div class="entry">
          <label for="gallery_source_marked">
            <input type="radio" value="marked" id="gallery_source_marked" name="gallery_source" <?php checked($this->options['gallery_source'], 'marked'); ?> followRules />
            <?php atom()->te('%s that I mark as featured', '<a href="'.admin_url('upload.php').'">'.atom()->t('Media items').'</a>'); ?>
          </label>
          </div>
 
-         <?php /*
-         <div class="entry">
-           <label for="gallery_source_flickr">
-             <input id="gallery_source_flickr" name="gallery_source" type="radio" value="flickr" <?php checked($this->options['gallery_source'], 'flickr'); ?> followRules />
-             <?php atom()->te('%s photoset', sprintf('<a href="%1$s" target="_blank">%2$s</a>', 'http://www.flickr.com', 'Flickr')); ?>
-           </label>
-
-           <div style="margin: 5px 10px 5px 20px;">
-           <div class="entry">
-             <label for="gallery_source_flickr_api"><a href="http://www.flickr.com/services/api/misc.api_keys.html" target="_blank">API Key</a>
-               <input id="gallery_source_flickr_api" name="gallery_source_flickr_api" type="text" value="<?php echo $this->options['gallery_source_flickr_api']; ?>" size="40" followRules rules="DEPENDS ON gallery_source BEING flickr" />
-             </label>
-           </div>
-
-           <div class="entry">
-             <?php $input = '<input id="gallery_source_flickr_interval" name="gallery_source_flickr_interval" type="text" value="'.(int)$this->options['gallery_source_flickr_interval'].'" size="4"  followRules rules="DEPENDS ON gallery_source BEING flickr" />'; ?>
-             <label for="gallery_source_flickr_interval"><?php atom()->te('Check for new photos every %s hours', $input); ?></label>
-           </div>
-
-           </div>
-         </div>
-         */ ?>         
-
-
          <div class="entry">
 
-         <label for="gallery_source_atom" class="disabled" title="<?php atom()->te('Plugin not installed'); ?>">
-           <input id="gallery_source_atom" name="gallery_source" type="radio" value="atom" disabled="disabled" />
-           <?php atom()->te('%s gallery', 'Atom'); ?>
-           <select name="gallery_source_atom" disabled="disabled">
+         <label for="gallery_source_atom" <?php if(!$atom_installed): ?> class="disabled" title="<?php atom()->te('Plugin not installed'); ?>" <?php endif;?>>
+           <input id="gallery_source_atom" name="gallery_source" type="radio" value="atom" <?php checked($this->options['gallery_source'], 'atom'); ?> <?php if(!$atom_installed): ?> disabled="disabled" <?php else: ?> followRules <?php endif;?>/>
+           <?php atom()->te('%s gallery', sprintf('<a href="%1$s" target="_blank">%2$s</a>', '#', 'Atom')); ?>
+           <select name="gallery_source_atom" <?php if(!$atom_installed): ?> disabled="disabled"  <?php else: ?> rules="gallery_source:atom"<?php endif;?>>
              <option value="0"><?php atom()->te('-- All galleries --'); ?></option>
+             <?php if($atom_installed): ?>
+             <?php foreach(AtomGallery::app()->getGalleries() as $gallery): ?>             <?php /* @todo: use meta key for counts */ ?>
+             <option value="<?php echo $gallery->ID; ?>" <?php selected($gallery->ID, $this->options['gallery_source_atom']); ?>><?php printf('%1$s (%2$s)', $gallery->post_title, count(get_children(array('post_type' => 'attachment', 'post_mime_type' => 'image' , 'post_parent' => $gallery->ID)))); ?></option>
+             <?php endforeach; ?>
+             <?php endif; ?>
            </select>
          </label>
 
@@ -227,7 +221,7 @@ class AtomModPhotoGallery extends AtomMod{
          <label for="gallery_source_nextgen" <?php if(!$ngg_installed): ?> class="disabled" title="<?php atom()->te('Plugin not installed'); ?>" <?php endif;?>>
            <input id="gallery_source_nextgen" name="gallery_source" type="radio" value="nextgen" <?php checked($this->options['gallery_source'], 'nextgen'); ?> <?php if(!$ngg_installed): ?> disabled="disabled" <?php else: ?> followRules <?php endif;?>/>
            <?php atom()->te('%s gallery', sprintf('<a href="%1$s" target="_blank">%2$s</a>', 'http://wordpress.org/extend/plugins/nextgen-gallery/', 'NextGEN')); ?>
-           <select name="gallery_source_nextgen" <?php if(!$ngg_installed): ?> disabled="disabled"  <?php else: ?> followRules rules="DEPENDS ON gallery_source BEING nextgen"<?php endif;?>>
+           <select name="gallery_source_nextgen" <?php if(!$ngg_installed): ?> disabled="disabled"  <?php else: ?> followRules rules="gallery_source:nextgen"<?php endif;?>>
              <option value="0"><?php atom()->te('-- All galleries --'); ?></option>
              <?php if($ngg_installed): ?>
              <?php foreach($nggdb->find_all_galleries('name', 'ASC', true) as $gallery): ?>
@@ -277,7 +271,7 @@ class AtomModPhotoGallery extends AtomMod{
 
          <div class="entry">
           <label for="gallery_link"><?php atom()->te('Slides link to:') ?></label>
-          <select id="gallery_link" name="gallery_link" followRules rules="DEPENDS ON gallery_source BEING marked">
+          <select id="gallery_link" name="gallery_link" followRules rules="gallery_source:marked">
             <option value="image" <?php selected($this->options['gallery_link'], 'image'); ?>><?php atom()->te('Original image'); ?></option>
             <option value="attachment" <?php selected($this->options['gallery_link'], 'attachment'); ?>><?php atom()->te('Post URL'); ?></option>
             <option value="post" <?php selected($this->options['gallery_link'], 'post'); ?>><?php atom()->te('Attached (parent) post URL, if any'); ?></option>
@@ -290,7 +284,7 @@ class AtomModPhotoGallery extends AtomMod{
           <input type="hidden" name="gallery_caption" value="0" />
           <input id="gallery_caption" name="gallery_caption" type="checkbox" followRules <?php checked($this->options['gallery_caption']); ?> value="1" />
           <label for="gallery_caption"><?php atom()->te('Captions:') ?></label>
-          <select id="gallery_caption_content" followRules rules="DEPENDS ON gallery_caption" name="gallery_caption_content">
+          <select id="gallery_caption_content" followRules rules="gallery_caption" name="gallery_caption_content">
            <option value="image" <?php selected($this->options['gallery_caption_content'], 'image'); ?>><?php atom()->te("Image title and description"); ?></option>
            <option value="post_filtered" <?php selected($this->options['gallery_caption_content'], 'post_filtered'); ?>><?php atom()->te("Filtered content from the attached post, if any"); ?></option>
            <option value="post_excerpt" <?php selected($this->options['gallery_caption_content'], 'post_excerpt'); ?>><?php atom()->te("Excerpt from the attached post, if any"); ?></option>
@@ -348,7 +342,7 @@ class AtomModPhotoGallery extends AtomMod{
   * @since      1.0
   * @return     array    An array of image properties
   */
-  private function getFeaturedPhotos(){
+  private function getFeaturedMediaPhotos(){
 
     // photo sizes to retrieve
     list($gallery_width, $gallery_height) = $this->options['gallery_dimensions'];
@@ -438,6 +432,79 @@ class AtomModPhotoGallery extends AtomMod{
 
 
 
+
+ /*
+  * Featured posts source
+  *
+  * @since      1.0
+  * @return     array    An array of image properties
+  */
+  private function getFeaturedPostsPhotos(){
+
+    // photo sizes to retrieve
+    list($gallery_width, $gallery_height) = $this->options['gallery_dimensions'];
+
+    // get featured media records and randomize them
+    $post_ids = wp_parse_id_list(get_option('featured_posts'));
+    shuffle($post_ids);
+
+    $day_limit = (int)$this->options['gallery_timeframe'];
+    $valid_photos = array();
+    $count = 1;
+
+    // process each image
+    foreach($post_ids as $post_id){
+
+      $media_id = get_post_thumbnail_id($post_id);
+
+      // make sure it exists
+      $image = wp_get_attachment_image_src($media_id, 'photo_gallery');
+      $post = new AtomObjectPost($post_id);
+
+      if(!$post || !$image) continue;
+
+      // make sure it has the dimensions we're looking for -- @todo: auto-regenerate?
+      list($src, $width, $height) = $image;
+      if(($width != $gallery_width) || ($height != $gallery_height)) continue;
+
+      $link = $desc = $title = '';
+
+      // alt image attribute
+      $alt = $post->getTitle();
+
+      if(empty($alt))
+        $alt = $post->getContent('e');
+
+      if($this->options['gallery_caption']){
+        $title = $post->getTitle();
+        $desc = $post->getContent($this->options['gallery_description_size'], array('allowed_tags' => $this->options['gallery_allowed_tags']));
+      }
+
+      // date must be within the timeframe set in the options
+      if($day_limit && (strtotime($post->get('post_date')) < strtotime("-{$day_limit} days"))) continue;
+
+      // image is valid, add it to the list
+      $valid_photos[] = apply_filters('atom_gallery_featured_photos', array(
+        'src'    => $src,
+        'link'   => $post->getURL(),
+        'alt'    => $alt,
+        'title'  => $title,
+        'desc'   => $desc,
+      ), $post->getData());
+
+      // stop if jquery is disabled (one photo only), or if the current photo count exceeds the number limit from the options
+      if(!atom()->options('jquery') || ($count++ == $this->options['gallery_count'])) break;
+
+    }
+
+    // reset post data
+    atom()->resetCurrentPost();
+
+    return $valid_photos;
+  }
+
+
+
  /*
   * Nextgen gallery photo source
   *
@@ -505,6 +572,34 @@ class AtomModPhotoGallery extends AtomMod{
     list($gallery_width, $gallery_height) = $this->options['gallery_dimensions'];
 
     $valid_photos = array();
+
+    $gallery_id = (int)$this->options['gallery_source_atom'];
+
+    $attachments = AtomGallery::app()->getGallery($gallery_id);
+
+    foreach($attachments as $attachment){
+      list($source, $width, $height) = wp_get_attachment_image_src($attachment->ID, 'photo_gallery');
+
+//      $gallery[] = '<a class="gallery-thumbnail" href="'.wp_get_attachment_url($attachment->ID).'"><img src="'.$source.'" width="'.$width.'" height="'.$height.'" /></a>';
+
+
+
+        $valid_photos[] = apply_filters('atom_gallery_atom_photos', array(
+          'src'    => $source,
+          'link'   => '#',
+          'alt'    => '#',
+          'title'  => '#',
+          'desc'   => '#',
+        ), $image);
+
+        // stop if jquery is disabled (one photo only), or if the current photo count exceeds the number limit from the options
+        if(!atom()->options('jquery') || ($count++ == $this->options['gallery_count'])) break;
+
+
+
+    }
+
+
 
     // @todo
 

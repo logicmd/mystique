@@ -52,10 +52,10 @@ class AtomModSocialMediaIcons extends AtomMod{
     $this->sprite_url  = $config['url'];
 
     // hooks
-    atom()->add($config['location'], array(&$this, 'output'), 100);
+    atom()->add($config['location'], array($this, 'output'), 100);
 
     // there's very little css, not worth loading a new stylesheet so we add it inline
-    atom()->add('inline_css', array(&$this, 'css'), 100);
+    atom()->add('inline_css', array($this, 'css'), 100);
 
     if(is_admin()){
 
@@ -64,13 +64,13 @@ class AtomModSocialMediaIcons extends AtomMod{
       ));
 
       // insert a tab
-      atom()->interface->addSection('media', atom()->t('Social-Media Icons'), array(&$this, 'form'), 32);
+      atom()->interface->addSection('media', atom()->t('Social-Media Icons'), array($this, 'form'), 32);
       atom()->interface->addAsset('script', 'jquery-ui-sortable');
 
-      atom()->add('save_options', array(&$this, 'save'), 10, 2);
+      atom()->add('save_options', array($this, 'save'), 10, 2);
 
       // ajax hooks
-      add_action('wp_ajax_update_media_icon_cache', array(&$this, 'updateIconDataCache'));
+      add_action('wp_ajax_update_media_icon_cache', array($this, 'updateIconDataCache'));
     }
   }
 

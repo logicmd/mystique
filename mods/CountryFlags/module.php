@@ -33,12 +33,12 @@ class AtomModCountryFlags extends AtomMod{
   public function onInit(){
 
     // hooks
-    atom()->add('comment_author',                   array(&$this, 'commentAuthor'), 10, 3);
-    atom()->add('widget_comments_keywords',         array(&$this, 'widgetTemplateVars'), 10, 3);
-    atom()->add('widget_top_commenters_keywords',   array(&$this, 'widgetTemplateVars'), 10, 3);
+    atom()->add('comment_author',                   array($this, 'commentAuthor'), 10, 3);
+    atom()->add('widget_comments_keywords',         array($this, 'widgetTemplateVars'), 10, 3);
+    atom()->add('widget_top_commenters_keywords',   array($this, 'widgetTemplateVars'), 10, 3);
 
-    add_action('wp_enqueue_scripts',                array(&$this, 'assets'));
-    add_filter('comment_class',                     array(&$this, 'commentClass'));
+    add_action('wp_enqueue_scripts',                array($this, 'assets'));
+    add_filter('comment_class',                     array($this, 'commentClass'));
   }
 
 

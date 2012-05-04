@@ -42,13 +42,13 @@ class AtomModAdBlocks extends AtomMod{
 
     if(is_admin()){
       // insert a tab, 22 is the priority (somewhere after 'Content Options')
-      atom()->interface->addSection('ad_blocks', atom()->t('Ads'), array(&$this, 'form'), 22);
-      add_action('wp_ajax_create_ad', array(&$this, 'createAd'));
+      atom()->interface->addSection('ad_blocks', atom()->t('Ads'), array($this, 'form'), 22);
+      add_action('wp_ajax_create_ad', array($this, 'createAd'));
     }
 
-    add_action('template_redirect', array(&$this, 'queueAds'));
+    add_action('template_redirect', array($this, 'queueAds'));
 
-    add_shortcode('ad', array(&$this, 'shortcode'));
+    add_shortcode('ad', array($this, 'shortcode'));
   }
 
 
@@ -126,7 +126,7 @@ class AtomModAdBlocks extends AtomMod{
     }
 
     foreach($this->queue as $place => $adv)
-      atom()->add($place, array(&$this, 'output'));
+      atom()->add($place, array($this, 'output'));
   }
 
 
@@ -179,7 +179,7 @@ class AtomModAdBlocks extends AtomMod{
         <?php atom()->te('This section helps you create advertisment blocks in non-widgetized areas. For widgetized areas such as sidebars, simply use a text widget to display your ads.'); ?>
       </div>
 
-      <?php if(atom()->shortcodeExists('ad', array(&$this, 'shortcode'))): ?>
+      <?php if(atom()->shortcodeExists('ad', array($this, 'shortcode'))): ?>
       <div class="notice e">
         <?php atom()->te('It appears that a plugin has already registered the %s shortcode.', '<strong>[ad]</strong>'); ?>
       </div>
@@ -318,9 +318,10 @@ class AtomModAdBlocks extends AtomMod{
 
    <div class="ad-block" id="ad_<?php echo $id; ?>">
      <div class="clear-block">
-       <p class="alignleft">
+       <div class="alignleft">
+
           <label for="ad_<?php echo $id; ?>_page"><?php atom()->te('Visibility:'); ?></label>
-          <select followAdRules rel="page" id="ad_<?php echo $id; ?>_page" name="advertisments[<?php echo $id; ?>][page]">
+          <select rel="page" id="ad_<?php echo $id; ?>_page" name="advertisments[<?php echo $id; ?>][page]">
             <optgroup label="<?php atom()->te('Automatic'); ?>">
               <?php foreach($contexts['pages'] as $page => $label): ?>
               <option value="<?php echo $page; ?>" <?php selected($page, $ad['page']) ?>><?php echo $label; ?></option>
@@ -331,42 +332,45 @@ class AtomModAdBlocks extends AtomMod{
             </optgroup>
           </select>
 
-          <select followAdRules rules="CONFLICTS WITH page BEING single AND CONFLICTS WITH page BEING 0" rel="generic" name="advertisments[<?php echo $id; ?>][place]">
+          <input type="text" size="24" class="code" rel="shortcode" ad-rules="page:0" value="<?php echo '[ad '.substr($id, 1).']'; ?>" />
+
+          <select ad-rules="page:!single|!0" rel="generic" name="advertisments[<?php echo $id; ?>][place]">
             <?php foreach($contexts['places']['generic'] as $place => $label): ?>
             <option value="<?php echo $place; ?>" <?php selected($place, $ad['place']) ?>><?php echo $label; ?></option>
             <?php endforeach; ?>
           </select>
 
-          <select followAdRules rules="DEPENDS ON page BEING single" rel="single" name="advertisments[<?php echo $id; ?>][place]">
+          <select ad-rules="page:single" rel="single" name="advertisments[<?php echo $id; ?>][place]">
             <?php foreach($contexts['places']['single'] as $place => $label): ?>
             <option value="<?php echo $place; ?>" <?php selected($place, $ad['place']) ?>><?php echo $label; ?></option>
             <?php endforeach; ?>
           </select>
 
-          <label for="ad_<?php echo $id; ?>_n">#</label>
-          <input rel="n" id="ad_<?php echo $id; ?>_n" type="text" size="2" value="<?php echo (int)$ad['n']; ?>" followAdRules rules="DEPENDS ON generic BEING before_teaser OR generic BEING after_teaser OR single BEING before_comment AND CONFLICTS WITH page BEING 0" name="advertisments[<?php echo $id; ?>][n]" />
+          <label for="ad_<?php echo $id; ?>_ng">#</label>
+          <input rel="ns" id="ad_<?php echo $id; ?>_ng" type="text" size="2" value="<?php echo (int)$ad['n']; ?>" ad-rules="generic:before_teaser|after_teaser + page:!0|!single" name="advertisments[<?php echo $id; ?>][n]" />
 
-          <input type="text" size="24" class="code" disabled="disabled" followAdRules rules="DEPENDS ON page BEING 0" value="<?php echo '[ad '.substr($id, 1).']'; ?>" />
+          <label for="ad_<?php echo $id; ?>_ns">#</label>
+          <input rel="ng" id="ad_<?php echo $id; ?>_ns" type="text" size="2" value="<?php echo (int)$ad['n']; ?>" ad-rules="single:before_comment + page:!0|!generic" name="advertisments[<?php echo $id; ?>][n]" />
 
           <label for="ad_<?php echo $id; ?>_time"><?php atom()->te('When:'); ?></label>
-          <select followAdRules rules="DEPENDS ON page BEING single" rel="when" id="ad_<?php echo $id; ?>_time" name="advertisments[<?php echo $id; ?>][when]">
+          <select ad-rules="page:single" rel="when" id="ad_<?php echo $id; ?>_time" name="advertisments[<?php echo $id; ?>][when]">
             <option value="0" <?php selected(empty($ad['when'])) ?>><?php atom()->te("Anytime"); ?></option>
             <option value="closed" <?php selected('closed', $ad['when']) ?>><?php atom()->te("Comments are closed") ?></option>
             <option value="open" <?php selected('open', $ad['when']) ?>><?php atom()->te("Comments are open") ?></option>
           </select>
 
           <label for="ad_<?php echo $id; ?>_to"><?php atom()->te('To:'); ?></label>
-          <select followAdRules rel="to" id="ad_<?php echo $id; ?>_to" name="advertisments[<?php echo $id; ?>][to]">
+          <select rel="to" id="ad_<?php echo $id; ?>_to" name="advertisments[<?php echo $id; ?>][to]">
             <option value="0" <?php selected(empty($ad['to'])) ?>><?php atom()->te("Anyone") ?></option>
             <option value="1" <?php selected(1, $ad['to']) ?>><?php atom()->te("Visitor only") ?></option>
             <?php foreach($wp_roles->get_names() as $role => $label): ?>
             <option value="<?php echo $role; ?>"  <?php selected($role, $ad['to']) ?>><?php echo translate_user_role($label); ?></option>
             <?php endforeach; ?>
           </select>
-        </p>
+        </div>
 
         <p class="alignright">
-          <input class="button-secondary alignright remove-ad" type="button" value="<?php atom()->te('Remove'); ?>" followAdRules />
+          <input class="button-secondary alignright remove-ad" type="button" value="<?php atom()->te('Remove'); ?>" />
         </p>
 
       </div>
@@ -378,7 +382,7 @@ class AtomModAdBlocks extends AtomMod{
       <script type="text/javascript">
        /*<![CDATA[*/
        jQuery(document).ready(function($){
-         $('#ad_<?php echo $id; ?> [followAdRules]').setupDependencies({disable_only:false, clear_inactive:false, identify_by:'rel'});
+         $('#ad_<?php echo $id; ?>').FormDependencies({hide_inactive:true, clear_inactive:false, identify_by:'rel', attribute:'ad-rules'});
 
          $("#ad_<?php echo $id; ?> .remove-ad").click(function(){
            $("#ad_<?php echo $id; ?>").animate({

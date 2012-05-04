@@ -1,8 +1,7 @@
 <?php
-
 /*
  * @template  Mystique
- * @revised   December 20, 2011
+ * @revised   April 24, 2012
  * @author    digitalnature, http://digitalnature.eu
  * @license   GPL, http://www.opensource.org/licenses/gpl-license
  */

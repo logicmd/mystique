@@ -39,16 +39,16 @@ class AtomModTranslate extends AtomMod{
     // this is an administration-only interface for super admins
     if(is_admin() && current_user_can('update_core')){
 
-      atom()->interface->addSection('translate', atom()->t('Translate'), array(&$this, 'form'), 38);
+      atom()->interface->addSection('translate', atom()->t('Translate'), array($this, 'form'), 38);
 
       if(is_child_theme()){
-        atom()->add('save_options', array(&$this, 'save'));
+        atom()->add('save_options', array($this, 'save'));
 
         atom()->addContextArgs('settings_update_errors', array(
           30 => atom()->t('Failed to save .mo / .po files. Is your child theme directory writable?'),
         ));
 
-        add_action('wp_ajax_cache_translation_string', array(&$this, 'updateStringCache'));
+        add_action('wp_ajax_cache_translation_string', array($this, 'updateStringCache'));
       }
 
     }
@@ -483,27 +483,26 @@ class AtomModTranslate extends AtomMod{
       <?php endif; ?>
 
       <div class="clear-block">
+        <p>
+         <label for="translator" <?php if(!$editing_allowed) echo 'class="disabled"'; ?>><?php atom()->te('Translator(s):'); ?></label>
+         <br />
+         <input type="text" <?php disabled(!$editing_allowed); ?> size="140" id="translator" name="translator" value="<?php echo htmlspecialchars($translator); ?>" />
+        </p>
 
-        <div class="block">
-          <p>
-           <label for="translator" <?php if(!$editing_allowed) echo 'class="disabled"'; ?>><?php atom()->te('Translator(s):'); ?></label>
-           <br />
-           <input type="text" <?php if(!$editing_allowed) echo 'disabled="disabled"'; ?> size="140" id="translator" name="translator" value="<?php echo htmlspecialchars($translator); ?>" />
-          </p>
+        <p>
+         <label for="team" <?php if(!$editing_allowed) echo 'class="disabled"'; ?>><?php atom()->te('Team:'); ?></label>
+         <br />
+         <input type="text" <?php disabled(!$editing_allowed); ?> size="70" id="team" name="team" value="<?php echo htmlspecialchars($team); ?>" />
+        </p>
+      </div>
 
-          <p>
-           <label for="team" <?php if(!$editing_allowed) echo 'class="disabled"'; ?>><?php atom()->te('Team:'); ?></label>
-           <br />
-           <input type="text" <?php if(!$editing_allowed) echo 'disabled="disabled"'; ?> size="70" id="team" name="team" value="<?php echo htmlspecialchars($team); ?>" />
-          </p>
 
-          <?php if($editing_allowed): ?>
-          <div class="notice w">
-            <?php atom()->te('Click on the black text below to edit the strings. Modified strings will temporarily be auto-saved. Press the "%s" button to export strings to .mo / .po files in your child theme directory.', atom()->t('Save Changes')); ?>
-          </div>
-          <?php endif; ?>
+      <?php if($editing_allowed): ?>
+      <div class="notice w">
+        <?php atom()->te('Click on the black text below to edit the strings. Modified strings will temporarily be auto-saved. Press the "%s" button to export strings to .mo / .po files in your child theme directory.', atom()->t('Save Changes')); ?>
+      </div>
+      <?php endif; ?>
 
-        </div>
 
       <table class="widefat list plurals-<?php echo $this->plural_count; ?>">
        <thead>

@@ -5,7 +5,7 @@
  *
  * Read the documentation for more info: http://digitalnature.eu/docs/
  *
- * @revised   February 4, 2012
+ * @revised   March 29, 2012
  * @author    digitalnature, http://digitalnature.eu
  * @license   GPL, http://www.opensource.org/licenses/gpl-license
  */
@@ -48,18 +48,18 @@ class AtomInterface{
     $this->interface_id = $id;
     $this->menu_title = $title;
 
-    add_action('admin_menu',                                array(&$this, 'addMenu'));
-    add_action('admin_post_'.$this->interface_id.'_update', array(&$this, 'saveOptions'));
+    add_action('admin_menu',                                array($this, 'addMenu'));
+    add_action('admin_post_'.$this->interface_id.'_update', array($this, 'saveOptions'));
 
-    add_action('admin_footer',                              array(&$this, 'footer'));
+    add_action('admin_footer',                              array($this, 'footer'));
 
     // ajax hooks
-    add_action('wp_ajax_get_tab',                           array(&$this, 'getTab'));
-    add_action('wp_ajax_process_upload',                    array(&$this, 'processUpload'));
-    add_action('wp_ajax_rss_meta_box',                      array(&$this, 'rssMetaBox'));
-    add_action('wp_ajax_force_update_check',                array(&$this, 'forceUpdateCheck'));
+    //add_action('wp_ajax_get_tab',                           array($this, 'getTab'));
+    add_action('wp_ajax_process_upload',                    array($this, 'processUpload'));
+    add_action('wp_ajax_rss_meta_box',                      array($this, 'rssMetaBox'));
+    add_action('wp_ajax_force_update_check',                array($this, 'forceUpdateCheck'));
 
-    atom()->add('settings_advanced',                        array(&$this, 'tabAdvancedCode'));
+    atom()->add('settings_advanced',                        array($this, 'tabAdvancedCode'));
   }
 
 
@@ -78,7 +78,6 @@ class AtomInterface{
         'type'            => 'text',
         'depends_on'      => '',
         'conflicts_with'  => '',
-        'follow_rules'    => false,
         'rules'           => '',
         'label'           => '',
         'description'     => '',
@@ -268,7 +267,6 @@ class AtomInterface{
 
     jQuery(document).ready(function($){
 
-
       // @todo: organize this in a single function...
       pm.bind("themepreview-load", function(data){
 
@@ -328,12 +326,15 @@ class AtomInterface{
           gs = (page_width == 'fluid') ? 100 : 960;
           jstep = (page_width == 'fluid') ? 1 : 10;
           jscale = (page_width == 'fluid') ? scale_fluid : scale_grid_12;
+
           pm({ // live preview
             target: window.frames['themepreview'],
             type: 'page_width',
             data: page_width
           });
+
           set_slider();
+
         });
 
         // max page width field
@@ -375,7 +376,7 @@ class AtomInterface{
         }).change();
 
 
-        set_slider(); // fixes slider bug   @todo: re-code slider for Atom
+        $(document).bind('themepreview-loaded', function(){ set_slider(); }); // fixes slider bug   @todo: re-code slider for Atom
 
       });
 
@@ -396,6 +397,7 @@ class AtomInterface{
   }
 
 
+
   protected function getLanguageData($type = 'core'){
 
     if(!is_child_theme() && $type !== 'core') return array();
@@ -412,22 +414,43 @@ class AtomInterface{
 
     $data = array();
     foreach($langs as $lang){
-      $mo = new MO();
-      $mo->import_from_file($path.'/lang/'.$lang.'.mo');
 
-      if(!empty($mo->headers)){
+      $handle = @fopen($path.'/lang/'.$lang.'.po', 'r');
+      $headers = array();
+
+      // parsing headers; stop at the first empty line
+      if($handle){
+        while(($line = fgets($handle, 4096)) !== false){
+
+          $line = substr(trim($line), 1, -1);
+          $col_index = strpos($line, ':');
+
+          if(empty($line))
+            break;
+
+          if($col_index === false)
+            continue;
+
+          $field = substr($line, 0, $col_index);
+
+          // skip the white space after the colon and remove the \n at the end
+          $headers[$field] = substr($line, $col_index + 1, -2);
+        }
+        fclose($handle);
+      }
+
+      if(!empty($headers)){
 
         $data[$lang][$type] = array(
-          'translator' => preg_replace('/(?<!href=")http:\/\//','', make_clickable(strip_tags($mo->headers['Last-Translator']))),
-          'language'   => strip_tags($mo->headers['X-Poedit-Language']),
-          'version'    => strip_tags($mo->headers['Project-Id-Version']),
+          'translator' => preg_replace('/(?<!href=")http:\/\//','', make_clickable(strip_tags($headers['Last-Translator']))),
+          'language'   => trim(strip_tags($headers['X-Poedit-Language'])),
+          'version'    => trim(strip_tags($headers['Project-Id-Version'])),
         );
 
         // more accurate
         if(function_exists('format_code_lang'))
           $data[$lang][$type]['language'] = format_code_lang($lang);
       }
-      unset($mo);
     }
 
     return $data;
@@ -448,12 +471,12 @@ class AtomInterface{
       $this->menu_title,
       'edit_theme_options',
       ATOM,
-      array(&$this, 'forms') // function below
+      array($this, 'forms') // function below
     );
 
     add_thickbox();
 
-    atom()->action('add_menu', &$this);
+    atom()->action('add_menu', $this);
   }
 
 
@@ -481,19 +504,15 @@ class AtomInterface{
       $rule = '';
 
       if($args['depends_on'])
-        $rule = "DEPENDS ON {$args['depends_on']}";
+        $rule = $args['depends_on'];
 
       if($args['conflicts_with'])
-        $rule = "CONFLICTS WITH {$args['conflicts_with']}";
+        $rule = "!{$args['conflicts_with']}";
 
       if($rule){
         $parts = explode(' ', preg_replace('/\s+/', ' ', $rule));
         $parts = array_filter($parts);
         $this->controls[$id]['rules'] = $rule;
-        $this->controls[$id]['follow_rules'] = true;
-        foreach($parts as $keyword)
-          if(array_key_exists($keyword, $this->controls))
-             $this->controls[$keyword]['follow_rules'] = true;
       }
     }
 
@@ -557,7 +576,6 @@ class AtomInterface{
         'class'       => $classes ? 'class="'.implode(' ', $classes).'"' : NULL,
         'name'        => $disabled ? NULL : 'name="'.$option_id.'"',
         'rules'       => ($rules && !$disabled) ? 'rules="'.$rules.'"' : NULL,
-        'followRules' => ($follow_rules && !$disabled) ? 'followRules' : NULL,
         'disabled'    => $disabled ? 'disabled="disabled"' : NULL,
         'size'        => $input_size ? 'size="'.(int)$input_size.'"' : NULL,
       )));
@@ -692,6 +710,7 @@ class AtomInterface{
 
     if($tab_id !== 'welcome'): ?>
     <div class="save">
+      <input type="hidden" name="section" value="<?php echo $tab_id; ?>" />
       <input type="submit" class="button-primary" name="submit" value="<?php atom()->te('Save Changes'); ?>" />
     </div>
     <?php endif;
@@ -705,7 +724,7 @@ class AtomInterface{
 
     <div class="clear-block">
 
-    <?php if(current_user_can('edit_themes') && ATOM_EXTEND): // only show this if the user can use the theme editor (same type of operation) ?>
+    <?php if(current_user_can('edit_themes') && is_child_theme()): // only show this if the user can use the theme editor (same type of operation) ?>
     <hr />
     <div class="clear-block">
      <h2 class="title"><?php atom()->te('User-defined code'); ?></h2>
@@ -952,15 +971,15 @@ class AtomInterface{
 
                <div class="entry">
                  <label for="<?php echo ATOM; ?>_page_width_fixed">
-                   <input name="page_width" id="<?php echo ATOM; ?>_page_width_fixed" type="radio" followRules class="radio" value="fixed" <?php checked('fixed', $this->options['page_width']); ?> />
+                   <input name="page_width" id="<?php echo ATOM; ?>_page_width_fixed" type="radio" class="radio" value="fixed" <?php checked('fixed', $this->options['page_width']); ?> />
                    <?php atom()->te('Fixed (%s)', '<a href="http://960.gs">960gs</a>'); ?>
                  </label>
                </div>
 
                <div class="entry">
                  <label for="<?php echo ATOM; ?>_page_width_fluid">
-                   <input name="page_width" id="<?php echo ATOM; ?>_page_width_fluid" type="radio" followRules class="radio" value="fluid" <?php checked('fluid', $this->options['page_width']); ?> />
-                   <?php atom()->te('Fluid, but not more than %s pixels', '<label><input size="4" followRules rules="DEPENDS ON page_width BEING fluid" name="page_width_max" id="'.ATOM.'_page_width_max" type="text" value="'.$this->options['page_width_max'].'" /></label>'); ?>
+                   <input name="page_width" id="<?php echo ATOM; ?>_page_width_fluid" type="radio" class="radio" value="fluid" <?php checked('fluid', $this->options['page_width']); ?> />
+                   <?php atom()->te('Fluid, but not more than %s pixels', '<label><input size="4" rules="page_width:fluid" name="page_width_max" id="'.ATOM.'_page_width_max" type="text" value="'.$this->options['page_width_max'].'" /></label>'); ?>
                  </label>
                </div>
 
@@ -984,7 +1003,7 @@ class AtomInterface{
               <img id="image-logo" class="image-upload" src="<?php echo ($logo = $this->options['logo']) ? $logo : atom()->getThemeURL().'/images/admin/x.gif'; ?>" title="<?php atom()->te('Current logo image'); ?>" />
               <a class="button reset_upload alignright <?php if(!$logo): ?>hidden<?php endif; ?>" id="<?php echo ATOM; ?>_reset_logo"><?php atom()->te('Remove'); ?></a>
               <a class="button upload alignright" id="<?php echo ATOM; ?>_logo" data-nonce="<?php echo wp_create_nonce('atom_upload'); ?>"><?php $logo ? atom()->te('Change Image') : atom()->te('Upload Image'); ?></a>
-              <input type="hidden" name="logo" value="<?php echo $logo; ?>" />
+              <input type="hidden" name="logo" data-title="<?php echo apply_filters('atom_logo_title', get_bloginfo('name')); ?>" value="<?php echo $logo; ?>" />
              </div>
           </div>
           <?php endif; ?>
@@ -994,7 +1013,7 @@ class AtomInterface{
 
           <?php if(atom()->OptionExists('color_scheme')): ?>
           <div class="postbox">
-             <h3><span><?php atom()->te("Styles &amp; colors"); ?></span></h3>
+             <h3><span><?php atom()->te('Styles &amp; colors'); ?></span></h3>
              <div class="inside clear-block">
 
                <div class="clear-block colorscheme-selector" id="color-scheme">
@@ -1004,7 +1023,7 @@ class AtomInterface{
 
                   endforeach;
                  ?>
-                 <a href="#" rel="" class="select no-style" title="<?php atom()->te("Disabled"); ?> (<?php atom()->te("use custom styles"); ?>)"><?php atom()->te("Blank"); ?></a>
+                 <a href="#" rel="" class="select no-style" title="<?php atom()->te('Disabled'); ?> (<?php atom()->te('use custom styles'); ?>)"><?php atom()->te('Blank'); ?></a>
                  <input type="hidden" class="select" name="color_scheme" value="<?php echo $this->options['color_scheme']; ?>" />
                </div>
              </div>
@@ -1013,7 +1032,7 @@ class AtomInterface{
 
           <?php if(atom()->OptionExists('background_image') || atom()->OptionExists('background_color')): ?>
           <div class="postbox upload-block">
-             <h3><span><?php atom()->te("Page Background"); ?></span></h3>
+             <h3><span><?php atom()->te('Page Background'); ?></span></h3>
              <div class="inside clear-block">
 
              <?php if(atom()->OptionExists('background_image')): ?>
@@ -1021,15 +1040,11 @@ class AtomInterface{
 
                <a class="button reset_upload alignright <?php if(!$background): ?>hidden<?php endif; ?>" id="<?php echo ATOM; ?>_reset_background"><?php atom()->te('Remove'); ?></a>
                <a class="button upload alignright" id="<?php echo ATOM; ?>_background" data-nonce="<?php echo wp_create_nonce('atom_upload'); ?>"><?php $background ? atom()->te('Change Image') : atom()->te('Upload Image'); ?></a>
-               <input type="hidden" name="background_image" value="<?php echo $background; ?>" />
+               <input type="hidden" name="background_image" value="<?php echo $background; ?>" data-selector="<?php echo esc_attr($this->options['background_image_selector']); ?>" />
              <?php endif; ?>
 
              <?php if(atom()->OptionExists('background_color')): ?>
-               <div class="color-selector alignleft" id="<?php echo ATOM; ?>_background_color">
-                 <div class="preview" style="background-color: #<?php echo esc_html($this->options['background_color']); ?>">
-                   <input name="background_color" type="hidden" value="<?php echo esc_html($this->options['background_color']); ?>" />
-                 </div>
-               </div>
+              <input name="background_color" class="color-selector" data-selector="<?php echo esc_attr($this->options['background_color_selector']); ?>" type="hidden" value="<?php echo esc_html($this->options['background_color']); ?>" />
              <?php endif; ?>
 
              </div>
@@ -1042,10 +1057,8 @@ class AtomInterface{
              <div class="inside clear-block">
 
              <?php if(atom()->OptionExists('background_gradient')): ?>
-               <div class="color-selector alignleft" id="<?php echo ATOM; ?>_background_color">
-                 <div class="preview" style="background-color: #<?php echo esc_html($this->options['background_gradient']); ?>">
-                   <input name="background_gradient" type="hidden" value="<?php echo esc_html($this->options['background_gradient']); ?>" />
-                 </div>
+               <div class="alignleft" id="<?php echo ATOM; ?>_background_gradient">
+                   <input name="background_gradient" class="color-selector" type="hidden" value="<?php echo esc_html($this->options['background_gradient']); ?>" />
                </div>
              <?php endif; ?>
 
@@ -1354,6 +1367,9 @@ class AtomInterface{
 
     $url = 'themes.php?page='.ATOM.'&'.($error ?  "error={$error}" : "updated=true");
 
+    if(isset($_POST['section']))
+      $url .= '&section='.sanitize_key($_POST['section']);
+
     wp_cache_flush();
 
     // stupid WP forces us to redirect even when we have errors that need to be displayed...
@@ -1381,10 +1397,6 @@ class AtomInterface{
 
       return $option;
     }
-
-    // int, can be evaluated as boolean too (0 / 1) -- @todo: handle float values? Normally we should have that kind of options...
-    if(is_numeric($option))
-      return (int)$option;
 
     // treat these as boolean true
     elseif(in_array(strtolower($option), array('on', 'yes', 'true', 'enabled'), true))

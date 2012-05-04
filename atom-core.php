@@ -54,7 +54,7 @@ class Atom{
   const
 
     // framework version
-    VERSION             = '2.0 r14',
+    VERSION             = '2.1',
 
     // required WordPress version to run this theme (3.1 is the minimum for Atom-based themes)
     // the check is made during the 'after_setup_theme' hook, so everything executed before this action
@@ -193,7 +193,7 @@ class Atom{
     $args = func_get_args();
     array_shift($args);
     array_unshift($args, "atom_{$tag}");
-    call_user_func_array('do_action', $args);
+    func_num_args() ? call_user_func_array('do_action', $args) : do_action("atom_{$tag}");
   }
 
 
@@ -353,13 +353,14 @@ class Atom{
   public function __call($name, $args){
 
     $caller = "__call{$name}";
-    if(method_exists($this, $caller)){
-      return call_user_func_array(array(&$this, $caller), $args);
-    }
+    $arg_count = count($args);
+
+    if(method_exists($this, $caller))
+      return $arg_count ? call_user_func_array(array($this, $caller), $args) : $this->$caller();
 
     $caller = "get{$name}";
     if(method_exists($this, $caller)){
-      echo call_user_func_array(array(&$this, $caller), $args);
+      echo $arg_count ? call_user_func_array(array($this, $caller), $args) : $this->$caller();
       return;
     }
 
@@ -367,13 +368,11 @@ class Atom{
       // method doesn't exist, check if it has been deprecated
       $deprecated_name = '__'.__CLASS__.$name;
       if(function_exists($deprecated_name))
-        return call_user_func_array($deprecated_name, $args); // call the compat function
+        return $arg_count ? call_user_func_array($deprecated_name, $args) : call_user_func($deprecated_name); // call the compat function
     }
 
     // not deprecated, throw the error
     throw new Exception("Method {$name} is not defined");
-
-
   }
 
 
@@ -386,30 +385,25 @@ class Atom{
   public function __get($name){
 
     $getter = "getCurrent{$name}";
-    if(method_exists($this, $getter)){
+    if(method_exists($this, $getter))
       return $this->$getter();
 
     // check modules
-    }elseif(($module = strtolower($name)) && isset($this->modules[$module])){
+    if(($module = strtolower($name)) && isset($this->modules[$module]))
       return $this->modules[$module];
 
-    }else{
-
-      if(defined('ATOM_COMPAT_MODE')){
-        // method doesn't exist, check if it has been deprecated
-        $deprecated_name = '__'.__CLASS__.$name;
-        if(function_exists($deprecated_name))
-          return $deprecated_name(); // call the compat function
-      }
-
-      throw new Exception("Method {$getter} is not defined.");
+    // method doesn't exist, check if it has been deprecated
+    if(defined('ATOM_COMPAT_MODE')){
+      $deprecated_name = '__'.__CLASS__.$name;
+      if(function_exists($deprecated_name))
+        return $deprecated_name(); // call the compat function
     }
 
-  }
+    throw new Exception("Method {$getter} is not defined.");  }
 
 
 
-  /**
+  /*
    * Only usable for setCurrent* methods
    *
    * @since 1.0
@@ -420,17 +414,15 @@ class Atom{
     if(method_exists($this, $setter))
       return $this->$setter($value);
 
-    else{
-
-      if(defined('ATOM_COMPAT_MODE')){
-        // method doesn't exist, check if it has been deprecated
-        $deprecated_name = '__'.__CLASS__.$name;
-        if(function_exists($deprecated_name))
-          return $deprecated_name($value); // call the compat function
-      }
-
-      throw new Exception("Method {$setter} is not defined.");
+    if(defined('ATOM_COMPAT_MODE')){
+      // method doesn't exist, check if it has been deprecated
+      $deprecated_name = '__'.__CLASS__.$name;
+      if(function_exists($deprecated_name))
+        return $deprecated_name($value); // call the compat function
     }
+
+    throw new Exception("Method {$setter} is not defined.");
+
   }
 
 
@@ -1002,14 +994,10 @@ class Atom{
       'second' => 1,
     );
 
-    // site setting for mu + swc
-    $gmt_offset = (is_multisite() && is_main_site()) ? get_site_option('gmt_offset') : get_option('gmt_offset');
-
-    $newer_date = ($newer_date == false) ? (time() + (3600 * $gmt_offset)) : $newer_date;
-    $since = $newer_date - $older_date;
+    $newer_date = ($newer_date !== false) ? $newer_date : current_time('timestamp');
 
     foreach($chunks as $key => $seconds)
-      if(($count = floor($since / $seconds)) != 0) break;
+      if(($count = floor(($newer_date - $older_date) / $seconds)) != 0) break;
 
     $messages = array(
       'year'   => atom()->nt('%s year ago', '%s years ago', $count),
@@ -1512,10 +1500,9 @@ class Atom{
 
       // otherwise use the post excerpt
       if(empty($description)){
-        global $post;
 
         // some stupid WP plugins force us to call get_the_content only once (inside the loop)
-        $description = atom()->generateExcerpt(trim($post->post_content), array(
+        $description = atom()->generateExcerpt(trim(get_the_content()), array(
           'limit'                    => 300,
           'cutoff'                   => 'sentence',
           'shortcodes'               => false,
@@ -1686,9 +1673,9 @@ class Atom{
     }
 
     if($fallback && method_exists($this, "get{$fallback}"))
-      $fallback = array(&$this, "get{$fallback}");
+      $fallback = array($this, "get{$fallback}");
 
-    $args = $this->getContextArgs("{$location}_menu", array(
+    $args = $this->getContextArgs("{$location}_menu",  $args, array(
       'echo'           => false,
       'container'      => false,
       'menu_class'     => "menu {$user_classes} clear-block",
@@ -2026,7 +2013,7 @@ class Atom{
       return '';
 
     // get_pagenum_link alternative (currently only needed for multipart posts)
-    $getPageLink = ($object instanceof AtomObject) && (method_exists($object, 'getPageLink')) ? array(&$object, 'getPageLink') : 'get_pagenum_link';
+    $getPageLink = ($object instanceof AtomObject) && (method_exists($object, 'getPageLink')) ? array($object, 'getPageLink') : 'get_pagenum_link';
 
     $half_page_start = floor(($pages_to_show - 1) / 2);
     $half_page_end = ceil(($pages_to_show - 1) / 2);
@@ -2314,7 +2301,7 @@ class Atom{
     // synchronize theme options
     $this->syncOptions();
 
-    // editor-style.css
+    // register WP editor styles
     add_editor_style('css/editor.css');
 
 
@@ -2325,12 +2312,6 @@ class Atom{
       $post_thumb = ($this->options('post_thumb_size') == 'media') ? array(get_option('thumbnail_size_w'), get_option('thumbnail_size_h')) : explode('x', $this->options('post_thumb_size'));
       list($w, $h) = $post_thumb;
       set_post_thumbnail_size($w, $h, true); // same as add_image_size('post-thumbnail' ...);
-
-      // extra sizes, these are registered a little later...
-      if($this->options('featured_thumb_size')){
-        list($w, $h) = explode('x', $this->options('featured_thumb_size'));
-        add_image_size('featured-thumbnail', $w, $h, true);
-      }
     }
 
     // nav menus
@@ -2346,9 +2327,12 @@ class Atom{
 
     // hooks
     if($this->options('remove_settings'))
-      add_action('switch_theme', array(&$this, 'uninstall'));
+      add_action('switch_theme', array($this, 'uninstall'));
 
     $this->action('core');
+
+    // expose $atom in templates?
+    set_query_var('atom', $this);
 
     define('ATOM_INITIALIZED', true);
   }
@@ -2361,13 +2345,11 @@ class Atom{
   * Options are synced when:
   * - a new theme version is installed
   * - a module is de/activated (if the module has option fields)
-  * - theme options from the db are invalid
+  * - theme options from the db are invalid (either missing or extra options)
   *
   * @since 1.0
   */
   protected function syncOptions(){
-
-    if(defined('DOING_AJAX') && DOING_AJAX) return;
 
     // sets up the "current_theme_options" property
     // only needed for the front-end, because within the admin area options() will be called sooner
@@ -2389,14 +2371,14 @@ class Atom{
       // highest priority: a new theme version might want to force an existing option value to be updated
       $this->action('sync_options', $old_version, $this->default_theme_options, $this->current_theme_options);
 
-      // check for new settings and load defaults
-      foreach($this->default_theme_options as $option => $value)
-        if(!array_key_exists($option, $this->current_theme_options))
-          $this->current_theme_options[$option] = $value;
+      $new_options = array();
 
-      // remove deprecated options -- maybe we should do this only on version change?
-      foreach($this->current_theme_options as $option => $value)
-        if(!array_key_exists($option, $this->default_theme_options)) unset($this->current_theme_options[$option]);
+      // check for new settings and load defaults
+      // also removes deprecated options...
+      foreach($this->default_theme_options as $option => $value)
+        $new_options[$option] = isset($this->current_theme_options[$option]) ? $this->current_theme_options[$option] : $value;
+
+      $this->current_theme_options = $new_options;
 
       // update theme version info
       $this->current_theme_options['theme_version'] = $this->theme_version;
@@ -2573,40 +2555,33 @@ class Atom{
   public static function getWidget($widget_id, $area = 'arbitrary', $remove_title = 'h3'){
     global $wp_registered_widgets, $wp_registered_sidebars;
 
-    $widget_contents = wp_cache_get("arbitrary_{$widget_id}");
+    // does the instance exist?
+    $callback = AtomWidget::getCallback($widget_id);
 
-    if($widget_contents === false){
+    if(!$callback)
+      return atom()->log("Requested widget instance doesn't exist: {$widget_id}");
 
-      // does the instance exist?
-      $callback = AtomWidget::getCallback($widget_id);
+    ob_start();  // catch the echo output, so we can control where it appears in the text
 
-      if(!$callback)
-        return atom()->log("Requested widget instance doesn't exist: {$widget_id}");
+    $params = array_merge(array(array_merge($wp_registered_sidebars[$area], array('widget_id' => $widget_id, 'widget_name' => $wp_registered_widgets[$widget_id]['name']))), (array)$wp_registered_widgets[$widget_id]['params']);
 
-      ob_start();  // catch the echo output, so we can control where it appears in the text
+    // align classes?
+    //if($align) $params[0]['before_widget'] = str_replace('block', 'block align'.$align, $params[0]['before_widget']);
 
-      $params = array_merge(array(array_merge($wp_registered_sidebars[$area], array('widget_id' => $widget_id, 'widget_name' => $wp_registered_widgets[$widget_id]['name']))), (array)$wp_registered_widgets[$widget_id]['params']);
+    // Substitute HTML id and class attributes into before_widget
+    $classname_ = '';
+    foreach((array)$wp_registered_widgets[$widget_id]['classname'] as $cn)
+      if(is_string($cn)) $classname_ .= '_'.$cn; elseif(is_object($cn)) $classname_ .= '_'.get_class($cn);
 
-      // align classes?
-      //if($align) $params[0]['before_widget'] = str_replace('block', 'block align'.$align, $params[0]['before_widget']);
+    $classname_ = ltrim($classname_, '_');
+    $params[0]['before_widget'] = sprintf($params[0]['before_widget'], $widget_id, $classname_);
+    $params = apply_filters('dynamic_sidebar_params', $params);
 
-      // Substitute HTML id and class attributes into before_widget
-      $classname_ = '';
-      foreach((array)$wp_registered_widgets[$widget_id]['classname'] as $cn)
-        if(is_string($cn)) $classname_ .= '_'.$cn; elseif(is_object($cn)) $classname_ .= '_'.get_class($cn);
+    if(is_callable($callback))
+      call_user_func_array($callback, $params);
 
-      $classname_ = ltrim($classname_, '_');
-      $params[0]['before_widget'] = sprintf($params[0]['before_widget'], $widget_id, $classname_);
-      $params = apply_filters('dynamic_sidebar_params', $params);
-
-      if(is_callable($callback))
-        call_user_func_array($callback, $params);
-
-      // remove h3?
-      $widget_contents = $remove_title ? preg_replace('#<'.$remove_title.' class="title">(.*?)</'.$remove_title.'>#', '', ob_get_clean()) : ob_get_clean();
-
-      wp_cache_set("arbitrary_{$widget_id}", $widget_contents, ATOM);
-    }
+    // remove h3?
+    $widget_contents = $remove_title ? preg_replace('#<'.$remove_title.' class="title">(.*?)</'.$remove_title.'>#', '', ob_get_clean()) : ob_get_clean();
 
     return apply_filters('atom_widget', $widget_contents, $widget_id); // probably useless filter
   }
@@ -3067,10 +3042,6 @@ class Atom{
   */
   public function getAvatar($email, $size = 48, $default = '', $alt = false){
 
-    // if today is April 1st show a pony :)
-    if(date('m-d') == '04-01') return
-      '<img class="avatar" onclick="cornify_add();return false;" src="http://unicornify.appspot.com/avatar/'.md5($email).'?s='.$size.'" alt="One Trick Pony" title="One Trick Pony" width="'.$size.'" height="'.$size.'" /><script src="http://www.cornify.com/js/cornify.js"></script>';
-
     // if not, display the user's gravatar
     return get_avatar($email, $size, $default, $alt);
   }
@@ -3248,7 +3219,8 @@ class Atom{
       }
     }
 
-    if(!empty($links)) return "<div class=\"controls\">\n".implode("\n", $links)."</div>\n";
+    if(!empty($links))
+      return "<div class=\"controls\">\n".implode("\n", $links)."</div>\n";
   }
 
 
@@ -3512,7 +3484,7 @@ class Atom{
     // debug info?
     if($this->options('debug') && current_user_can('edit_theme_options') && !$this->previewMode()){
 
-      if(!ATOM_DEV_MODE && true == false){  // disabled for now... until the html5 validator is not experimental anymore :)
+      if(!ATOM_DEV_MODE && true === false){  // disabled for now... until the html5 validator is not experimental anymore :)
         // html validation
         $url = 'http://validator.w3.org/check?uri='.urlencode($this->getCurrentPageURL());
         $response = wp_remote_retrieve_body(wp_remote_request("{$url}&output=soap12"));
@@ -3586,8 +3558,7 @@ abstract class AtomObject{
     $getter = "get{$name}";
 
     if(method_exists($this, $getter)){
-       // note that this is 15 times slower than directly calling the method...
-       echo call_user_func_array(array(&$this, $getter), $args);
+       echo count($args) ? call_user_func_array(array($this, $getter), $args) : $this->$getter();
        return;
     }
 
@@ -3916,8 +3887,6 @@ class AtomObjectPost extends AtomObject{
     $post_format              = false,
     $post_title               = false,
     $post_url                 = false,
-    $post_content             = false,
-    $post_excerpt             = false,
     $post_author              = false,    // post author
     $post_thumb               = array(),  // caches requested thumb sizes
     $available_thumb_sizes    = array(),
@@ -3971,6 +3940,11 @@ class AtomObjectPost extends AtomObject{
         );
 
     }
+  }
+
+
+  public function getData(){
+    return $this->data;
   }
 
 
@@ -4645,7 +4619,6 @@ class AtomObjectPost extends AtomObject{
   * @return   string
   */
   public function getContent($mode = '', $options = array()){
-
     $limit = 0;
 
     $mode = $mode ? $mode : atom()->options('post_content_mode');
@@ -4672,18 +4645,11 @@ class AtomObjectPost extends AtomObject{
     $options = array_merge($defaults, $options);
 
     if($mode[0] == 'e'){
-      if($this->post_excerpt === false)
-        $this->post_excerpt = get_the_excerpt();
-
-      return $this->post_excerpt;
+      return in_the_loop() ? get_the_excerpt() : $this->data->post_excerpt;
 
     }else{
-      if($this->post_content === false){
-        $this->post_content = apply_filters('the_content', get_the_content());
-        $this->post_content = str_replace(']]>', ']]&gt;', $this->post_content);
-      }
-
-      return ($mode !== 'f') ? atom()->generateExcerpt($this->post_content, $options) : $this->post_content;
+      $content = in_the_loop() ? str_replace(']]>', ']]&gt;', apply_filters('the_content', get_the_content())) : get_the_content();
+      return ($mode !== 'f') ? atom()->generateExcerpt($content, $options) : $content;
     }
   }
 
@@ -5819,8 +5785,7 @@ class AtomMod{
     $getter = "get{$name}";
 
     if(method_exists($this, $getter)){
-      // note that this is 15 times slower than directly calling the method...
-      echo call_user_func_array(array(&$this, $getter), $args);
+      echo count($args) ? call_user_func_array(array($this, $getter), $args) : $this->$getter();
       return;
     }
 

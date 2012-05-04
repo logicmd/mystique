@@ -1,3 +1,4 @@
+
 /**
  * jQuery extensions used by Atom.
  * The ones that are minified are original (unmodified) versions.
@@ -129,7 +130,7 @@ b*(7.5625*(a-=2.25/2.75)*a+0.9375)+c:b*(7.5625*(a-=2.625/2.75)*a+0.984375)+c},ea
           //   </div>
 
           var tabs = $(this),
-              instance = tabs.attr('id');
+              instance = this.id;
 
           $('.section', tabs).css({'position' : 'absolute', 'width': '100%'});
           $('.sections', tabs).css('height', $('#' + $('.navi li.active a', tabs).attr('href'), tabs).outerHeight(true));
@@ -173,7 +174,7 @@ b*(7.5625*(a-=2.25/2.75)*a+0.9375)+c:b*(7.5625*(a-=2.625/2.75)*a+0.984375)+c},ea
 
           // override if tab is present in hash (URL)
           $('.navi li a', tabs).each(function(){
-            if(window.location.hash == $(this).attr('href'))
+            if(window.location.hash == this.href)
               $(this).trigger(tabs.data('event') || 'click');
           });
 
@@ -316,7 +317,7 @@ b*(7.5625*(a-=2.25/2.75)*a+0.9375)+c:b*(7.5625*(a-=2.625/2.75)*a+0.984375)+c},ea
       },
 
       // show/hide a element
-      // the link's rel attribute should contain the target element ID to toggle
+      // the link's target data attribute should contain the target element ID to toggle
       toggleVisibility: function(){
         return this.live('click', function(event){
           event.preventDefault();
@@ -334,7 +335,7 @@ b*(7.5625*(a-=2.25/2.75)*a+0.9375)+c:b*(7.5625*(a-=2.625/2.75)*a+0.984375)+c},ea
       webShots: function(){
         return this.each(function(i){
           var title = $(this).attr('title'),
-              url = 'http://s.wordpress.com/mshots/v1/' + encodeURIComponent($(this).attr('href')) + '?w=400',
+              url = 'http://s.wordpress.com/mshots/v1/' + encodeURIComponent(this.href) + '?w=400',
               // defaultimg = 'http://s.wordpress.com/wp-content/plugins/mshots/default.gif',
               webshot = $('<div class="webshot" id="webshot-' + i + '"><img src="' + url + '" width="400" alt="' + title + '" /></div>').hide().appendTo(document.body),
               fadeAmt = $('body').hasClass('no-fx') ? 0 : 333;
@@ -1062,7 +1063,7 @@ b*(7.5625*(a-=2.25/2.75)*a+0.9375)+c:b*(7.5625*(a-=2.625/2.75)*a+0.984375)+c},ea
       showMoreControl: function(){
         return this.click(function(event){
 
-          var block = $(this).parents('.block'),
+          var block = $(this).closest('.block'),
               link = $(this),
               oldTitle = $(this).html();
 
@@ -1165,7 +1166,7 @@ b*(7.5625*(a-=2.25/2.75)*a+0.9375)+c:b*(7.5625*(a-=2.625/2.75)*a+0.984375)+c},ea
 
             event.preventDefault();
 
-            var data = $(this).attr('id'),
+            var data = this.id,
                 pos = data.lastIndexOf('-'),
                 targetID = data.substr(++pos);
 
@@ -1413,6 +1414,8 @@ b*(7.5625*(a-=2.25/2.75)*a+0.9375)+c:b*(7.5625*(a-=2.625/2.75)*a+0.984375)+c},ea
           _abort();
 
           cfg = $.extend({
+            padding              : 10,
+            margin               : 40,
             opacity              : false,
             cyclic               : false,
             scrolling            : 'auto',	// 'auto', 'yes' or 'no'
@@ -1465,7 +1468,7 @@ b*(7.5625*(a-=2.25/2.75)*a+0.9375)+c:b*(7.5625*(a-=2.625/2.75)*a+0.984375)+c},ea
           if(title === '' && cfg.orig && cfg.titleFromAlt)
             title = cfg.orig.attr('alt');
 
-          href = cfg.href || (obj.nodeName ? $(obj).attr('href') : obj.href) || null;
+          href = cfg.href || obj.href || null;
 
           if((/^(?:javascript)/i).test(href) || href == '#')
             href = null;
@@ -1481,9 +1484,11 @@ b*(7.5625*(a-=2.25/2.75)*a+0.9375)+c:b*(7.5625*(a-=2.625/2.75)*a+0.984375)+c},ea
 
           cfg.href = href;
           cfg.title = title;
-          padding = (content.outerWidth() - content.width()) / 2;
 
-          tmp.css('padding', padding);
+          cfg.padding = parseInt(cfg.padding, 10);
+          cfg.margin = parseInt(cfg.margin, 10);
+
+          tmp.css('padding', (cfg.padding + cfg.margin));
 
           $('.fb-inline-tmp').unbind('fb-cancel').bind('fb-change', function(){
             $(this).replaceWith(content.children());
@@ -1545,13 +1550,13 @@ b*(7.5625*(a-=2.25/2.75)*a+0.9375)+c:b*(7.5625*(a-=2.625/2.75)*a+0.984375)+c},ea
           var w = cfg.width, h = cfg.height;
 
           if(w.toString().indexOf('%') > -1)
-            w = parseInt($(window).width() * parseFloat(w) / 100, 10) + 'px';
+            w = parseInt( ($(window).width() - (cfg.margin * 2)) * parseFloat(w) / 100, 10) + 'px';
 
           else
             w = w == 'auto' ? 'auto' : w + 'px';
 
           if(h.toString().indexOf('%') > -1)
-            h = parseInt($(window).height() * parseFloat(h) / 100, 10) + 'px';
+            h = parseInt( ($(window).height() - (cfg.margin * 2)) * parseFloat(h) / 100, 10) + 'px';
 
           else
             h = h == 'auto' ? 'auto' : h + 'px';
@@ -1625,9 +1630,9 @@ b*(7.5625*(a-=2.25/2.75)*a+0.9375)+c:b*(7.5625*(a-=2.625/2.75)*a+0.984375)+c},ea
             pos = wrap.position(),
 
             start_pos = {
-              top	 : pos.top,
-              left : pos.left,
-              width : wrap.width(),
+              top    : pos.top,
+              left   : pos.left,
+              width  : wrap.width(),
               height : wrap.height()
             };
 
@@ -1644,8 +1649,9 @@ b*(7.5625*(a-=2.25/2.75)*a+0.9375)+c:b*(7.5625*(a-=2.625/2.75)*a+0.984375)+c},ea
               content
                 .empty()
                 .css({
-                  'width': final_pos.width - padding * 2,
-                  'height': (cfg.type == 'ajax') ? 'auto' : final_pos.height - titleHeight - padding * 2
+                  'border-width' : currentOpts.padding,
+                  'width': final_pos.width - currentOpts.padding * 2,
+                  'height': (cfg.type == 'ajax') ? 'auto' : final_pos.height - titleHeight - currentOpts.padding * 2
                 });
 
               if(equal){
@@ -1667,6 +1673,7 @@ b*(7.5625*(a-=2.25/2.75)*a+0.9375)+c:b*(7.5625*(a-=2.625/2.75)*a+0.984375)+c},ea
           }
 
           wrap.removeAttr('style');
+          content.css('border-width', currentOpts.padding);
 
           if(currentOpts.transitionIn == 'elastic'){
 
@@ -1693,8 +1700,8 @@ b*(7.5625*(a-=2.25/2.75)*a+0.9375)+c:b*(7.5625*(a-=2.625/2.75)*a+0.984375)+c},ea
             title.show();
 
           content.css({
-            'width': final_pos.width - padding * 2,
-            'height': (cfg.type == 'ajax') ? 'auto' : final_pos.height - titleHeight - padding * 2
+            'width': final_pos.width - currentOpts.padding * 2,
+            'height': (cfg.type == 'ajax') ? 'auto' : final_pos.height - titleHeight - currentOpts.padding * 2
           }).html(tmp.contents());
 
           wrap.css(final_pos).fadeIn(currentOpts.transitionIn == 'none' ? 0 : currentOpts.speedIn, _finish);
@@ -1738,9 +1745,9 @@ b*(7.5625*(a-=2.25/2.75)*a+0.9375)+c:b*(7.5625*(a-=2.625/2.75)*a+0.984375)+c},ea
 
           title
             .css({
-              'width' : final_pos.width - (padding * 2),
-              'marginLeft' : padding,
-              'marginRight' : padding
+              'width' : final_pos.width - (currentOpts.padding * 2),
+              'marginLeft' : currentOpts.padding,
+              'marginRight' : currentOpts.padding
           });
 
           titleHeight = title.outerHeight(true);
@@ -1846,22 +1853,22 @@ b*(7.5625*(a-=2.25/2.75)*a+0.9375)+c:b*(7.5625*(a-=2.625/2.75)*a+0.984375)+c},ea
           wrap.css(dim);
 
           content.css({
-            'width': dim.width - padding * 2,
-            'height': dim.height - (titleHeight * pos) - padding * 2
+            'width': dim.width - currentOpts.padding * 2,
+            'height': dim.height - (titleHeight * pos) - currentOpts.padding * 2
           });
         },
 
         _get_viewport = function(){
           return [
-            $(window).width(),
-            $(window).height(),
-            $(document).scrollLeft(),
-            $(document).scrollTop()
+            $(window).width() - (currentOpts.margin * 2),
+            $(window).height() - (currentOpts.margin * 2),
+            $(document).scrollLeft() + currentOpts.margin,
+            $(document).scrollTop() + currentOpts.margin
           ];
         },
 
         _get_zoom_to = function(){
-          var view = _get_viewport(), to = {}, resize = true, double_padding = padding * 2, ratio;
+          var view = _get_viewport(), to = {}, resize = true, double_padding = currentOpts.padding * 2, ratio;
 
           to.width = (currentOpts.width.toString().indexOf('%') > -1) ? parseInt((view[0] * parseFloat(currentOpts.width)) / 100, 10) : currentOpts.width + double_padding;
           to.height = (currentOpts.height.toString().indexOf('%') > -1) ? parseInt((view[1] * parseFloat(currentOpts.height)) / 100, 10) : currentOpts.height + double_padding;
@@ -1908,18 +1915,18 @@ b*(7.5625*(a-=2.25/2.75)*a+0.9375)+c:b*(7.5625*(a-=2.625/2.75)*a+0.984375)+c},ea
             pos = _get_obj_pos(orig);
 
             from = {
-              width: pos.width + (padding * 2),
-              height: pos.height + (padding * 2),
-              top: pos.top - padding - 20,
-              left: pos.left - padding - 20
+              width: pos.width + (currentOpts.padding * 2),
+              height: pos.height + (currentOpts.padding * 2),
+              top: pos.top - currentOpts.padding - 20,
+              left: pos.left - currentOpts.padding - 20
             };
 
           }else{
             view = _get_viewport();
 
             from = {
-              width: padding * 2,
-              height: padding * 2,
+              width: currentOpts.padding * 2,
+              height: currentOpts.padding * 2,
               top: parseInt(view[3] + view[1] * 0.5, 10),
               left: parseInt(view[2] + view[0] * 0.5, 10)
             };
@@ -2054,8 +2061,8 @@ b*(7.5625*(a-=2.25/2.75)*a+0.9375)+c:b*(7.5625*(a-=2.625/2.75)*a+0.984375)+c},ea
           wrap
             .stop()
             .animate({
-              'top' : parseInt(Math.max(view[3] - 20, view[3] + ((view[1] - content.height() - 40) * 0.5) - padding)),
-              'left' : parseInt(Math.max(view[2] - 20, view[2] + ((view[0] - content.width() - 40) * 0.5) - padding))
+              'top' : parseInt(Math.max(view[3] - 20, view[3] + ((view[1] - content.height() - 40) * 0.5) - currentOpts.padding)),
+              'left' : parseInt(Math.max(view[2] - 20, view[2] + ((view[0] - content.width() - 40) * 0.5) - currentOpts.padding))
             }, typeof arguments[0] == 'number' ? arguments[0] : 200);
         };
 
@@ -2269,7 +2276,7 @@ jQuery(document).ready(function($){
 
         $('.block a.more').atom('showMoreControl');
 
-        $('.nav ul.menu, nav > ul, .tabs > .navi').atom('superfish');
+        $('.nav ul.menu, nav > ul').atom('superfish');   // add .tabs > .navi too ?
         $('a.screenshot').atom('webShots');
         $('.accordion, .collapsible').atom('collapsibleMenu');
         $('.toggle').atom('toggleVisibility');
@@ -2367,15 +2374,15 @@ jQuery(document).ready(function($){
           var oldTitle = $(this).html();
 
           $.ajax({
-            url: $(this).attr('href'),
-            type: 'GET',
+            url: this.href,
+            type: 'POST',
             data: { atom: 'content_only' },
             context: this,
             beforeSend: function(){ $(this).addClass('loading').html(''); },
             success: function(data){
               $(data).find('#primary-content .posts .hentry').hide().appendTo($('.posts')).fadeIn(333);
               var new_page = $(data).find('#primary-content .page-navi.single a').attr('href');
-              new_page ? $(this).attr('href', new_page.split('?')[0]).removeClass('loading').html(oldTitle) : $(this).remove();
+              new_page ? $(this).attr('href', new_page).removeClass('loading').html(oldTitle) : $(this).remove();
             }
           });
         });
@@ -2403,12 +2410,12 @@ jQuery(document).ready(function($){
         });
         /**/
 
-        // fix for z-index issues with youtube movies
+        // attempt to fix z-index issues with youtube movies
         $('iframe[src*="youtube.com"]').each(function(){
           this.src += (this.src.indexOf('?') !== -1) ? '&wmode=Opaque' : '?wmode=Opaque';
         });
 
-        // older fix
+        // fix for older embed code
         $('[type="application/x-shockwave-flash"]').append('<param name="wMode" value="transparent" />');
 
       };
@@ -2417,5 +2424,3 @@ jQuery(document).ready(function($){
   $(document).bind('atom_ready', atom_init).trigger('atom_ready');
 
 });
-
-

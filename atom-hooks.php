@@ -46,6 +46,7 @@ function atom_register_hooks(){
     add_filter('manage_media_columns',          'atom_featured_column_title');
     add_filter('manage_posts_custom_column',    'atom_posts_column_content', 10, 2);
     add_filter('manage_media_custom_column',    'atom_media_column_content', 10, 2);
+    add_action('post_submitbox_misc_actions',   'atom_publish_action_featured');
 
     add_action('wp_ajax_process_featured',      'atom_process_featured');
 
@@ -145,7 +146,11 @@ function atom_register_hooks(){
   add_filter('query_vars',          'atom_query_vars');
   add_filter('pre_get_posts',       'atom_main_query_args');
 
+  // wp applies the_content filter even if outside the loop,
+  // and stupid wp plugins don't bother to handle this...
+  remove_filter('get_the_excerpt', 'wp_trim_excerpt');
   add_filter('get_the_excerpt',     'atom_trim_excerpt', -10);
+
 
   Atom::action('init');
   return true;
@@ -356,9 +361,11 @@ function atom_body_class($classes){
     $classes[] = atom()->options('page_width'); // fluid/fixed
   }
 
-  // custom background image (used for theme preview)
-  if(Atom::previewMode() && atom()->options('background_image'))
-    $classes[] = atom()->options('custom-bg');
+  if(atom()->options('background_image'))
+    $classes[] = 'cbgi';
+
+  if(atom()->options('background_color'))
+    $classes[] = 'cbgc';
 
   // detect browser
   if($is_lynx) $browser = 'lynx';
@@ -827,32 +834,39 @@ function atom_check_js(){
  */
 function atom_admin_assets($page){
 
-  wp_enqueue_style(ATOM.'-settings', atom()->get('theme_url').'/css/admin.css');
+  $app = atom();
+
+  wp_enqueue_style(ATOM.'-settings', $app->get('theme_url').'/css/admin.css');
 
   // only load these on specific pages -- maybe we should load them on all pages?
-  if(in_array($page, array('widgets.php', 'edit.php', 'upload.php', 'appearance_page_'.ATOM))){
+  if(in_array($page, array('post.php', 'post-new.php', 'widgets.php', 'edit.php', 'upload.php', 'appearance_page_'.ATOM))){
 
     wp_enqueue_script('jquery');
     wp_enqueue_script('jquery-ui-core');
-    wp_enqueue_script('post-message', atom()->jsURL('pm'));
-    wp_enqueue_script('codemirror', atom()->jsURL('codemirror'));
-    wp_enqueue_script('atom-interface', atom()->jsURL('admin'), array('jquery', 'jquery-ui-core', 'post-message', 'codemirror'), atom()->getThemeVersion(), true);
 
-    wp_localize_script('atom-interface', 'atom_config', atom()->getContextArgs('atom_config_js', array(
+    // we need to prepend our prefix to codemirror because the one used by plugins (if such a plugin is present) will most likely not work here
+    wp_enqueue_script('atom-codemirror', $app->jsURL('codemirror'), $app->getThemeVersion(), true);
+    wp_enqueue_script('atom-preview', $app->jsURL('theme-preview'), array('jquery'), $app->getThemeVersion(), true);
+    wp_enqueue_script('atom-interface', $app->jsURL('admin'), array('jquery', 'jquery-ui-core', 'atom-codemirror'), $app->getThemeVersion(), true);
+
+    $atom_config = array(
       'id'                        => ATOM,
-      'label_loading'             => atom()->t('Loading...'),
-      'label_visibility_show'     => atom()->t('Show Page Visibility Options'),
-      'label_visibility_hide'     => atom()->t('Hide Page Visibility Options'),
-      'label_checking'            => atom()->t('Checking...'),
-      'label_design_panel_error'  => atom()->t('It appears that your home page has javascript errors on it. Deactivate all plugins, then activate them back one by one to find out which one is causing errors.'),
-      'label_uploading'           => atom()->t('Uploading'),
-      'label_try_another'         => atom()->t('Try Another Image?'),
-      'label_change_image'        => atom()->t('Change Image'),
-      'label_upload_image'        => atom()->t('Upload Image'),
-    )));
+      'preview_mode'              => false,
+      'label_loading'             => $app->t('Loading...'),
+      'label_visibility_show'     => $app->t('Show Page Visibility Options'),
+      'label_visibility_hide'     => $app->t('Hide Page Visibility Options'),
+      'label_checking'            => $app->t('Checking...'),
+      'label_design_panel_error'  => $app->t('It appears that your home page has javascript errors on it. Deactivate all plugins, then activate them back one by one to find out which one is causing errors.'),
+      'label_uploading'           => $app->t('Uploading'),
+      'label_try_another'         => $app->t('Try Another Image?'),
+      'label_change_image'        => $app->t('Change Image'),
+      'label_upload_image'        => $app->t('Upload Image'),
+    );
+
+    wp_localize_script('atom-interface', 'atom_config', $app->getContextArgs('atom_config_js', $atom_config));
 
     // extra assets, registered by modules etc.
-    $assets = atom()->getContextArgs('interface_assets');
+    $assets = $app->getContextArgs('interface_assets');
 
     if(isset($assets['script']))
       foreach($assets['script'] as $args)
@@ -862,7 +876,7 @@ function atom_admin_assets($page){
       foreach($assets['style'] as $args)
         call_user_func_array('wp_enqueue_style', $args);
 
-    atom()->action('admin_js');
+    $app->action('admin_js');
   }
 }
 
@@ -1185,15 +1199,15 @@ function atom_inline_css(){
   }
 
   // background image
-  if(atom()->OptionExists('background_image') && $s['background_image'])
-    $css[] = $s['background_image_selector'].'{background-image:url("'.$s['background_image'].'");}';
+  if(atom()->OptionExists('background_image') && $s['background_image']){
+    $selector = $s['background_image_selector'] === 'body' ? '' : $s['background_image_selector'];
+    $css[] = 'body.cbgi '.$selector.'{background-image:url("'.$s['background_image'].'");}';
+  }
 
   // background color
-  if(atom()->OptionExists('background_color') && ($s['background_color']) && ($s['background_color'] != '000000')){
-    $css[] = $s['background_color_selector'].'{background-color:#'.$s['background_color'].';}';
-
-    if(empty($s['background_image']))
-      $css[] = $s['background_image_selector'].'{background-image:none;}';
+  if(atom()->OptionExists('background_color') && ($s['background_color'])){
+    $selector = $s['background_color_selector'] === 'body' ? '' : $s['background_color_selector'];
+    $css[] = 'body.cbgc '.$selector.'{background-color:#'.$s['background_color'].';}';
   }
 
   // extra css may be added by plugins etc.
@@ -1233,29 +1247,33 @@ function atom_inline_css(){
 function atom_assets(){
 
   $theme = ATOM;
+  $app = atom();
 
-  atom()->action('js');
-  atom()->action('css');
+  $app->action('js');
+  $app->action('css');
 
-  if(atom()->options('jquery')){
+  if($app->options('jquery')){
 
     // load google's jquery, should be faster theoretically
-    if(!ATOM_DEV_MODE && atom()->options('optimize')){
+    if(!ATOM_DEV_MODE && $app->options('optimize')){
       wp_deregister_script('jquery');
-      wp_register_script('jquery', ('https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js'));
+      wp_register_script('jquery', ('https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js'));
     }
 
     // jquery
     wp_enqueue_script('jquery');
 
     // jquery plugins
-    wp_enqueue_script($theme, atom()->jsURL('jquery.atom'), array('jquery'), atom()->getThemeVersion(), true);
+    wp_enqueue_script($theme, $app->jsURL('jquery.atom'), array('jquery'), $app->getThemeVersion(), true);
+
+    if($app->previewMode())
+      wp_enqueue_script('theme-preview', $app->jsURL('theme-preview'), array('jquery', $theme));
 
     // send relevant option configuration to atom.js
     $js_options = array('effects', 'lightbox', 'generate_thumbs');
 
     foreach($js_options as $index => $option)
-      if(!atom()->options($option))
+      if(!$app->options($option))
         unset($js_options[$index]);
 
     // get search query, if any
@@ -1273,45 +1291,41 @@ function atom_assets(){
 
     // wp_localize_script should escape any js characters
     $args = array(
+      'id'           => ATOM,
       'blog_url'     => home_url('/'),
+      'theme_url'    => $app->getThemeURL(),
       'context'      => $context,
+      'preview_mode' => $app->previewMode(),
       'search_query' => $search_query,
       'options'      => implode('|', $js_options),
     );
 
     wp_localize_script($theme, 'atom_config', apply_filters('atom_config_js', $args));
-
-    // post-message
-    if(atom()->previewMode()){
-      wp_enqueue_script('post-message', atom()->jsURL('pm'), array('jquery'), atom()->getThemeVersion(), true);
-      require TEMPLATEPATH.'/js/theme-preview.js.php';
-    }
-
   }
 
   // determine if we have a color scheme, and enqueue it
-  if(atom()->optionExists('color_scheme')){
+  if($app->optionExists('color_scheme')){
 
     // custom field -- highest priority
     if(is_singular())
-      $style = atom()->post->getMeta('style');
+      $style = $app->post->getMeta('style');
 
     // theme settings - lowest priority
     if(empty($style))
-      $style = atom()->options('color_scheme');
+      $style = $app->options('color_scheme');
 
     if($style)
-      wp_enqueue_style("{$theme}-style", atom()->get('theme_url').'/css/style-'.$style.'.css', array("{$theme}-core"), atom()->getThemeVersion());
+      wp_enqueue_style("{$theme}-style", $app->get('theme_url').'/css/style-'.$style.'.css', array("{$theme}-core"), $app->getThemeVersion());
 
   }
 
   // enqueue the core if we don't have a color scheme option, or if we have it, but it's set to blank (which suggests the user wants custom css)
-  if((atom()->optionExists('color_scheme') && !empty($style)) || !atom()->optionExists('color_scheme'))
-    wp_enqueue_style("{$theme}-core", atom()->get('theme_url').'/css/core.css', array(), atom()->getThemeVersion());
+  if(($app->optionExists('color_scheme') && !empty($style)) || !$app->optionExists('color_scheme'))
+    wp_enqueue_style("{$theme}-core", $app->get('theme_url').'/css/core.css', array(), $app->getThemeVersion());
 
   // enqueue child theme css, if this is a child theme
   if(is_child_theme())
-    wp_enqueue_style($theme, get_stylesheet_uri(), array(), atom()->getThemeVersion());
+    wp_enqueue_style($theme, get_stylesheet_uri(), array(), $app->getThemeVersion());
 
 }
 
@@ -1615,9 +1629,12 @@ function atom_trim_excerpt($text){
   if(empty($text)){
     $text = get_the_content();
     $text = strip_shortcodes($text);
-    $text = apply_filters('the_content', $text);
+
+    if(in_the_loop())
+      $text = apply_filters('the_content', $text);
+
     $text = str_replace(']]>', ']]&gt;', $text);
-    $text = Atom::generateExcerpt($text, atom()->getContextArgs('auto_excerpt', array(
+    $text = atom()->generateExcerpt($text, atom()->getContextArgs('auto_excerpt', array(
        'limit'         => 300,      // apply_filters('excerpt_length', 55)
        'cutoff'        => 'word',
        'allowed_tags'  => array(),
@@ -2469,7 +2486,7 @@ function atom_posts_column_content($column_name, $id){
 
   $posts = wp_parse_id_list(get_option('featured_posts'));
   ?>
-  <a href="#" rel="post" id="featured-<?php echo $id; ?>" class="feature <?php echo in_array($id, $posts) ? 'on' : 'off'; ?>"></a>
+  <a href="#" data-type="post" data-post="<?php echo $id; ?>" class="feature <?php echo in_array($id, $posts) ? 'on' : 'off'; ?>"></a>
   <?php
 }
 
@@ -2488,7 +2505,31 @@ function atom_media_column_content($column_name, $id){
   if($column_name !== 'featured' || strpos(get_post_mime_type($id), 'image/') === false) return;
   $posts = wp_parse_id_list(get_option('featured_media'));
   ?>
-  <a href="#" rel="attachment" id="featured-<?php echo $id; ?>" class="feature <?php echo in_array($id, $posts) ? 'on' : 'off'; ?>"></a>
+  <a href="#" data-type="attachment" data-post="<?php echo $id; ?>" class="feature <?php echo in_array($id, $posts) ? 'on' : 'off'; ?>"></a>
+  <?php
+}
+
+
+
+/**
+ * Featured post status / publish action
+ *
+ * @since 2.0
+ */
+function atom_publish_action_featured(){
+
+  if(get_post_type() !== 'post') return;
+
+  $featured = get_option('featured_posts');
+  $featured = $featured ? wp_parse_id_list($featured) : array();
+
+  ?>
+  <div class="feature-section misc-pub-section curtime misc-pub-section-last">
+    <a class="feature <?php echo in_array(get_the_ID(), $featured) ? 'on' : 'off'; ?>" data-type="post" data-post="<?php echo get_the_ID(); ?>">
+      <span></span><?php atom()->te('Make this post featured'); ?>
+    </a>
+  </div>
+
   <?php
 }
 
@@ -2523,3 +2564,7 @@ function atom_theme_install_notification(){ ?>
   </div>
   <?php
 }
+
+
+
+

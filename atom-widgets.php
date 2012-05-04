@@ -81,7 +81,7 @@ abstract class AtomWidget extends WP_Widget{
     // default ajax show-more-content control
     if(isset($ajax_control)){
       $this->ajax_control = $ajax_control;
-      atom()->add('requests', array(&$this, 'ajaxControl'));
+      atom()->add('requests', array($this, 'ajaxControl'));
     }
 
   }
@@ -500,20 +500,22 @@ class AtomWidgetArchives extends AtomWidget{
     ));
 
     // flush cache when posts are changed
-    add_action('save_post',       array(&$this, 'flushCache'));
-    add_action('deleted_post',    array(&$this, 'flushCache'));
+    add_action('save_post',       array($this, 'flushCache'));
+    add_action('deleted_post',    array($this, 'flushCache'));
 
     // include CPT in main query
-    add_action('pre_get_posts',   array(&$this, 'includeCPTinArchives'), -999);
+    add_action('pre_get_posts',   array($this, 'includeCPTinArchives'), -999);
   }
 
 
 
   public function includeCPTinArchives(){
     if(is_archive()){
-      $post_type = get_query_var('post_type');
 
-      if($post_type && post_type_exists($post_type))
+      $post_type = get_query_var('post_type');
+      $post_type = is_array($post_type) ? array_filter($post_type, 'post_type_exists') : (post_type_exists($post_type) ? $post_type : false);
+
+      if($post_type)
         atom()->addContextArgs('main_query', array('post_type' => $post_type));
 
     }
@@ -755,7 +757,7 @@ class AtomWidgetArchives extends AtomWidget{
 
       <p>
        <label for="<?php echo $this->get_field_id('post_type'); ?>"><?php atom()->te('Post Type:'); ?></label>
-       <select id="<?php echo $this->get_field_id('post_type'); ?>" name="<?php echo $this->get_field_name('post_type'); ?>" class="wide" followRules>
+       <select id="<?php echo $this->get_field_id('post_type'); ?>" name="<?php echo $this->get_field_name('post_type'); ?>" class="wide">
          <?php foreach(get_post_types(array('public' => true)) as $post_type): ?>
           <?php $data = get_post_type_object($post_type); ?>
           <option value="<?php echo esc_attr($post_type); ?>" <?php selected($instance['post_type'], $post_type); ?>><?php echo $data->label; ?></option>
@@ -853,7 +855,7 @@ class AtomWidgetBlogs extends AtomWidget{
 
 
     // flush cache when blog is updated
-    add_action('wpmu_blog_updated',  array(&$this, 'flushCache'));
+    add_action('wpmu_blog_updated',  array($this, 'flushCache'));
   }
 
 
@@ -1066,20 +1068,22 @@ class AtomWidgetCalendar extends AtomWidget{
     ));
 
     // flush cache when posts are changed
-    add_action('save_post',       array(&$this, 'flushCache'));
-    add_action('deleted_post',    array(&$this, 'flushCache'));
+    add_action('save_post',       array($this, 'flushCache'));
+    add_action('deleted_post',    array($this, 'flushCache'));
 
     // include CPT in main query
-    add_action('pre_get_posts',   array(&$this, 'includeCPTinArchives'), -999);
+    add_action('pre_get_posts',   array($this, 'includeCPTinArchives'), -999);
   }
 
 
 
   public function includeCPTinArchives(){
     if(is_archive()){
-      $post_type = get_query_var('post_type');
 
-      if($post_type && post_type_exists($post_type))
+      $post_type = get_query_var('post_type');
+      $post_type = is_array($post_type) ? array_filter($post_type, 'post_type_exists') : (post_type_exists($post_type) ? $post_type : false);
+
+      if($post_type)
         atom()->addContextArgs('main_query', array('post_type' => $post_type));
 
     }
@@ -1395,7 +1399,7 @@ class AtomWidgetCalendar extends AtomWidget{
 
       <p>
        <label for="<?php echo $this->get_field_id('post_type'); ?>"><?php atom()->te('Post Type:'); ?></label>
-       <select id="<?php echo $this->get_field_id('post_type'); ?>" name="<?php echo $this->get_field_name('post_type'); ?>" class="wide" followRules>
+       <select id="<?php echo $this->get_field_id('post_type'); ?>" name="<?php echo $this->get_field_name('post_type'); ?>" class="wide">
          <?php foreach(get_post_types(array('public' => true)) as $post_type): ?>
           <?php $data = get_post_type_object($post_type); ?>
           <option value="<?php echo esc_attr($post_type); ?>" <?php selected($instance['post_type'], $post_type); ?>><?php echo $data->label; ?></option>
@@ -1885,7 +1889,7 @@ class AtomWidgetLogin extends AtomWidget{
       ),
     ));
 
-    atom()->add('requests', array(&$this, 'login'));
+    atom()->add('requests', array($this, 'login'));
   }
 
 
@@ -2616,22 +2620,22 @@ class AtomWidgetPages extends AtomWidget{
       <div class="high-priority-block">
         <p><strong><?php atom()->te("Display:"); ?></strong></p>
         <label for="<?php echo $this->get_field_id('type'); ?>_all">
-          <input id="<?php echo $this->get_field_id('type'); ?>_all" followRules name="<?php echo $this->get_field_name('type'); ?>" value="all" type="radio" <?php checked($instance['type'], 'all'); ?> />
+          <input id="<?php echo $this->get_field_id('type'); ?>_all" name="<?php echo $this->get_field_name('type'); ?>" value="all" type="radio" <?php checked($instance['type'], 'all'); ?> />
           <?php atom()->te('All Pages'); ?>
         </label>
         <br />
         <label for="<?php echo $this->get_field_id('type'); ?>_sub">
-          <input id="<?php echo $this->get_field_id('type'); ?>_sub" followRules name="<?php echo $this->get_field_name('type'); ?>" value="sub" type="radio" <?php checked($instance['type'], 'sub'); ?> />
+          <input id="<?php echo $this->get_field_id('type'); ?>_sub" name="<?php echo $this->get_field_name('type'); ?>" value="sub" type="radio" <?php checked($instance['type'], 'sub'); ?> />
           <?php atom()->te('Children of the active page'); ?>
         </label>
         <br />
-        <input style="margin-left: 20px;" id="<?php echo $this->get_field_id('root'); ?>" name="<?php echo $this->get_field_name('root'); ?>" type="checkbox" <?php checked(isset($instance['root']) ? $instance['root'] : 0); ?> followRules rules="DEPENDS ON <?php echo $this->get_field_name('type'); ?> BEING sub" />
+        <input style="margin-left: 20px;" id="<?php echo $this->get_field_id('root'); ?>" name="<?php echo $this->get_field_name('root'); ?>" type="checkbox" <?php checked(isset($instance['root']) ? $instance['root'] : 0); ?> rules="<?php echo $this->get_field_name('type'); ?>:sub" />
         <label for="<?php echo $this->get_field_id('root'); ?>"><?php atom()->te('Start from root'); ?></label>
 
 
         <br />
         <label for="<?php echo $this->get_field_id('type'); ?>_child">
-          <input id="<?php echo $this->get_field_id('type'); ?>_child" name="<?php echo $this->get_field_name('type'); ?>" followRules value="child" type="radio" <?php checked($instance['type'], 'child'); ?> />
+          <input id="<?php echo $this->get_field_id('type'); ?>_child" name="<?php echo $this->get_field_name('type'); ?>" value="child" type="radio" <?php checked($instance['type'], 'child'); ?> />
           <?php atom()->te('Children of:'); ?>
         </label>
         <br />
@@ -2642,7 +2646,7 @@ class AtomWidgetPages extends AtomWidget{
            'selected'         => (int)$instance['child_of'],
            'orderby'          => 'menu_order',
            'hierarchical'     => 1,
-           'extra_attributes' => 'style="margin-left: 20px;" followRules rules="DEPENDS ON '.$this->get_field_name('type').' BEING child"',
+           'extra_attributes' => 'style="margin-left: 20px;" rules="'.$this->get_field_name('type').':child"',
          ));
         ?>
 
@@ -2769,11 +2773,11 @@ class AtomWidgetPosts extends AtomWidget{
     ));
 
     // register thumbnail size
-    add_action('wp_loaded',       array(&$this, 'setThumbSize'));
+    add_action('wp_loaded',       array($this, 'setThumbSize'));
 
     // flush cache when posts are changed
-    add_action('save_post',       array(&$this, 'flushCache'));
-    add_action('deleted_post',    array(&$this, 'flushCache'));
+    add_action('save_post',       array($this, 'flushCache'));
+    add_action('deleted_post',    array($this, 'flushCache'));
   }
 
 
@@ -3008,7 +3012,7 @@ class AtomWidgetPosts extends AtomWidget{
       <?php if(atom()->get('swc')): // only on mu + atom-swc ?>
       <div class="high-priority-block">
 
-         <input type="checkbox" id="<?php echo $this->get_field_id('site_wide'); ?>" name="<?php echo $this->get_field_name('site_wide'); ?>" <?php checked($site_wide); ?> followRules />
+         <input type="checkbox" id="<?php echo $this->get_field_id('site_wide'); ?>" name="<?php echo $this->get_field_name('site_wide'); ?>" <?php checked($site_wide); ?> />
          <label for="<?php echo $this->get_field_id('site_wide'); ?>"><strong><?php atom()->te('Network (site-wide) content'); ?></strong></label>
          <br />
          <em style="margin-left:15px;">(<?php atom()->te('Get posts from all network blogs'); ?>)</em>
@@ -3019,12 +3023,12 @@ class AtomWidgetPosts extends AtomWidget{
         <div class="section alignleft">
           <p>
            <label for="<?php echo $this->get_field_id('title'); ?>"><?php atom()->te('Title:'); ?></label>
-           <input class="wide" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php $title; ?>" />
+           <input class="wide" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo $title; ?>" />
           </p>
 
           <p>
            <label for="<?php echo $this->get_field_id('post_type'); ?>"><?php atom()->te('Post Type:'); ?></label>
-           <select id="<?php echo $this->get_field_id('post_type'); ?>" name="<?php echo $this->get_field_name('post_type'); ?>" class="wide" followRules>
+           <select id="<?php echo $this->get_field_id('post_type'); ?>" name="<?php echo $this->get_field_name('post_type'); ?>" class="wide">
              <?php foreach(get_post_types(array('public' => true)) as $cpt): ?>
               <option value="<?php echo esc_attr($cpt); ?>" <?php selected($post_type, $cpt); ?>><?php echo get_post_type_object($cpt)->label; ?></option>
              <?php endforeach; ?>
@@ -3054,7 +3058,7 @@ class AtomWidgetPosts extends AtomWidget{
               'show_count'        => 1,
               'class'             => 'wide',
               'hierarchical'      => 1,
-              'extra_attributes'  => 'followRules rules="DEPENDS ON '.$this->get_field_name('post_type').' BEING post AND CONFLICTS WITH '.$this->get_field_name('site_wide').'"',
+              'extra_attributes'  => 'rules="'.$this->get_field_name('post_type').':post + !'.$this->get_field_name('site_wide').'"',
             ));
           ?>
           <p>
@@ -3088,7 +3092,7 @@ class AtomWidgetPosts extends AtomWidget{
           </p>
 
           <p>
-           <input type="checkbox" id="<?php echo $this->get_field_id('related'); ?>" name="<?php echo $this->get_field_name('related'); ?>"<?php checked($related); ?> followRules rules="DEPENDS ON <?php echo $this->get_field_name('post_type'); ?> BEING post" />
+           <input type="checkbox" id="<?php echo $this->get_field_id('related'); ?>" name="<?php echo $this->get_field_name('related'); ?>"<?php checked($related); ?> rules="<?php echo $this->get_field_name('post_type'); ?>:post" />
            <label for="<?php echo $this->get_field_id('related'); ?>"><?php atom()->te('Get only context-related posts'); ?></label>
           </p>
         </div>
@@ -3182,8 +3186,8 @@ class AtomWidgetRecentComments extends AtomWidget{
     ));
 
     // flush cache when comments are changed
-    add_action('comment_post',              array(&$this, 'flushCache'));
-    add_action('transition_comment_status', array(&$this, 'flushCache'));
+    add_action('comment_post',              array($this, 'flushCache'));
+    add_action('transition_comment_status', array($this, 'flushCache'));
   }
 
 
@@ -3453,8 +3457,8 @@ class AtomWidgetSplitter extends AtomWidget{
       'description' => atom()->t('Splits area into 2 columns'),
     ));
 
-    atom()->add('area_check', array(&$this, 'areaCheck'), 10, 2);
-    atom()->add('widget_area', array(&$this, 'areaProcess'), 10, 2);
+    atom()->add('area_check', array($this, 'areaCheck'), 10, 2);
+    atom()->add('widget_area', array($this, 'areaProcess'), 10, 2);
   }
 
 
@@ -4246,10 +4250,8 @@ class AtomWidgetTagCloud extends AtomWidget{
           <label for="<?php echo $this->get_field_id('smallest'); ?>"><?php atom()->te('Smallest:') ?></label>
           <input type="text" size="4" id="<?php echo $this->get_field_id('smallest'); ?>" name="<?php echo $this->get_field_name('smallest'); ?>" value="<?php if(isset($instance['smallest'])) echo esc_attr($instance['smallest']); ?>" /> <small>pt</small>
         </div>
-        <div class="color-selector alignright" id="<?php echo $this->get_field_id('gradient_start'); ?>">
-          <div class="preview" style="background-color: #<?php echo esc_attr($instance['gradient_start']); ?>">
-            <input name="<?php echo $this->get_field_name('gradient_start'); ?>" type="hidden" value="<?php echo esc_attr($instance['gradient_start']); ?>" />
-          </div>
+        <div class="alignright">
+          <input name="<?php echo $this->get_field_name('gradient_start'); ?>" class="color-selector" type="hidden" value="<?php echo esc_attr($instance['gradient_start']); ?>" />
         </div>
       </p>
 
@@ -4258,10 +4260,8 @@ class AtomWidgetTagCloud extends AtomWidget{
           <label for="<?php echo $this->get_field_id('largest'); ?>"><?php atom()->te('Largest:') ?></label>
           <input type="text" size="4" id="<?php echo $this->get_field_id('largest'); ?>" name="<?php echo $this->get_field_name('largest'); ?>" value="<?php if(isset($instance['largest'])) echo esc_attr($instance['largest']); ?>" /> <small>pt</small>
         </div>
-        <div class="color-selector alignright" id="<?php echo $this->get_field_id('gradient_end'); ?>">
-          <div class="preview" style="background-color: #<?php echo esc_attr($instance['gradient_end']); ?>">
-            <input name="<?php echo $this->get_field_name('gradient_end'); ?>" type="hidden" value="<?php echo esc_attr($instance['gradient_end']); ?>" />
-          </div>
+        <div class="alignright">
+          <input name="<?php echo $this->get_field_name('gradient_end'); ?>" class="color-selector" type="hidden" value="<?php echo esc_attr($instance['gradient_end']); ?>" />
         </div>
       </p>
     </div>
@@ -4411,7 +4411,7 @@ class AtomWidgetTerms extends AtomWidget{
       'exclude'                => $instance['exclude'],
       'depth'                  => $instance['depth'],
       'walker'                 => $instance['dropdown'] ? '' : new AtomWalkerTerms(),
-      'item_display_callback'  => array(&$this, 'termEntry'),
+      'item_display_callback'  => array($this, 'termEntry'),
       'template'               => $instance['template'],
       'character_limit'        => $instance['character_limit'],
       'allowed_tags'           => $instance['allowed_tags'],
@@ -4491,22 +4491,22 @@ class AtomWidgetTerms extends AtomWidget{
       <div class="high-priority-block">
         <p><strong><?php atom()->te('Display:'); ?></strong></p>
         <label for="<?php echo $this->get_field_id('type'); ?>_all">
-          <input id="<?php echo $this->get_field_id('type'); ?>_all" name="<?php echo $this->get_field_name('type'); ?>" followRules value="all" type="radio" <?php checked($instance['type'], 'all'); ?> />
+          <input id="<?php echo $this->get_field_id('type'); ?>_all" name="<?php echo $this->get_field_name('type'); ?>" value="all" type="radio" <?php checked($instance['type'], 'all'); ?> />
           <?php atom()->te('All Terms'); ?>
         </label>
         <br />
         <label for="<?php echo $this->get_field_id('type'); ?>_sub">
-          <input id="<?php echo $this->get_field_id('type'); ?>_sub" name="<?php echo $this->get_field_name('type'); ?>" followRules value="sub" type="radio" <?php checked($instance['type'], 'sub'); ?> />
+          <input id="<?php echo $this->get_field_id('type'); ?>_sub" name="<?php echo $this->get_field_name('type'); ?>" value="sub" type="radio" <?php checked($instance['type'], 'sub'); ?> />
           <?php atom()->te('Children of the active term'); ?>
         </label>
         <br />
-        <input style="margin-left: 20px;" id="<?php echo $this->get_field_id('root'); ?>" name="<?php echo $this->get_field_name('root'); ?>" type="checkbox" <?php checked(isset($instance['root']) ? $instance['root'] : 0); ?> followRules rules="DEPENDS ON <?php echo $this->get_field_name('type'); ?> BEING sub" />
+        <input style="margin-left: 20px;" id="<?php echo $this->get_field_id('root'); ?>" name="<?php echo $this->get_field_name('root'); ?>" type="checkbox" <?php checked(isset($instance['root']) ? $instance['root'] : 0); ?> rules="<?php echo $this->get_field_name('type'); ?>:sub" />
         <label for="<?php echo $this->get_field_id('root'); ?>"><?php atom()->te('Start from root'); ?></label>
 
         <?php /*/ child of @todo ?>
         <br />
         <label for="<?php echo $this->get_field_id('child'); ?>_child">
-          <input id="<?php echo $this->get_field_id('child'); ?>_child" name="<?php echo $this->get_field_name('child'); ?>" followRules value="child" type="radio" <?php checked($instance['child'], 'child'); ?> />
+          <input id="<?php echo $this->get_field_id('child'); ?>_child" name="<?php echo $this->get_field_name('child'); ?>" value="child" type="radio" <?php checked($instance['child'], 'child'); ?> />
           <?php atom()->te('Children of'); ?>
         </label>
         <br />
@@ -4521,11 +4521,11 @@ class AtomWidgetTerms extends AtomWidget{
            'orderby' => 'name',
            'show_count' => 1,
            'hierarchical' => 1,
-           'extra_attributes' => 'followRules rules="DEPENDS ON '.$this->get_field_name('type').' BEING child"',
+           'extra_attributes' => 'rules="'.$this->get_field_name('type').':child"',
          ));
         ?>
 
-        <input style="margin-left: 20px;" id="<?php echo $this->get_field_id('root'); ?>" name="<?php echo $this->get_field_name('root'); ?>" type="checkbox" <?php checked(isset($instance['root']) ? $instance['root'] : 0); ?> followRules rules="DEPENDS ON <?php echo $this->get_field_name('type'); ?> BEING child" />
+        <input style="margin-left: 20px;" id="<?php echo $this->get_field_id('root'); ?>" name="<?php echo $this->get_field_name('root'); ?>" type="checkbox" <?php checked(isset($instance['root']) ? $instance['root'] : 0); ?> rules="<?php echo $this->get_field_name('type'); ?>:child" />
         <label for="<?php echo $this->get_field_id('root'); ?>"><?php atom()->te('Start from root'); ?></label>
         <?php //*/ ?>
 
@@ -4636,8 +4636,8 @@ class AtomWidgetText extends AtomWidget{
       add_action('admin_print_scripts',        create_function('', 'add_thickbox();wp_enqueue_script("media-upload");'));
       add_action('admin_print_styles',         create_function('', 'wp_enqueue_style("thickbox");'));
       add_action('admin_print_footer_scripts', create_function('', 'wp_preload_dialogs(array("plugins" => "wpdialogs,wplink"));'));
-      add_filter('tiny_mce_before_init',       array(&$this, 'tiny_mce_config'));
-      add_action('admin_footer',               array(&$this, 'js'));
+      add_filter('tiny_mce_before_init',       array($this, 'tiny_mce_config'));
+      add_action('admin_footer',               array($this, 'js'));
     }
     */
 
@@ -4936,8 +4936,8 @@ class AtomWidgetTopCommenters extends AtomWidget{
 
 
     // flush cache when comments are changed
-    add_action('comment_post', array(&$this, 'flushCache'));
-    add_action('transition_comment_status', array(&$this, 'flushCache'));
+    add_action('comment_post', array($this, 'flushCache'));
+    add_action('transition_comment_status', array($this, 'flushCache'));
   }
 
 
@@ -5475,10 +5475,10 @@ class AtomWidgetUsers extends AtomWidget{
     ));
 
     // flush cache when posts or users change
-    add_action('save_post',                 array(&$this, 'flushCache'));
-    add_action('deleted_post',              array(&$this, 'flushCache'));
-    add_action('user_register',             array(&$this, 'flushCache'));
-    add_action('delete_user',               array(&$this, 'flushCache'));
+    add_action('save_post',      array($this, 'flushCache'));
+    add_action('deleted_post',   array($this, 'flushCache'));
+    add_action('user_register',  array($this, 'flushCache'));
+    add_action('delete_user',    array($this, 'flushCache'));
   }
 
 
@@ -5763,11 +5763,11 @@ class AtomWidgetBBPress extends AtomWidget{
       ),
     ));
 
-    atom()->add('requests',                   array(&$this, 'ajax'));
+    atom()->add('requests',                   array($this, 'ajax'));
 
     // flush cache when comments are changed
-    add_action('comment_post',              array(&$this, 'flushCache'));
-    add_action('transition_comment_status', array(&$this, 'flushCache'));
+    add_action('comment_post',              array($this, 'flushCache'));
+    add_action('transition_comment_status', array($this, 'flushCache'));
   }
 
 

@@ -59,7 +59,7 @@
     <?php if(atom()->options('post_comments') && comments_open()): ?>
     <a class="comments" href="<?php atom()->post->URL(); ?>#comments"><?php atom()->post->commentCount(); ?></a>
     <?php endif; ?>
-
+                     
     <?php if((atom()->options('post_date') || atom()->options('post_category') || atom()->options('post_author')) && !(is_sticky() && is_home())): ?>
     <div class="post-std clear-block">
       <?php if(atom()->options('post_date')): ?>

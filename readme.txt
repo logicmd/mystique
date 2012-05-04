@@ -15,7 +15,7 @@ CREDITS:
 - jQuery - http://jquery.com
 - Fancybox by Janis Skarnelis - http://fancybox.net
 - clearfield by Stijn Van Minnebruggen - http://www.donotfold.be
-- jQuery Color picker plugin by eyecon.ro
+- jQuery Color picker plugin by Cory LaViska - http://abeautifulsite.net
 - Justin Tadlock - http://justintadlock.com/archives/2009/05/09/using-shortcodes-to-show-members-only-content
 - CodeMirror javascript library - http://marijn.haverbeke.nl/codemirror
 - IP2Country by Omry Yadan - http://firestats.cc/wiki/ip2c
@@ -32,6 +32,26 @@ REQUIREMENTS:
 
 
 CHANGE LOG:
+
+  5, 5,2012,  3.3.1    - fixed an issue from 3.3 in the Ads module
+                       - widget / tabs: fixed a bug in the show-more control
+                       - widget / archives, calendar: fixed a problem with CPT queries that affected other plugins
+                       - improved background color/image controls inside the live design preview
+
+  30,4,2012,  3.3      - added featured posts source to "Photo Gallery", and renamed the gallery to "Featured Content"
+                       - disabled meta section on all post types that have comments disabled, except "posts"
+                       - added template files for image and generic attachments
+                       - improved form field dependency API
+                       - disabled the_content filter from post content requests outside the main loop to accommodate buggy plugins
+                       - applied arrows to first level of the main menu as well
+                       - only translation headers are now parsed on the welcome settings page to avoid insufficient memory issues
+                       - disabled ajax navigation for the theme settings panel
+                       - changed color picker, you can now deselect the background color :)
+                       - fixed an issue with relative time on MU
+
+ 28,3,2012,  3.2.9.3   - widget / posts: fixed widget title not showing
+                       - removed some PHP < 5 compat code which caused server errors on some 5.4 setups
+                       - added Chinese and Japanese translations, tx to Laycher and yast
 
  23,2,2012,  3.2.9.2   - disabled the EXTEND feature (too many people getting server errors because of host restrictions);
                          if you want it, just create the child theme yourself...

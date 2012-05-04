@@ -19,8 +19,8 @@ class AtomModAjaxify extends AtomMod{
 
   public function onInit(){
     if(!is_admin()){
-      add_action('wp_enqueue_scripts', array(&$this, 'enqueueJS'));
-      add_action('wp_footer', array(&$this, 'inlineJS'));
+      add_action('wp_enqueue_scripts', array($this, 'enqueueJS'));
+      add_action('wp_footer',          array($this, 'inlineJS'));
     }
   }
 

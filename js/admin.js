@@ -1,4 +1,3 @@
-
 /**
 * Cookie plugin
 *
@@ -55,117 +54,226 @@ jQuery.cookie = function(name, value, options){
 
 
 
-
 /*
- jQuery Form Dependencies 1.2, http://digitalnature.eu
-   This is a jQuery port of the Form Manager script by Twey, http://www.twey.co.uk/
 
-  Usage samples:
-    $("input").setupDependencies();
-    $("input, select").setupDependencies({attribute:'rel', disable_only:false, clear_inactive:true});
+ jQuery Form Dependencies v2.0
+   by digitalnature
 
-  Use, copying, and modification allowed, so long as credit
-  remains intact, under the terms of the GNU General Public License,
-  version 2 or later. See http://www.gnu.org/copyleft/gpl.html for details.
+     http://digitalnature.eu
+     http://github.com/digitalnature/Form-Dependencies
 
-  big @todo: optimize for speed (too slow on pages with many dependencies)
+     Demo: http://dev.digitalnature.eu/jquery/form-dependencies/
+
+
+ This was originally based on the Form Manager script by Twey (http://www.dynamicdrive.com/dynamicindex16/formdependency.htm),
+ but the code got completely refactored from 2.0...
+
+
+  Usage:
+
+    $('form').FormDependencies();
+    $('#some_div').FormDependencies({attribute:'data-rules', hide_inactive:true, clear_inactive:true});
+
+
+  Example:
+
+    <input type="checkbox" id="first" />
+    <input type="checkbox" id="second" />
+    <input type="submit" id="third" data-rules="first + !second" />
+
+    will keep "third" input disabled until "first" checkbox is checked and "second" checkbox is unchecked.
+
+
+
+  Change log:
+
+    31 mar. 2012, v2.0  - rewritten and changed syntax completely (removed keyword options)
+                        - changed "disable_only" option name to "hide_inactive"
+                        - added "selectors" option (implies support for any type of element)
+
+    13 feb. 2012, v1.3  - slightly improved performance (rules are parsed once, and only dependencies are now iterated during checks)
+                        - changed target selector to match the container of the input fields, instead of the input fields directly
+                        - added repo to github (first public release)
+
+    23 jun. 2011, v1.2  - Fixed a problem in the value matching function
+
+    21 jun. 2011, v1.1  - Added disable_only / clear_inactive options
+
+    20 jun. 2011, v1.0  - First release
+
 */
 
+
 (function($){
-$.fn.setupDependencies = function(options){
+$.fn.FormDependencies = function(opts){
 
   var defaults = {
-        attribute              : 'rules',           // the field attribute which contains the rules (use 'rel' for w3c valid code)
-        disable_only           : true,              // if true it will disable fields + label, otherwise it will also hide them
-        clear_inactive         : false,             // clears input values from hidden/disabled fields
-        identify_by            : 'name',            // attribute used to identify dependencies (ie. DEPENDS ON [identify_by] BEING ...)
 
-        condition_separator    : ' AND ',           // rules...
-        possibility_separator  : ' OR ',
-        name_value_separator   : ' BEING ',
-        depends                : 'DEPENDS ON ',
-        conflicts              : 'CONFLICTS WITH ',
-        empty                  : 'EMPTY'
+        // the attribute which contains the rules (use 'data-rules' for w3c-valid HTML5 code)
+        attribute             : 'rules',
+
+        // selectors to parse rules from
+        selectors             : 'input, select, textarea, button',
+
+        // if true it will disable fields + label, otherwise it will also hide them
+        hide_inactive         : false,
+
+        // clears input values from hidden/disabled fields
+        clear_inactive        : false,
+
+        // attribute used to identify dependencies, must be unique if other than "name"
+        identify_by           : 'name'
       },
 
-      settings = $.extend({}, defaults, options),
-      matches = this,
+      opts = $.extend(defaults, opts),
 
-      valueMatches = function(e, v){
-        return (e.val() == v || (e.is(':radio') && e.filter(':checked').val() == v));
-      },
-
-      // show or enable
-      show = function(e){
-        $('label[for="' + e.attr('id') + '"]').removeClass('disabled');
-        e.removeAttr('disabled');
-        if(!settings.disable_only){
-          e.show();
-          $('label[for="' + e.attr('id') + '"]').show();
-        }
-        return true;
-      },
-
-      // hide or disable
+      // disable (and maybe hide) the hooked element
       hide = function(e){
-        $('label[for="' + e.attr('id') + '"]').addClass('disabled');
-        e.attr('disabled', 'disabled');
-        if(!settings.disable_only){
-          e.hide();
-          $('label[for="' + e.attr('id') + '"]').hide();
+
+        if(!$(e).is(':input') && !$(e).hasClass('disabled'))
+          $(e).addClass('disabled');
+
+        if(!e.disabled){
+          e.disabled = true;
+          $('label[for="' + e.id + '"]').addClass('disabled');
+
+          if(opts.hide_inactive){
+            $(e).hide();
+            $('label[for="' + e.id + '"]').hide();
+          }
+
+          // we don't want to "clear" submit buttons
+          if(opts.clear_inactive && !$(e).is(':submit'))
+            if($(e).is(':checkbox, :radio')) e.checked = false; else if(!$(e).is('select')) $(e).val('');
+
         }
-        if(settings.clear_inactive == true && !e.is(':submit')) // ignore submit buttons
-          if(e.is(':checkbox,:radio')) e.removeAttr('checked'); else e.val('');
-        return true;
+      },
+
+      // enable (and show?) the hooked element
+      show = function(e){
+
+        if(!$(e).is(':input') && $(e).hasClass('disabled'))
+          $(e).removeClass('disabled');
+
+        if(e.disabled || !$(e).is(':visible')){
+          e.disabled = false;
+          $('label[for="' + e.id + '"]').removeClass('disabled');
+
+          if(opts.hide_inactive){
+            $(e).show();
+            $('label[for="' + e.id + '"]').show();
+          }
+
+          //if(opts.clear_inactive && $(e).is(':checkbox, :radio')) e.checked = true;
+        }
+
+      },
+
+      // verifies if a conditions is met
+      matches = function(key, values, block){
+
+        var i, v, invert = false, e = $('[' + opts.identify_by + '="' + key + '"]', block);
+
+        // @note: using filter() is 4-5 times faster than using multiple selectors
+        e = e.is(':radio') ? e.filter(':checked') : e.filter('[type!="hidden"]')
+
+        for(i = 0; i < values.length; i++){
+
+          v = values[i];
+          invert = false;
+
+          if(v[0] === '!'){
+            invert = true;
+            v = v.substr(1);
+          }
+
+          if((!v && e.is(':checked')) || (e.val() == v) || ((e.is(':submit') || e.is(':button')) && !e.is(':disabled')))
+            return !invert;
+        }
+
+        return invert;
       };
 
 
-  return this.bind('change input', function(){  // note: input event not working in IE <= 8, obviously
-    var j, k, f, n, isHidden, dep;
 
-    matches.each(function(){
+  return this.each(function(){
 
-      isHidden = false;
-      dep = $(this).attr(settings.attribute);
+    var block = this, rules = [], keys = [];
 
-      if(dep)
-        for(j = 0, f = dep.split(settings.condition_separator); j < f.length; ++j)
-          if(f[j].indexOf(settings.depends) === 0){
-            for(k = 0, g = f[j].substr(settings.depends.length).split(settings.possibility_separator); k < g.length; ++k)
-              if(g[k].indexOf(settings.name_value_separator) === -1){
-                if(matches.filter('[' + settings.identify_by + '="' + g[k] + '"]').is(':checked')) break; else if(k + 1 == g.length) isHidden = hide($(this));
+    // parse rules
+    $(opts.selectors, this).each(function(){
 
-              }else{
-                n = g[k].split(settings.name_value_separator);
-                if(valueMatches(matches.filter('[' + settings.identify_by+'="' + n[0] + '"]'), n[1])) break; else if(k + 1 == g.length) isHidden = hide($(this));
-              }
-          }else if(f[j].indexOf(settings.conflicts) === 0){
-            if(f[j].indexOf(settings.name_value_separator) === -1){
-              if(matches.filter('[' + settings.identify_by + '="' + f[j].substr(settings.conflicts.length) + '"]').is(':checked')){
-                isHidden = hide($(this));
-                break;
-              }
-            }else{
-              n = f[j].substr(settings.conflicts.length).split(settings.name_value_separator);
-              if(valueMatches(matches.filter('[' + settings.identify_by + '="' + n[0] + '"]'), n[1])){
-                isHidden = hide($(this));
-                break;
-              }
-            }
-          };
+      var deps = $(this).attr(opts.attribute), dep, parsed_deps = {}, i, invert;
 
-      if(!isHidden) show($(this));
+      if(!deps)
+        return this;
 
+      deps = deps.split('+');
+
+      for(i = 0; i < deps.length; i++){
+
+        dep = $.trim(deps[i]);
+        invert = false;
+
+        // reverse conditional check if the name starts with '!'
+        // the rules should have any values specified in this case
+        if(dep[0] === '!'){
+          dep = dep.substr(1);
+          invert = true;
+        }
+
+        dep = dep.split(':');
+        values = dep[1] || '';
+
+        if(!values && invert)
+          values = '!';
+
+        parsed_deps[dep[0]] = values.split('|');
+
+        // store key inputs in a separate array
+        $('[' + opts.identify_by + '="' + dep[0] + '"]', block).filter('[type!="hidden"]').each(function(){
+          ($.inArray(this, keys) !== -1) || keys.push(this);
+        });
+
+      }
+
+      rules.push({target: this, deps: parsed_deps});
     });
 
-    return true;
-  }).change();
+    // attach our state checking function on keys (ie. inputs on which other inputs depend on)
+    if(keys.length){
+      $(keys).on('change keyup', function(){
 
+        // iterate trough all rules
+        $.each(rules, function(input, input_rules){
 
+          var hide_it = false;
+
+          $.each(input_rules.deps, function(key, values){
+
+            // we check only if a condition fails,
+            // in which case we know we need to hide the hooked element
+            if(!matches(key, values, block)){
+              hide_it = true;
+              return false;
+            }
+          });
+
+          hide_it ? hide(input_rules.target) : show(input_rules.target);
+
+        });
+
+      }).change();
+    }
+
+    return this;
+
+  });
 
 };
 
 })(jQuery);
+
 
 
 
@@ -846,497 +954,609 @@ $.fn.setupDependencies = function(options){
 
 
 
-/**
+
+
+
+
+
+/*
+ * jQuery miniColors: A small color selector
+ * Copyright 2011 Cory LaViska for A Beautiful Site, LLC. (http://abeautifulsite.net/)
+ * Dual licensed under the MIT or GPL Version 2 licenses
  *
- * Color picker
- * Author: Stefan Petre www.eyecon.ro
- *
- * Dual licensed under the MIT and GPL licenses
+ * Heavily modified for Atom! Careful if you're attempting to update the plugin,
+ * which you shouldn't because I'm planning to maintain this fork in the future....
  *
  */
-(function ($) {
-	var ColorPicker = function () {
-		var
-			ids = {},
-			inAction,
-			charMin = 65,
-			visible,
-			tpl = '<div class="colorpicker"><div class="colorpicker_color"><div><div></div></div></div><div class="colorpicker_hue"><div></div></div><div class="colorpicker_new_color"></div><div class="colorpicker_current_color"></div><div class="colorpicker_hex"><input type="text" maxlength="6" size="6" /></div><div class="colorpicker_rgb_r colorpicker_field"><input type="text" maxlength="3" size="3" /><span></span></div><div class="colorpicker_rgb_g colorpicker_field"><input type="text" maxlength="3" size="3" /><span></span></div><div class="colorpicker_rgb_b colorpicker_field"><input type="text" maxlength="3" size="3" /><span></span></div><div class="colorpicker_hsb_h colorpicker_field"><input type="text" maxlength="3" size="3" /><span></span></div><div class="colorpicker_hsb_s colorpicker_field"><input type="text" maxlength="3" size="3" /><span></span></div><div class="colorpicker_hsb_b colorpicker_field"><input type="text" maxlength="3" size="3" /><span></span></div><div class="colorpicker_submit"></div></div>',
-			defaults = {
-				eventName: 'click',
-				onShow: function () {},
-				onBeforeShow: function(){},
-				onHide: function () {},
-				onChange: function () {},
-				onSubmit: function () {},
-				color: 'ff0000',
-				livePreview: true,
-				flat: false
-			},
-			fillRGBFields = function  (hsb, cal) {
-				var rgb = HSBToRGB(hsb);
-				$(cal).data('colorpicker').fields
-					.eq(1).val(rgb.r).end()
-					.eq(2).val(rgb.g).end()
-					.eq(3).val(rgb.b).end();
-			},
-			fillHSBFields = function  (hsb, cal) {
-				$(cal).data('colorpicker').fields
-					.eq(4).val(hsb.h).end()
-					.eq(5).val(hsb.s).end()
-					.eq(6).val(hsb.b).end();
-			},
-			fillHexFields = function (hsb, cal) {
-				$(cal).data('colorpicker').fields
-					.eq(0).val(HSBToHex(hsb)).end();
-			},
-			setSelector = function (hsb, cal) {
-				$(cal).data('colorpicker').selector.css('backgroundColor', '#' + HSBToHex({h: hsb.h, s: 100, b: 100}));
-				$(cal).data('colorpicker').selectorIndic.css({
-					left: parseInt(150 * hsb.s/100, 10),
-					top: parseInt(150 * (100-hsb.b)/100, 10)
-				});
-			},
-			setHue = function (hsb, cal) {
-				$(cal).data('colorpicker').hue.css('top', parseInt(150 - 150 * hsb.h/360, 10));
-			},
-			setCurrentColor = function (hsb, cal) {
-				$(cal).data('colorpicker').currentColor.css('backgroundColor', '#' + HSBToHex(hsb));
-			},
-			setNewColor = function (hsb, cal) {
-				$(cal).data('colorpicker').newColor.css('backgroundColor', '#' + HSBToHex(hsb));
-			},
-			keyDown = function (ev) {
-				var pressedKey = ev.charCode || ev.keyCode || -1;
-				if ((pressedKey > charMin && pressedKey <= 90) || pressedKey == 32) {
-					return false;
-				}
-				var cal = $(this).parent().parent();
-				if (cal.data('colorpicker').livePreview === true) {
-					change.apply(this);
-				}
-			},
-			change = function (ev) {
-				var cal = $(this).parent().parent(), col;
-				if (this.parentNode.className.indexOf('_hex') > 0) {
-					cal.data('colorpicker').color = col = HexToHSB(fixHex(this.value));
-				} else if (this.parentNode.className.indexOf('_hsb') > 0) {
-					cal.data('colorpicker').color = col = fixHSB({
-						h: parseInt(cal.data('colorpicker').fields.eq(4).val(), 10),
-						s: parseInt(cal.data('colorpicker').fields.eq(5).val(), 10),
-						b: parseInt(cal.data('colorpicker').fields.eq(6).val(), 10)
-					});
-				} else {
-					cal.data('colorpicker').color = col = RGBToHSB(fixRGB({
-						r: parseInt(cal.data('colorpicker').fields.eq(1).val(), 10),
-						g: parseInt(cal.data('colorpicker').fields.eq(2).val(), 10),
-						b: parseInt(cal.data('colorpicker').fields.eq(3).val(), 10)
-					}));
-				}
-				if (ev) {
-					fillRGBFields(col, cal.get(0));
-					fillHexFields(col, cal.get(0));
-					fillHSBFields(col, cal.get(0));
-				}
-				setSelector(col, cal.get(0));
-				setHue(col, cal.get(0));
-				setNewColor(col, cal.get(0));
-				cal.data('colorpicker').onChange.apply(cal, [col, HSBToHex(col), HSBToRGB(col), cal.data('colorpicker').el]);
-			},
-			blur = function (ev) {
-				var cal = $(this).parent().parent();
-				cal.data('colorpicker').fields.parent().removeClass('colorpicker_focus');
-			},
-			focus = function () {
-				charMin = this.parentNode.className.indexOf('_hex') > 0 ? 70 : 65;
-				$(this).parent().parent().data('colorpicker').fields.parent().removeClass('colorpicker_focus');
-				$(this).parent().addClass('colorpicker_focus');
-			},
-			downIncrement = function (ev) {
-				var field = $(this).parent().find('input').focus();
-				var current = {
-					el: $(this).parent().addClass('colorpicker_slider'),
-					max: this.parentNode.className.indexOf('_hsb_h') > 0 ? 360 : (this.parentNode.className.indexOf('_hsb') > 0 ? 100 : 255),
-					y: ev.pageY,
-					field: field,
-					val: parseInt(field.val(), 10),
-					preview: $(this).parent().parent().data('colorpicker').livePreview
-				};
-				$(document).bind('mouseup', current, upIncrement);
-				$(document).bind('mousemove', current, moveIncrement);
-			},
-			moveIncrement = function (ev) {
-				ev.data.field.val(Math.max(0, Math.min(ev.data.max, parseInt(ev.data.val + ev.pageY - ev.data.y, 10))));
-				if (ev.data.preview) {
-					change.apply(ev.data.field.get(0), [true]);
-				}
-				return false;
-			},
-			upIncrement = function (ev) {
-				change.apply(ev.data.field.get(0), [true]);
-				ev.data.el.removeClass('colorpicker_slider').find('input').focus();
-				$(document).unbind('mouseup', upIncrement);
-				$(document).unbind('mousemove', moveIncrement);
-				return false;
-			},
-			downHue = function (ev) {
-				var current = {
-					cal: $(this).parent(),
-					y: $(this).offset().top
-				};
-				current.preview = current.cal.data('colorpicker').livePreview;
-				$(document).bind('mouseup', current, upHue);
-				$(document).bind('mousemove', current, moveHue);
-			},
-			moveHue = function (ev) {
-				change.apply(
-					ev.data.cal.data('colorpicker')
-						.fields
-						.eq(4)
-						.val(parseInt(360*(150 - Math.max(0,Math.min(150,(ev.pageY - ev.data.y))))/150, 10))
-						.get(0),
-					[ev.data.preview]
-				);
-				return false;
-			},
-			upHue = function (ev) {
-				fillRGBFields(ev.data.cal.data('colorpicker').color, ev.data.cal.get(0));
-				fillHexFields(ev.data.cal.data('colorpicker').color, ev.data.cal.get(0));
-				$(document).unbind('mouseup', upHue);
-				$(document).unbind('mousemove', moveHue);
-				return false;
-			},
-			downSelector = function (ev) {
-				var current = {
-					cal: $(this).parent(),
-					pos: $(this).offset()
-				};
-				current.preview = current.cal.data('colorpicker').livePreview;
-				$(document).bind('mouseup', current, upSelector);
-				$(document).bind('mousemove', current, moveSelector);
-			},
-			moveSelector = function (ev) {
-				change.apply(
-					ev.data.cal.data('colorpicker')
-						.fields
-						.eq(6)
-						.val(parseInt(100*(150 - Math.max(0,Math.min(150,(ev.pageY - ev.data.pos.top))))/150, 10))
-						.end()
-						.eq(5)
-						.val(parseInt(100*(Math.max(0,Math.min(150,(ev.pageX - ev.data.pos.left))))/150, 10))
-						.get(0),
-					[ev.data.preview]
-				);
-				return false;
-			},
-			upSelector = function (ev) {
-				fillRGBFields(ev.data.cal.data('colorpicker').color, ev.data.cal.get(0));
-				fillHexFields(ev.data.cal.data('colorpicker').color, ev.data.cal.get(0));
-				$(document).unbind('mouseup', upSelector);
-				$(document).unbind('mousemove', moveSelector);
-				return false;
-			},
-			enterSubmit = function (ev) {
-				$(this).addClass('colorpicker_focus');
-			},
-			leaveSubmit = function (ev) {
-				$(this).removeClass('colorpicker_focus');
-			},
-			clickSubmit = function (ev) {
-				var cal = $(this).parent();
-				var col = cal.data('colorpicker').color;
-				cal.data('colorpicker').origColor = col;
-				setCurrentColor(col, cal.get(0));
-				cal.data('colorpicker').onSubmit(col, HSBToHex(col), HSBToRGB(col), cal.data('colorpicker').el);
-			},
-			show = function (ev) {
-				var cal = $('#' + $(this).data('colorpickerId'));
-				cal.data('colorpicker').onBeforeShow.apply(this, [cal.get(0)]);
-				var pos = $(this).offset();
-				var viewPort = getViewport();
-				var top = pos.top + this.offsetHeight;
-				var left = pos.left;
-				if (top + 176 > viewPort.t + viewPort.h) {
-					top -= this.offsetHeight + 176;
-				}
-				if (left + 356 > viewPort.l + viewPort.w) {
-					left -= 356;
-				}
-				cal.css({left: left + 'px', top: top + 'px'});
-				if (cal.data('colorpicker').onShow.apply(this, [cal.get(0)]) != false) {
-					cal.show();
-				}
-				$(document).bind('mousedown', {cal: cal}, hide);
-				return false;
-			},
-			hide = function (ev) {
-				if (!isChildOf(ev.data.cal.get(0), ev.target, ev.data.cal.get(0))) {
-					if (ev.data.cal.data('colorpicker').onHide.apply(this, [ev.data.cal.get(0)]) != false) {
-						ev.data.cal.hide();
-					}
-					$(document).unbind('mousedown', hide);
-				}
-			},
-			isChildOf = function(parentEl, el, container) {
-				if (parentEl == el) {
-					return true;
-				}
-				if (parentEl.contains) {
-					return parentEl.contains(el);
-				}
-				if ( parentEl.compareDocumentPosition ) {
-					return !!(parentEl.compareDocumentPosition(el) & 16);
-				}
-				var prEl = el.parentNode;
-				while(prEl && prEl != container) {
-					if (prEl == parentEl)
-						return true;
-					prEl = prEl.parentNode;
-				}
-				return false;
-			},
-			getViewport = function () {
-				var m = document.compatMode == 'CSS1Compat';
-				return {
-					l : window.pageXOffset || (m ? document.documentElement.scrollLeft : document.body.scrollLeft),
-					t : window.pageYOffset || (m ? document.documentElement.scrollTop : document.body.scrollTop),
-					w : window.innerWidth || (m ? document.documentElement.clientWidth : document.body.clientWidth),
-					h : window.innerHeight || (m ? document.documentElement.clientHeight : document.body.clientHeight)
-				};
-			},
-			fixHSB = function (hsb) {
-				return {
-					h: Math.min(360, Math.max(0, hsb.h)),
-					s: Math.min(100, Math.max(0, hsb.s)),
-					b: Math.min(100, Math.max(0, hsb.b))
-				};
-			},
-			fixRGB = function (rgb) {
-				return {
-					r: Math.min(255, Math.max(0, rgb.r)),
-					g: Math.min(255, Math.max(0, rgb.g)),
-					b: Math.min(255, Math.max(0, rgb.b))
-				};
-			},
-			fixHex = function (hex) {
-				var len = 6 - hex.length;
-				if (len > 0) {
-					var o = [];
-					for (var i=0; i<len; i++) {
-						o.push('0');
-					}
-					o.push(hex);
-					hex = o.join('');
-				}
-				return hex;
-			},
-			HexToRGB = function (hex) {
-				var hex = parseInt(((hex.indexOf('#') > -1) ? hex.substring(1) : hex), 16);
-				return {r: hex >> 16, g: (hex & 0x00FF00) >> 8, b: (hex & 0x0000FF)};
-			},
-			HexToHSB = function (hex) {
-				return RGBToHSB(HexToRGB(hex));
-			},
-			RGBToHSB = function (rgb) {
-				var hsb = {
-					h: 0,
-					s: 0,
-					b: 0
-				};
-				var min = Math.min(rgb.r, rgb.g, rgb.b);
-				var max = Math.max(rgb.r, rgb.g, rgb.b);
-				var delta = max - min;
-				hsb.b = max;
+(function($){
 
-				hsb.s = max != 0 ? 255 * delta / max : 0;
-				if (hsb.s != 0) {
-					if (rgb.r == max) {
-						hsb.h = (rgb.g - rgb.b) / delta;
-					} else if (rgb.g == max) {
-						hsb.h = 2 + (rgb.b - rgb.r) / delta;
-					} else {
-						hsb.h = 4 + (rgb.r - rgb.g) / delta;
-					}
-				} else {
-					hsb.h = -1;
-				}
-				hsb.h *= 60;
-				if (hsb.h < 0) {
-					hsb.h += 360;
-				}
-				hsb.s *= 100/255;
-				hsb.b *= 100/255;
-				return hsb;
-			},
-			HSBToRGB = function (hsb) {
-				var rgb = {};
-				var h = Math.round(hsb.h);
-				var s = Math.round(hsb.s*255/100);
-				var v = Math.round(hsb.b*255/100);
-				if(s == 0) {
-					rgb.r = rgb.g = rgb.b = v;
-				} else {
-					var t1 = v;
-					var t2 = (255-s)*v/255;
-					var t3 = (t1-t2)*(h%60)/60;
-					if(h==360) h = 0;
-					if(h<60) {rgb.r=t1;	rgb.b=t2; rgb.g=t2+t3}
-					else if(h<120) {rgb.g=t1; rgb.b=t2;	rgb.r=t1-t3}
-					else if(h<180) {rgb.g=t1; rgb.r=t2;	rgb.b=t2+t3}
-					else if(h<240) {rgb.b=t1; rgb.r=t2;	rgb.g=t1-t3}
-					else if(h<300) {rgb.b=t1; rgb.g=t2;	rgb.r=t2+t3}
-					else if(h<360) {rgb.r=t1; rgb.g=t2;	rgb.b=t1-t3}
-					else {rgb.r=0; rgb.g=0;	rgb.b=0}
-				}
-				return {r:Math.round(rgb.r), g:Math.round(rgb.g), b:Math.round(rgb.b)};
-			},
-			RGBToHex = function (rgb) {
-				var hex = [
-					rgb.r.toString(16),
-					rgb.g.toString(16),
-					rgb.b.toString(16)
-				];
-				$.each(hex, function (nr, val) {
-					if (val.length == 1) {
-						hex[nr] = '0' + val;
-					}
-				});
-				return hex.join('');
-			},
-			HSBToHex = function (hsb) {
-				return RGBToHex(HSBToRGB(hsb));
-			},
-			restoreOriginal = function () {
-				var cal = $(this).parent();
-				var col = cal.data('colorpicker').origColor;
-				cal.data('colorpicker').color = col;
-				fillRGBFields(col, cal.get(0));
-				fillHexFields(col, cal.get(0));
-				fillHSBFields(col, cal.get(0));
-				setSelector(col, cal.get(0));
-				setHue(col, cal.get(0));
-				setNewColor(col, cal.get(0));
-			};
-		return {
-			init: function (opt) {
-				opt = $.extend({}, defaults, opt||{});
-				if (typeof opt.color == 'string') {
-					opt.color = HexToHSB(opt.color);
-				} else if (opt.color.r != undefined && opt.color.g != undefined && opt.color.b != undefined) {
-					opt.color = RGBToHSB(opt.color);
-				} else if (opt.color.h != undefined && opt.color.s != undefined && opt.color.b != undefined) {
-					opt.color = fixHSB(opt.color);
-				} else {
-					return this;
-				}
-				return this.each(function () {
-					if (!$(this).data('colorpickerId')) {
-						var options = $.extend({}, opt);
-						options.origColor = opt.color;
-						var id = 'collorpicker_' + parseInt(Math.random() * 1000);
-						$(this).data('colorpickerId', id);
-						var cal = $(tpl).attr('id', id);
-						if (options.flat) {
-							cal.appendTo(this).show();
-						} else {
-							cal.appendTo(document.body);
-						}
-						options.fields = cal
-											.find('input')
-												.bind('keyup', keyDown)
-												.bind('change', change)
-												.bind('blur', blur)
-												.bind('focus', focus);
-						cal
-							.find('span').bind('mousedown', downIncrement).end()
-							.find('>div.colorpicker_current_color').bind('click', restoreOriginal);
-						options.selector = cal.find('div.colorpicker_color').bind('mousedown', downSelector);
-						options.selectorIndic = options.selector.find('div div');
-						options.el = this;
-						options.hue = cal.find('div.colorpicker_hue div');
-						cal.find('div.colorpicker_hue').bind('mousedown', downHue);
-						options.newColor = cal.find('div.colorpicker_new_color');
-						options.currentColor = cal.find('div.colorpicker_current_color');
-						cal.data('colorpicker', options);
-						cal.find('div.colorpicker_submit')
-							.bind('mouseenter', enterSubmit)
-							.bind('mouseleave', leaveSubmit)
-							.bind('click', clickSubmit);
-						fillRGBFields(options.color, cal.get(0));
-						fillHSBFields(options.color, cal.get(0));
-						fillHexFields(options.color, cal.get(0));
-						setHue(options.color, cal.get(0));
-						setSelector(options.color, cal.get(0));
-						setCurrentColor(options.color, cal.get(0));
-						setNewColor(options.color, cal.get(0));
-						if (options.flat) {
-							cal.css({
-								position: 'relative',
-								display: 'block'
-							});
-						} else {
-							$(this).bind(options.eventName, show);
-						}
-					}
-				});
-			},
-			showPicker: function() {
-				return this.each( function () {
-					if ($(this).data('colorpickerId')) {
-						show.apply(this);
-					}
-				});
-			},
-			hidePicker: function() {
-				return this.each( function () {
-					if ($(this).data('colorpickerId')) {
-						$('#' + $(this).data('colorpickerId')).hide();
-					}
-				});
-			},
-			setColor: function(col) {
-				if (typeof col == 'string') {
-					col = HexToHSB(col);
-				} else if (col.r != undefined && col.g != undefined && col.b != undefined) {
-					col = RGBToHSB(col);
-				} else if (col.h != undefined && col.s != undefined && col.b != undefined) {
-					col = fixHSB(col);
-				} else {
-					return this;
-				}
-				return this.each(function(){
-					if ($(this).data('colorpickerId')) {
-						var cal = $('#' + $(this).data('colorpickerId'));
-						cal.data('colorpicker').color = col;
-						cal.data('colorpicker').origColor = col;
-						fillRGBFields(col, cal.get(0));
-						fillHSBFields(col, cal.get(0));
-						fillHexFields(col, cal.get(0));
-						setHue(col, cal.get(0));
-						setSelector(col, cal.get(0));
-						setCurrentColor(col, cal.get(0));
-						setNewColor(col, cal.get(0));
-					}
-				});
-			}
-		};
-	}();
-	$.fn.extend({
-		ColorPicker: ColorPicker.init,
-		ColorPickerHide: ColorPicker.hidePicker,
-		ColorPickerShow: ColorPicker.showPicker,
-		ColorPickerSetColor: ColorPicker.setColor
-	});
+  $.extend($.fn, {
+
+    miniColors: function(o, data){
+
+      var lastColors = ['FFFFFF', 'CCCCCC', '888888', '444444', '000000'], // last picked colors are stored here (we're filling this with defaults on start-up)
+
+          pickerSize = 150, // other sizes not yet supported, need to adjust the math grrr..
+
+          create = function(input, o, data){
+
+            // determine initial color (defaults to white)
+            var color = expandHex(input.val());
+
+            // Create trigger
+            var trigger = $('<a class="trigger" href="#"></a>');
+
+            if(color)
+              trigger.css('background-color', '#' + color);
+
+            if(!color)
+              trigger.addClass('alpha');
+
+            trigger.insertAfter(input);
+
+            // Set input data and update attributes
+            input
+            .addClass('miniColors')
+            .data('cp.original-maxlength', input.attr('maxlength') || null)
+            .data('cp.original-autocomplete', input.attr('autocomplete') || null)
+            .data('cp.letterCase', 'uppercase')
+            .data('cp.trigger', trigger)
+            .data('cp.hsb', hex2hsb(color))
+            .data('cp.change', o.change ? o.change : null)
+            .attr('maxlength', 7)
+            .attr('autocomplete', 'off')
+            .val(convertCase(color, o.letterCase));
+
+            // Handle options
+            if(o.readonly)
+              input.prop('readonly', true);
+
+            if(o.disabled)
+              disable(input);
+
+            // Show selector when trigger is clicked
+            trigger.bind('click.miniColors', function(event){
+              event.preventDefault();
+              show(input);
+            });
+
+            input
+              .bind('focus.miniColors', function(event){
+                show(input);
+              })
+              .bind('blur.miniColors', function(event){
+                var hex = expandHex(input.val());
+                input.val(hex ? convertCase(hex, input.data('cp.letterCase')) : '');
+              })
+              .bind('keydown.miniColors', function(event){
+                if(event.keyCode === 9) hide(input);
+              })
+              .bind('keyup.miniColors', function(event){
+                setColorFromInput(input);
+              })
+              .bind('paste.miniColors', function(event){
+                // Short pause to wait for paste to complete
+                setTimeout(function(){ setColorFromInput(input); }, 5);
+              });
+
+          },
+
+         // Destroys an active instance of the miniColors selector
+          destroy = function(input){
+
+            hide();
+            input = $(input);
+
+            // Restore to original state
+            input.data('cp.trigger').remove();
+            input
+              .attr('autocomplete', input.data('cp.original-autocomplete'))
+              .attr('maxlength', input.data('cp.original-maxlength'))
+              .removeData()
+              .removeClass('miniColors')
+              .unbind('.miniColors');
+
+            $(document).unbind('.miniColors');
+          },
+
+          // Enables the input control and the selector
+          enable = function(input){
+            input.prop('disabled', false).data('cp.trigger').css('opacity', 1);
+          },
+
+         // Disables the input control and the selector
+          disable = function(input){
+            hide(input);
+            input.prop('disabled', true).data('cp.trigger').css('opacity', 0.5);
+          },
+
+          // Shows the miniColors selector
+          show = function(input){
+
+            if(input.prop('disabled')) return false;
+
+            // Hide all other instances
+            hide();
+
+            // Generate the selector
+            var selector = $('<div class="selector"></div>'),
+                shortcuts = $('<div class="shortcuts"></div>');
+
+            $('<a class="alpha"></a>').appendTo(shortcuts).click(function(){
+              input.val('').data('cp.trigger').addClass('alpha');
+              hide();
+
+              // fire change callback, send "false" to denote that no color was selected
+              if(input.data('cp.change'))
+                input.data('cp.change').call(input.get(0), false, false);
+            });
+
+            for(var i = 1; i <= 5; i++){
+              $('<a class="quick-set-' + i + '"></a>').appendTo(shortcuts).data('índex', i).css('background-color', '#' + lastColors[i -1]).click(function(){
+                var color = lastColors[$(this).data('índex') - 1];
+
+                $(this).css('background-color', '#' + color);
+                input.val(color);
+                setColorFromInput(input);
+              });
+            }
+
+            // we will attempt to bring up the selector within the current user viewport
+			var inputPos = input.is(':visible') ? input.offset() : input.data('cp.trigger').offset(),
+                inputHeight = (input.is(':visible') ? input.outerHeight() : input.data('cp.trigger').outerHeight()),
+                viewPort = {
+                  l : window.pageXOffset || document.documentElement.scrollLeft,
+                  t : window.pageYOffset || document.documentElement.scrollTop,
+                  w : window.innerWidth || document.documentElement.clientWidth,
+                  h : window.innerHeight || document.documentElement.clientHeight
+                };
+
+            selector
+              .append('<div class="wheel" style="background-color: #fff;"><div class="wheel-picker"></div></div>')
+              .append('<div class="hue"><div class="hue-picker"></div></div>')
+              .append(shortcuts)
+              .css({
+                top: (inputPos.top + inputHeight + pickerSize > viewPort.t + viewPort.h) ? inputPos.top - (pickerSize + 10) : inputPos.top + inputHeight,
+                left: (inputPos.left + (pickerSize + 60) > viewPort.l + viewPort.w) ? inputPos.left - (pickerSize + 60) : inputPos.left,
+                display: 'none'
+              })
+              .addClass(input.attr('class'));
+
+
+
+            // Set background for colors
+            var hsb = input.data('cp.hsb');
+
+            selector.find('.wheel').css('backgroundColor', '#' + hsb2hex({ h: hsb.h, s: 100, b: 100 }));
+
+            // Set colorPicker position
+            var colorPosition = input.data('cp.colorPosition');
+
+            if(!colorPosition)
+              colorPosition = getColorPositionFromHSB(hsb);
+
+            selector.find('.wheel-picker').css({top: colorPosition.y + 'px', left: colorPosition.x + 'px'});
+
+            // Set huePicker position
+            var huePosition = input.data('cp.huePosition');
+
+            if(!huePosition)
+              huePosition = getHuePositionFromHSB(hsb);
+
+            selector.find('.hue-picker').css('top', huePosition.y + 'px');
+
+            // Set input data
+            input
+              .data('cp.selector', selector)
+              .data('cp.huePicker', selector.find('.hue-picker'))
+              .data('cp.colorPicker', selector.find('.wheel-picker'))
+              .data('cp.mousebutton', 0);
+
+            $('body').append(selector);
+
+            selector.fadeIn(100);
+
+            // Prevent text selection in IE
+            selector.bind('selectstart', function(){ return false; });
+
+            $(document).bind('mousedown.miniColors touchstart.miniColors', function(event){
+              input.data('cp.mousebutton', 1);
+
+              if($(event.target).parents().andSelf().hasClass('wheel')){
+                event.preventDefault();
+                input.data('cp.moving', 'colors');
+                moveColor(input, event);
+              }
+
+              if($(event.target).parents().andSelf().hasClass('hue')){
+                event.preventDefault();
+                input.data('cp.moving', 'hues');
+                moveHue(input, event);
+              }
+
+              if($(event.target).parents().andSelf().hasClass('selector')){
+                event.preventDefault();
+                return;
+              }
+
+              if($(event.target).parents().andSelf().hasClass('miniColors')) return;
+
+              hide(input);
+            });
+
+            $(document)
+              .bind('mouseup.miniColors touchend.miniColors', function(event){
+                event.preventDefault();
+                input.data('cp.mousebutton', 0).removeData('moving');
+              })
+              .bind('mousemove.miniColors touchmove.miniColors', function(event){
+                event.preventDefault();
+                if(input.data('cp.mousebutton') === 1){
+
+                  if(input.data('cp.moving') === 'colors')
+                    moveColor(input, event);
+
+                  if(input.data('cp.moving') === 'hues')
+                    moveHue(input, event);
+                }
+              });
+
+          },
+
+          // Hides one or more miniColors selectors
+          hide = function(input){
+
+            var color = input ? $(input).val() : false;
+
+            if(color && $.inArray(color, lastColors) === -1){
+              lastColors.unshift(color);
+              lastColors = lastColors.slice(0, -1);
+            }
+
+            // Hide all other instances if input isn't specified
+            if(!input)
+              input = '.miniColors';
+
+            $(input).each(function(){
+              var selector = $(this).data('cp.selector');
+              $(this).removeData('selector');
+              $(selector).fadeOut(100, function(){ $(this).remove(); });
+            });
+
+            $(document).unbind('.miniColors');
+
+          },
+
+          moveColor = function(input, event){
+
+            var colorPicker = input.data('cp.colorPicker');
+
+            colorPicker.hide();
+
+            var position = {x: event.pageX, y: event.pageY};
+
+            // Touch support
+            if(event.originalEvent.changedTouches){
+              position.x = event.originalEvent.changedTouches[0].pageX;
+              position.y = event.originalEvent.changedTouches[0].pageY;
+            }
+
+            position.x = position.x - input.data('cp.selector').find('.wheel').offset().left - 5;
+            position.y = position.y - input.data('cp.selector').find('.wheel').offset().top - 5;
+
+            if(position.x <= -5)
+              position.x = -5;
+
+            if(position.x >= pickerSize - 6)
+              position.x = pickerSize - 6;
+
+            if(position.y <= -5)
+              position.y = -5;
+
+            if(position.y >= pickerSize - 6)
+              position.y = pickerSize - 6;
+
+            input.data('cp.colorPosition', position);
+            colorPicker.css('left', position.x).css('top', position.y).show();
+
+            // Calculate saturation
+            var s = Math.round((position.x + 5) * 0.67);
+
+            s = Math.min(Math.max(s, 0), 100);
+
+            // Calculate brightness
+            var b = 100 - Math.round((position.y + 5) * 0.67);
+
+            b = Math.min(Math.max(b, 0), 100);
+
+            // Update HSB values
+            var hsb = input.data('cp.hsb');
+            hsb.s = s;
+            hsb.b = b;
+
+            // Set color
+            setColor(input, hsb, true);
+          },
+
+          moveHue = function(input, event){
+
+            var huePicker = input.data('cp.huePicker');
+
+            huePicker.hide();
+
+            var position = {y: event.pageY};
+
+            // Touch support
+            if(event.originalEvent.changedTouches)
+              position.y = event.originalEvent.changedTouches[0].pageY;
+
+            position.y = position.y - input.data('cp.selector').find('.wheel').offset().top - 1;
+
+            position.y = Math.min(Math.max(position.y, -1), pickerSize - 1);
+
+            input.data('cp.huePosition', position);
+            huePicker.css('top', position.y).show();
+
+            // Update HSB values
+            var hsb = input.data('cp.hsb');
+
+            // Calculate hue
+            hsb.h = Math.min(Math.max((Math.round((pickerSize - position.y - 1) * 2.4)), 0), 360);
+
+            // Set color
+            setColor(input, hsb, true);
+          },
+
+          setColor = function(input, hsb, updateInput){
+            input.data('cp.hsb', hsb);
+            var hex = hsb2hex(hsb);
+
+            if(updateInput)
+              input.val(convertCase(hex, input.data('cp.letterCase')));
+
+            input.data('cp.trigger').removeClass('alpha');
+            input.data('cp.trigger').css('backgroundColor', '#' + hex);
+
+            if(input.data('cp.selector'))
+              input.data('cp.selector').find('.wheel').css('backgroundColor', '#' + hsb2hex({h: hsb.h, s: 100, b: 100}));
+
+            // Fire change callback
+            if(input.data('cp.change')){
+              if(hex === input.data('cp.lastChange')) return;
+              input.data('cp.change').call(input.get(0), hex, hsb2rgb(hsb));
+              input.data('cp.lastChange', hex);
+            }
+
+          },
+
+          setColorFromInput = function(input){
+
+            input.val(cleanHex(input.val()));
+            var hex = expandHex(input.val());
+
+            if(!hex){
+              input.data('cp.trigger').addClass('alpha');
+              return false;
+            }
+
+            // Get HSB equivalent
+            var hsb = hex2hsb(hex);
+
+            // If color is the same, no change required
+            var currentHSB = input.data('cp.hsb');
+
+            if(hsb.h === currentHSB.h && hsb.s === currentHSB.s && hsb.b === currentHSB.b)
+              return true;
+
+            // Set colorPicker position
+            var colorPosition = getColorPositionFromHSB(hsb);
+            var colorPicker = $(input.data('cp.colorPicker'));
+
+            colorPicker.css('top', colorPosition.y + 'px').css('left', colorPosition.x + 'px');
+            input.data('cp.colorPosition', colorPosition);
+
+            // Set huePosition position
+            var huePosition = getHuePositionFromHSB(hsb);
+            var huePicker = $(input.data('cp.huePicker'));
+
+            huePicker.css('top', huePosition.y + 'px');
+            input.data('cp.huePosition', huePosition);
+
+            setColor(input, hsb);
+
+            return true;
+          },
+
+          convertCase = function(string, letterCase){
+
+            if(letterCase === 'lowercase')
+              return string.toLowerCase();
+
+            if(letterCase === 'uppercase')
+              return string.toUpperCase();
+
+            return string;
+          },
+
+          getColorPositionFromHSB = function(hsb){
+            var x = Math.min(Math.max(Math.ceil(hsb.s / 0.67), 0), pickerSize),
+                y = Math.min(Math.max((pickerSize - Math.ceil(hsb.b / 0.67)), 0), pickerSize);
+
+            return {x: x - 5, y: y - 5};
+          },
+
+          getHuePositionFromHSB = function(hsb){
+            return {y: Math.min(Math.max((pickerSize - (hsb.h / 2.4)), 0), pickerSize) - 1};
+          },
+
+          cleanHex = function(hex){
+            return hex.replace(/[^A-F0-9]/ig, '');
+          },
+
+          expandHex = function(hex){
+            hex = cleanHex(hex);
+
+            if(!hex)
+              return null;
+
+            if(hex.length === 3)
+              hex = hex[0] + hex[0] + hex[1] + hex[1] + hex[2] + hex[2];
+
+            return hex.length === 6 ? hex : null;
+          },
+
+          hsb2rgb = function(hsb){
+            var rgb = {},
+                h = Math.round(hsb.h);
+                s = Math.round(hsb.s * 255 / 100);
+                v = Math.round(hsb.b * 255 / 100);
+
+            if(s === 0){
+              rgb.r = rgb.g = rgb.b = v;
+
+            }else{
+              var t1 = v;
+              var t2 = (255 - s) * v / 255;
+              var t3 = (t1 - t2) * (h % 60) / 60;
+              if(h === 360) h = 0;
+              if(h < 60){ rgb.r = t1; rgb.b = t2; rgb.g = t2 + t3;}
+              else if(h < 120){rgb.g = t1; rgb.b = t2; rgb.r = t1 - t3;}
+              else if(h < 180){rgb.g = t1; rgb.r = t2; rgb.b = t2 + t3;}
+              else if(h < 240){rgb.b = t1; rgb.r = t2; rgb.g = t1 - t3;}
+              else if(h < 300){rgb.b = t1; rgb.g = t2; rgb.r = t2 + t3;}
+              else if(h < 360){rgb.r = t1; rgb.g = t2; rgb.b = t1 - t3;}
+              else{ rgb.r = 0; rgb.g = 0; rgb.b = 0;}
+            }
+
+            return {r: Math.round(rgb.r), g: Math.round(rgb.g), b: Math.round(rgb.b)};
+          },
+
+          rgb2hex = function(rgb){
+            var hex = [parseInt(rgb.r).toString(16), parseInt(rgb.g).toString(16), parseInt(rgb.b).toString(16)];
+            $.each(hex, function(nr, val){
+              if(val.length === 1)
+                hex[nr] = '0' + val;
+            });
+            return hex.join('');
+          },
+
+          hex2rgb = function(hex){
+            hex = parseInt(hex, 16);
+            return {r: hex >> 16, g: (hex & 0x00FF00) >> 8, b: (hex & 0x0000FF)};
+          },
+
+          rgb2hsb = function(rgb){
+            var hsb = {h: 0, s: 0, b: 0};
+            var min = Math.min(rgb.r, rgb.g, rgb.b);
+            var max = Math.max(rgb.r, rgb.g, rgb.b);
+            var delta = max - min;
+            hsb.b = max;
+            hsb.s = max !== 0 ? 255 * delta / max : 0;
+
+            if(hsb.s !== 0){
+              if(rgb.r === max){
+                hsb.h = (rgb.g - rgb.b) / delta;
+              }else if(rgb.g === max){
+                hsb.h = 2 + (rgb.b - rgb.r) / delta;
+              }else{
+                hsb.h = 4 + (rgb.r - rgb.g) / delta;
+              }
+
+            }else{
+              hsb.h = -1;
+            }
+
+            hsb.h *= 60;
+
+            if(hsb.h < 0)
+              hsb.h += 360;
+
+            hsb.s *= 100 / 255;
+            hsb.b *= 100 / 255;
+
+            return hsb;
+          },
+
+          hex2hsb = function(hex){
+            var hsb = rgb2hsb(hex2rgb(hex));
+
+            // Zero out hue marker for black, white, and grays (saturation === 0)
+            if(hsb.s === 0)
+              hsb.h = 360;
+
+            return hsb;
+          },
+
+          hsb2hex = function(hsb){
+            return rgb2hex(hsb2rgb(hsb));
+          };
+
+
+      // Handle calls to $([selector]).miniColors()
+      switch(o){
+        case 'readonly':
+          $(this).each(function(){
+            if(!$(this).hasClass('miniColors')) return;
+            $(this).prop('readonly', data);
+          });
+          return $(this);
+
+        case 'disabled':
+          $(this).each(function(){
+            if(!$(this).hasClass('miniColors')) return;
+            data ? disable($(this)) : enable($(this));
+          });
+          return $(this);
+
+        case 'value':
+          // Getter
+          if(data === undefined){
+            if(!$(this).hasClass('miniColors')) return;
+            var input = $(this),
+                hex = expandHex(input.val());
+            return hex ? convertCase(hex, input.data('cp.letterCase')) : null;
+          }
+
+          // Setter
+          $(this).each(function(){
+            if(!$(this).hasClass('miniColors')) return;
+            $(this).val(data);
+            setColorFromInput($(this));
+          });
+
+          return $(this);
+
+        case 'destroy':
+          $(this).each(function(){
+            if(!$(this).hasClass('miniColors')) return;
+            destroy($(this));
+          });
+
+          return $(this);
+
+        default:
+          if(!o) o = {};
+          $(this).each(function(){
+
+            // Must be called on an input element
+            if($(this)[0].tagName.toLowerCase() !== 'input') return;
+
+            // If a trigger is present, the control was already created
+            if($(this).data('cp.trigger')) return;
+
+            // Create the control
+            create($(this), o, data);
+          });
+
+          return $(this);
+
+      }
+
+    }
+
+  });
+
 })(jQuery);
-
-
-
-
-
-
-
-
-
 
 
 
@@ -2666,7 +2886,22 @@ jQuery(document).ready(function($){
         });
 
         // form dependencies (disable/enable them based on the rules attribute check)
-        $('[followRules]', block).setupDependencies();
+        block.FormDependencies();
+
+        // fix for widget form toggle glitch
+        $('.widget-title-action', block.parents('.widget')).click(function(){
+          setTimeout(function(){
+            // refresh codemirror editors, if any
+            for(var i = 0; i < editors.length; i++)
+              editors[i].refresh();
+
+            // twice:(
+            for(var i = 0; i < editors.length; i++)
+              editors[i].refresh();
+
+          }, 10);
+
+        });
 
         // (un)select-all
         $('.toggle-select-all', block).toggle(function() {
@@ -2696,19 +2931,9 @@ jQuery(document).ready(function($){
         });
 
         // color pickers
-        $('.color-selector', block).ColorPicker({
-          onShow: function(colorpicker){
-            $(colorpicker).css({ opacity: 0, marginTop: -10 }).show().animate({ opacity: 1, marginTop: 0 }, 160);
-            $(this).ColorPickerSetColor($(this).find('input').val());
-            return false;
-          },
-          onHide: function(colorpicker) {
-            $(colorpicker).fadeOut(160);
-            return false;
-          },
-          onChange: function(hsb, hex, rgb, element) {
-            $('.preview', element).css('background-color', '#' + hex);
-            $('input', element).val(hex).trigger('change');
+        $('.color-selector', block).miniColors({
+          change: function(hex, rgb){
+            $(this).change();
           }
         });
 
@@ -2856,9 +3081,8 @@ jQuery(document).ready(function($){
 
 
   // featured posts handler
-  $('td.featured a.feature').click(function(event){
+  $('a.feature').click(function(event){
     event.preventDefault();
-    var pos = $(this).attr('id').lastIndexOf('-');
 
     $.ajax({
       url: ajaxurl,
@@ -2866,10 +3090,9 @@ jQuery(document).ready(function($){
       context: this,
       data: ({
         action: 'process_featured',
-        id: $(this).attr('id').substr(++pos),
-        isOn: $(this).hasClass('on') ? 1 : 0,
-        what: $(this).attr('rel'),
-        _ajax_nonce: $(this).data('nonce')
+        id: $(this).data('post'),
+        what: $(this).data('type'),
+        isOn: $(this).hasClass('on') ? 1 : 0
       }),
       beforeSend: function() {
         $(this).removeClass('on off').addClass('loading');
@@ -2887,7 +3110,7 @@ jQuery(document).ready(function($){
   });
 
 
-  // simple ajax tabbed interface for the theme settings tabs
+  /*/ simple ajax tabbed interface for the theme settings tabs
   $('#theme-settings .atom-tabs .nav a').click(function(event){
 
     var tabs = $(this).parents('.atom-tabs'),
@@ -2937,6 +3160,7 @@ jQuery(document).ready(function($){
     if(window.location.hash == $(this).attr('href'))
       $(this).trigger('click');
   });
+  /*/
 
 
   // live theme preview
@@ -2954,8 +3178,12 @@ jQuery(document).ready(function($){
       pm({
         target: window.frames['themepreview'],
         type: 'background_color', // $(this).attr('name')
-        data: $(this).val()
+        data: {
+          color: $(this).val(),
+          selector: $(this).data('selector')
+        }
       });
+      $('input[name="background_image"]').change();
     });
 
     // live preview: logo
@@ -2963,7 +3191,10 @@ jQuery(document).ready(function($){
       pm({
         target: window.frames['themepreview'],
         type: 'logo',
-        data: $(this).val() || 'remove'
+        data: {
+          url: $(this).val() || 'remove',
+          title: $(this).data('title')
+        }
       });
     });
 
@@ -2972,7 +3203,10 @@ jQuery(document).ready(function($){
       pm({
         target: window.frames['themepreview'],
         type: 'background_image',
-        data: $(this).val() || 'remove'
+        data: {
+          url: $(this).val() || 'remove',
+          selector: $(this).data('selector')
+        }
       });
     });
 
@@ -2993,7 +3227,10 @@ jQuery(document).ready(function($){
       marginBottom: 'show',
       paddingTop: 'show',
       paddingBottom: 'show'
-    }, 333);
+    }, 333, function(){
+
+      $(document).trigger('themepreview-loaded');
+    });
 
     // remove design panel error message,
     // which in some cases might be there because the iframe took more than 10 seconds to load...
