@@ -2,7 +2,7 @@
 /**
  * Module Name: Advertisment Blocks
  * Description: Allows you to insert context-dependent ads into your pages
- * Version: 1.4
+ * Version: 2.0
  * Author: digitalnature
  * Author URI: http://digitalnature.eu
  * Auto Enable: yes
@@ -28,7 +28,7 @@ class AtomModAdBlocks extends AtomMod{
   // $this->dir  - this module's directory
 
 
-
+  
  /*
   * Module init event.
   * Runs during Atom initialization (within the 'after_setup_theme' action)
@@ -48,7 +48,7 @@ class AtomModAdBlocks extends AtomMod{
 
     add_action('template_redirect', array($this, 'queueAds'));
 
-    add_shortcode('ad', array($this, 'shortcode'));
+    //add_shortcode('ad', array($this, 'shortcode'));
   }
 
 
@@ -175,6 +175,8 @@ class AtomModAdBlocks extends AtomMod{
     <!-- tab: ads -->
     <div class="clear-block">
 
+      <?php if(defined('I_WANT_MY_ADS_MODULE')): ?>
+
       <div class="notice">
         <?php atom()->te('This section helps you create advertisment blocks in non-widgetized areas. For widgetized areas such as sidebars, simply use a text widget to display your ads.'); ?>
       </div>
@@ -252,6 +254,13 @@ class AtomModAdBlocks extends AtomMod{
         });
 
       </script>
+
+      <?php else: ?>
+      <div class="notice e">
+        <?php atom()->te('This mod is now being developed as a WordPress plugin, see %s', '<a href="http://digitalnature.eu/forum/plugins/ad-manager/">AdManager</a> (old module data will be automatically imported by the plugin)'); ?>
+      </div>
+      <?php endif; ?>
+
 
     </div>
     <!-- /tab: ads -->

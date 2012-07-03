@@ -381,7 +381,6 @@ class AtomInterface{
       });
 
 
-
       $(document).trigger('atom_ready');
 
       <?php Atom::action('admin_jquery_init'); ?>

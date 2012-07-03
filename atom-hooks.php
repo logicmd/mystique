@@ -367,6 +367,14 @@ function atom_body_class($classes){
   if(atom()->options('background_color'))
     $classes[] = 'cbgc';
 
+  // determine if meta is present (comments)
+  // some themes (like "digitalnature v5" may want to style the site differently in this case
+  if(is_singular()){
+    $comments_disabled = (post_password_required() || (!comments_open() && !is_single('post') && atom()->post->getCommentCount() < 1));
+    if(!$comments_disabled)
+      $classes[] = 'with-meta';
+  }
+
   // detect browser
   if($is_lynx) $browser = 'lynx';
   elseif($is_gecko) $browser = 'gecko';

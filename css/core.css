@@ -2597,8 +2597,10 @@ a.go-top:hover{
 
 .no-js .hide-if-no-js{display: none;}
 
-.ad-block{
-  padding: 10px 0 20px 0;
+.ad, .ad-block{
+  text-align: center;
+  display: block;
+  margin: 10px auto 20px;
 }
 
 /* [column] shortcode -- @todo: remove this and add a real interface for adding columns in the editor */

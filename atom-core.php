@@ -54,7 +54,7 @@ class Atom{
   const
 
     // framework version
-    VERSION             = '2.1',
+    VERSION             = '2.1.2',
 
     // required WordPress version to run this theme (3.1 is the minimum for Atom-based themes)
     // the check is made during the 'after_setup_theme' hook, so everything executed before this action
@@ -4644,8 +4644,10 @@ class AtomObjectPost extends AtomObject{
     // function arguments override everything
     $options = array_merge($defaults, $options);
 
+    // stupid plugins will probably screw the excerpt fileters up...
     if($mode[0] == 'e'){
-      return in_the_loop() ? get_the_excerpt() : $this->data->post_excerpt;
+      //return in_the_loop() ? get_the_excerpt() : $this->data->post_excerpt;
+      return get_the_excerpt();
 
     }else{
       $content = in_the_loop() ? str_replace(']]>', ']]&gt;', apply_filters('the_content', get_the_content())) : get_the_content();

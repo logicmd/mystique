@@ -74,6 +74,19 @@ if(!defined('ATOM_OVERRIDE_CONFIG') || !ATOM_OVERRIDE_CONFIG){
   add_theme_support('bbpress');
   add_theme_support('post-formats', array('aside', 'gallery'));
 
+  // register ad locations for the AdManager plugin;
+  // key names may not match what the label suggests, but they are correct because these are the template action tags
+  // the ":index" prepended to the action tag suggests that this location requires the index field (the ad will be inserted after N action executions)
+  if(class_exists('AdManager') && defined('AdManager::VERSION'))
+    AdManager()->registerAdLocation(array(
+      'atom_before_main'             => atom()->t('After header'),         // all pages
+      'atom_before_primary'          => atom()->t('Before main'),          // all pages
+      'atom_after_primary'           => atom()->t('After main'),           // all pages
+      'atom_before_teaser:index'     => atom()->t('Before post teaser'),   // post listing pages
+      'atom_after_teaser:index'      => atom()->t('After post teaser'),    // post listing pages
+      'atom_before_comment:index'    => atom()->t('Before comment'),       // single pages
+    ));
+
   atom()->registerDefaultOptions(array(
     'layout'                       => 'c2right',
     'page_width'                   => 'fixed',

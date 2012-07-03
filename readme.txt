@@ -32,6 +32,9 @@ REQUIREMENTS:
 
 
 CHANGE LOG:
+ 
+  9, 5,2012,  3.3.2    - added back auto-generated excerpts to featured content media source
+                       - disabled editing of ads in the Ad module (use the plugin)
 
   5, 5,2012,  3.3.1    - fixed an issue from 3.3 in the Ads module
                        - widget / tabs: fixed a bug in the show-more control
