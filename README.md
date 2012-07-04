@@ -1,4 +1,4 @@
-﻿Readme
+Readme
 ======
 
 Branch
@@ -27,3 +27,4 @@ Adding the following feature
    `done`
 8. recaptcha
    `TODO` work-around for admin.
+9. add views under title in index page.
