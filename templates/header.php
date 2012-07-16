@@ -24,7 +24,7 @@
 
   <link rel="pingback" href="<?php bloginfo('pingback_url'); ?>" />
   <link rel="apple-touch-icon" href="http://logicmd.net/wp-content/themes/intrepidity/images/apple_touch_icon.png" />
-  
+  <link href="https://plus.google.com/104776107602001611816" rel="publisher" />
   <!--[if lte IE 7]>
   <link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/css/ie.css" type="text/css" media="screen" />
   <![endif]-->
