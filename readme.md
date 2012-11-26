@@ -1,17 +1,30 @@
-##Branch
+Readme
+======
 
-* master: mystique
-* extend: mystique-extend Child theme of mystique
-
-===================
-
-##Features
+Branch
+------
+* [master] -- mystique
+* [extend] -- mystique-extend Child theme of mystique
 
 Adding the following feature
-* custom-smiles: done on commentform.php
-* real-time-gavatar: inhirented,no-need
-* footer: done(remove links + ie warning)
-* header: done(seo+ie compactablity)
-* lazy-load: done on footer.php, not working
-* share: done on core.php, not working
-* recaptcha: [TODO] work-around for admin
+----------------------------
+1. footer
+   `done`(remove links + ie warning)
+2. header
+   `done`(seo+ie compactablity)
+3. custom-smiles
+   `done` on commentform.php
+4. real-time-gavatar
+   inhirented,no-need
+5. lazy-load
+   `done` on footer.php, not working
+6. share
+   * `done` on atom-core.php, not working.
+   * atom-core.php may get protected from the child theme.
+   * working on single.php, worked.
+   * add css sprite
+7. google plus one
+   `done`
+8. recaptcha
+   `TODO` work-around for admin.
+9. add views under title in index page.
