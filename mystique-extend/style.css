@@ -1,110 +1,308 @@
 /*
+
 Theme Name: Mystique - Extend
+
 Theme URI: http://digitalnature.eu/themes/mystique/
+
 Description: Auto-generated child theme of Mystique. Please leave this one activated for proper customizations to Mystique.
+
 Version: 1.0
+
 Author: <a href="http://digitalnature.eu/" title="访问作者主页">digitalnature</a>
+
 Author URI: http://digitalnature.eu/
+
 Template: mystique
+
 */
 
+
+
 /* You can safely edit this file, but keep the Template tag above unchanged! */
+
 /* Syntax Hightlighter */
+
 .syntaxhighlighter,
+
 .syntaxhighlighter a,
+
 .syntaxhighlighter div,
+
 .syntaxhighlighter code,
+
 .syntaxhighlighter table,
+
 .syntaxhighlighter table td,
+
 .syntaxhighlighter table tr,
+
 .syntaxhighlighter table tbody,
+
 .syntaxhighlighter table thead,
+
 .syntaxhighlighter table caption,
+
 .syntaxhighlighter textarea {
-font-size: 13px !important; /* Set the font size in pixels */  
-font-family: "Consolas", "Bitstream Vera Sans Mono", "Courier New", Courier, monospace !important; /* Set the font type */  
+
+font-size: 13px !important; /* Set the font size in pixels */
+
+font-family: "Consolas", "Bitstream Vera Sans Mono", "Courier New", Courier, monospace !important; /* Set the font type */
+
 }
+
 .syntaxhighlighter table caption {
-/* For Title(Caption) */  
-font-size: 14px !important; /* Set the font size in pixels */  
-font-family: "Consolas", "Bitstream Vera Sans Mono", "Courier New", Courier, monospace !important; /* Set the font type */  
+
+/* For Title(Caption) */
+
+font-size: 14px !important; /* Set the font size in pixels */
+
+font-family: "Consolas", "Bitstream Vera Sans Mono", "Courier New", Courier, monospace !important; /* Set the font type */
+
 }
+
 .syntaxhighlighter.nogutter td.code .line {
-/* Set the left padding space when no-gutter in ver. 3.0 */  
+
+/* Set the left padding space when no-gutter in ver. 3.0 */
+
 padding-left: 3px !important;
+
 }
+
 .syntaxhighlighter {
-/* For Chrome/Safari(WebKit) */  
-/* Hide the superfluous vertical scrollbar in ver. 3.0 */  
+
+/* For Chrome/Safari(WebKit) */
+
+/* Hide the superfluous vertical scrollbar in ver. 3.0 */
+
 overflow-y: hidden !important;
+
 padding: 1px !important;
+
 }
-/* Post Content Style */  
+
+/* Post Content Style */
+
 .hentry .post-content ul, .hentry .post-content ol {
+
   font-size:14px;
+
   /*line-height:165%; */ /*Already have*/
+
   word-spacing:0.1em;
+
 }
+
+
 
 .hentry .post-content p {
+
   font-size:14px;
+
   margin:5px 0 10px 0;
+
   /*line-height:165%; */ /*Already have*/
-  padding-top:3px; 
-  padding-bottom:5px; 
+
+  padding-top:3px;
+
+  padding-bottom:5px;
+
   word-spacing:0.1em;
-}
-blockquote p {
-  font-style: normal;
-}
-div#smiles {
-  padding: 10px 0;
+
 }
 
-ul.post-shares, ul.post-shares li{
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  float: left;
+blockquote p {
+
+  font-style: normal;
+
 }
+
+div#smiles {
+
+  padding: 10px 0;
+
+}
+
+
+
+ul.post-shares, ul.post-shares li{
+
+  list-style-type: none;
+
+  margin: 0;
+
+  padding: 0;
+
+  float: left;
+
+}
+
+
 
 ul.post-shares{padding-left: 10px;}
 
+
+
 ul.post-shares li{
+
   border: 2px solid #fff;
+
   margin-right: 2px;
+
 }
+
+
 
 ul.post-shares li.last a{margin-right: 0;}
 
+
+
 ul.post-shares li, ul.post-shares li a{
+
   -moz-border-radius:3px;
+
   -webkit-border-radius:3px;
+
   border-radius:3px;
+
 }
+
+
 
 ul.post-shares a{
+
   background: transparent url(images/socialize.png) no-repeat left top;
+
   width: 32px;
+
   height: 32px;
+
   display: block;
+
 }
+
+
 
 ul.post-shares li.weibo a{background-position:0px -32px;}
+
 ul.post-shares li.renren a{background-position:-32px -32px;}
+
 ul.post-shares li.qqzone a{background-position:-64px -32px;}
+
 ul.post-shares li.qqweibo a{background-position:-96px -32px;}
 
+
+
 ul.post-shares li.weibo a:hover{background-position:0 0px;}
+
 ul.post-shares li.renren a:hover{background-position:-32px 0px;}
+
 ul.post-shares li.qqzone a:hover{background-position:-64px 0px;}
+
 ul.post-shares li.qqweibo a:hover{background-position:-96px 0px;}
 
+
+
 ul.post-shares span{
+
   display: none;
+
 }
+
+
 
 span.gplusone{
+
   padding:0 10px;
+
 }
 
+
+.socialmedia-buttons {
+  margin-top: 5px;
+}
+
+.smw_left {
+  text-align: left;
+}
+
+.smw_center {
+  text-align: center;
+}
+
+.smw_right {
+  text-align: right;
+}
+
+li.Social_Widget a {
+  padding: 0 !important;
+  margin: 0 !important;
+  background: none !important;
+}
+
+.smw_center img,
+.smw_left img {
+  border: 0;
+  border: 0 !important;
+  margin-right: 10px !important;
+  display: inline;
+  -webkit-transition: all 0.2s ease-in;
+  -moz-transition: all 0.2s ease-in;
+  transition: all 0.2s ease;
+}
+
+.smw_right img {
+  border: 0;
+  border: 0 !important;
+  margin-left: 10px !important;
+  display: inline;
+  -webkit-transition: all 0.2s ease-in;
+  -moz-transition: all 0.2s ease-in;
+  transition: all 0.2s ease;
+}
+
+.socialmedia-buttons a {
+  background: none !important;
+}
+
+.socialmedia-buttons a:hover {
+  text-decoration: none;
+  border: 0;
+}
+.socialmedia-buttons img.fade:hover {
+  opacity: 1 !important;
+  -moz-opacity: 1 !important;
+  -webkit-transition: all 0.2s ease-in;
+  -moz-transition: all 0.2s ease-in;
+  transition: all 0.2s ease;
+}
+
+.socialmedia-buttons img.scale:hover {
+  -moz-transform: scale(1.2);
+  -webkit-transform: scale(1.2);
+  -webkit-transition: all 0.2s ease-in;
+  -moz-transition: all 0.2s ease-in;
+  -ms-zoom: 1.2;
+  transition: all 0.2s ease;
+}
+
+.socialmedia-buttons img.bounce:hover {
+  transform: translate(0px, -2px);
+  -moz-transform: translate(0px, -2px);
+  -webkit-transform: translate(0px, -2px);
+  -webkit-transition: -webkit-transform 0.2s ease-in;
+  -moz-transition: all 0.2s ease-in;
+  transition: all 0.2s ease;
+
+}
+
+.socialmedia-buttons img.combo:hover {
+  transform: translate(0px, -4px);
+  -moz-transform: scale(1.1) translate(0px, -4px);
+  -webkit-transform: scale(1.1) translate(0px, -4px);
+  -ms-zoom: 1.1;
+  opacity: 1 !important;
+  -moz-opacity: 1 !important;
+  -webkit-transition: all 0.2s ease-in;
+  -moz-transition: all 0.2s ease-in;
+  transition: all 0.2s ease;
+}
